@@ -16,8 +16,12 @@ function LoginScreen() {
     <LoginPageContainer>
       <Logo />
       <ConnexionContainer>
-        <LoginInput placeholder="E-mail" />
-        <LoginInput placeholder="Password" />
+        <LoginInput placeholder="E-mail" autoCapitalize="none" />
+        <LoginInput
+          placeholder="Password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+        />
         <ConnectButton>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
