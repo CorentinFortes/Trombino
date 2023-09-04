@@ -23,6 +23,7 @@ export const LoginInput = styled.TextInput`
   width: 80%;
   height: 40px;
   border: 1px solid #9a9797;
+  font-family: 'Rubik_Light';
   border-radius: 20px;
   padding: 10px;
 `;
@@ -36,15 +37,14 @@ export const ConnectButtonText = styled.Text`
   color: #fafaff;
   font-size: 20px;
   padding: 10px;
-  font-family: 'Rubik';
+  font-family: 'Rubik_Medium';
   font-weight: 500;
   padding: 8px 33px;
 `;
 
 export const GreyText = styled.Text`
   font-size: 12px;
-  font-family: 'Rubik';
-  font-weight: 300;
+  font-family: 'Rubik_Light';
   color: #1e1e1e;
   opacity: 0.4;
 `;
