@@ -19,13 +19,19 @@ export const ConnexionContainer = styled.View`
   padding-top: 10px;
 `;
 
-export const LoginInput = styled.TextInput`
-  width: 80%;
+export const InputContainer = styled.View`
+  flex-direction: row;
   height: 40px;
   border: 1px solid #9a9797;
-  font-family: 'Rubik_Light';
   border-radius: 20px;
-  padding: 10px;
+  width: 80%;
+  padding: 10px 15px;
+`;
+
+export const LoginInput = styled.TextInput`
+  font-family: 'Rubik_Light';
+  width: 100%;
+  padding-left: 10px;
 `;
 
 export const ConnectButton = styled.TouchableOpacity`

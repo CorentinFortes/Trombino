@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Logo } from '../svg/Logo';
 import {
   ConnectButton,
@@ -7,21 +7,30 @@ import {
   ConnexionContainer,
   CreditsContainer,
   GreyText,
+  InputContainer,
   LoginInput,
   LoginPageContainer,
 } from './LoginScreen.style';
+import { UserIcon } from '../svg/User';
+import { LockIcon } from '../svg/Lock';
 
 function LoginScreen() {
   return (
     <LoginPageContainer>
       <Logo />
       <ConnexionContainer>
-        <LoginInput placeholder="E-mail" autoCapitalize="none" />
-        <LoginInput
-          placeholder="Password"
-          secureTextEntry={true}
-          autoCapitalize="none"
-        />
+        <InputContainer>
+          <UserIcon />
+          <LoginInput placeholder="E-mail" autoCapitalize="none" />
+        </InputContainer>
+        <InputContainer>
+          <LockIcon />
+          <LoginInput
+            placeholder="Password"
+            secureTextEntry={true}
+            autoCapitalize="none"
+          />
+        </InputContainer>
         <ConnectButton>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
