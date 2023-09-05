@@ -46,3 +46,12 @@ export const CreditsContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
+
+export const InputContainer = styled.View`
+  display: flex;
+  flex-direction: clolumn;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  gap: 35px;
+`;

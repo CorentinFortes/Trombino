@@ -2,10 +2,10 @@ import styled from 'styled-components/native';
 
 export const InputContainer = styled.View`
   flex-direction: row;
-  height: 40px;
+  height: 45px;
   border: 1px solid #9a9797;
-  border-radius: 20px;
-  width: 80%;
+  border-radius: 10px;
+  width: 100%;
   padding: 10px 15px;
 `;
 
