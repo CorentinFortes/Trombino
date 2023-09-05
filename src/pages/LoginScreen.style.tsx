@@ -4,9 +4,9 @@ export const LoginPageContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 230px;
+  justify-content: space-between;
   padding-top: 120px;
+  height: 100%;
 `;
 
 export const ConnexionContainer = styled.View`
@@ -60,4 +60,5 @@ export const CreditsContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 20px;
 `;
