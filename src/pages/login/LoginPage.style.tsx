@@ -7,6 +7,7 @@ export const LoginPageContainer = styled.View`
   justify-content: center;
   gap: 230px;
   padding-top: 120px;
+  background-color: #fffafa;
 `;
 
 export const ConnexionContainer = styled.View`

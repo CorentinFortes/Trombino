@@ -8,4 +8,5 @@ export const PageContainer = styled.View`
   padding: 20px;
   height: 100%;
   width: 100%;
+  background-color: #fffafa;
 `;
