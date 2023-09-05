@@ -1,11 +1,14 @@
 import React from 'react';
+import { Text } from 'react-native';
+import { BoxIcon } from '../../svg/BoxIcon';
+import { MailIcon } from '../../svg/MailIcon';
 import { WidgetType } from '../../types/widgetType';
+import { Widget } from '../Widget';
 import {
   MailContainer,
   MailContent,
   MailTitle,
   MailsContainer,
-  MainContent,
   PointUnread,
   SenderText,
   TextUnread,
@@ -15,10 +18,6 @@ import {
   TopLeftContent,
   TopRightContent,
 } from './MailWidget.style';
-import { MailIcon } from '../../svg/MailIcon';
-import { BoxIcon } from '../../svg/BoxIcon';
-import { Text } from 'react-native';
-import { Widget } from '../Widget';
 
 export type Mail = {
   title: string;
@@ -36,7 +35,6 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
   nbUnread,
   mails,
   size,
-  icon,
 }) => {
   return (
     <Widget
@@ -49,7 +47,11 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
           </TopLeftContent>
           <TopRightContent>
             <BoxIcon />
-            <TextUnread>{nbUnread} unread</TextUnread>
+            <TextUnread>
+              {nbUnread}
+              {` `}
+              {`unread${nbUnread > 1 ? 's' : ''}`}
+            </TextUnread>
           </TopRightContent>
         </TopContent>
       }
@@ -61,7 +63,7 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
               {!mails[0].read && <PointUnread />}
               <MailTitle>{mails[0].title}</MailTitle>
             </TopLeftContent>
-            <SenderText>de {mails[0].sender}</SenderText>
+            <SenderText>from {mails[0].sender}</SenderText>
           </TitleAndSender>
           <MailContent numberOfLines={2}>
             <Text>{mails[0].content}</Text>
@@ -73,7 +75,7 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
               {!mails[1].read && <PointUnread />}
               <MailTitle>{mails[1].title}</MailTitle>
             </TopLeftContent>
-            <SenderText>de {mails[1].sender}</SenderText>
+            <SenderText>from {mails[1].sender}</SenderText>
           </TitleAndSender>
           <MailContent numberOfLines={2}>
             <Text>{mails[1].content}</Text>

@@ -10,6 +10,6 @@ export enum WidgetSize {
 export type WidgetType = {
   size: 'BIG' | 'MEDIUM' | 'SMALL' | 'HEADER';
   icon?: React.ReactNode;
-  title: React.ReactNode;
+  title?: React.ReactNode;
   children?: React.ReactNode;
 };

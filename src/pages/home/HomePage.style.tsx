@@ -5,5 +5,7 @@ export const PageContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
 `;

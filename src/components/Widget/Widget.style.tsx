@@ -26,14 +26,19 @@ export const WidgetContainer = styled.View<{
 }>`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: ${({ size }) => WIDGET_SIZE[size].width};
   height: ${({ size }) => WIDGET_SIZE[size].height};
   padding: 0 20px;
   padding-top: 20px;
   border: 1px solid rgba(154, 151, 151, 0.2);
+  border-radius: 10px;
 `;
 
 export const WidgetTitle = styled.View`
   display: flex;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;

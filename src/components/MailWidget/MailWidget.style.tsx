@@ -17,7 +17,6 @@ export const TopContent = styled.View`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
 `;
 
 export const TopLeftContent = styled.View`
@@ -45,14 +44,14 @@ export const TopRightContent = styled.View`
 `;
 
 export const TextUnread = styled.Text`
-  font-size: 8px;
+  font-size: 10px;
   font-family: 'Rubik_Medium';
   font-weight: 600;
   color: #fafaff;
 `;
 
 export const MailTitle = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'Rubik_Medium';
   font-weight: 600;
   color: #1e1e1e;
@@ -67,7 +66,7 @@ export const PointUnread = styled.View`
 `;
 
 export const SenderText = styled.Text`
-  font-size: 11px;
+  font-size: 13px;
   font-family: 'Rubik_Light';
   font-weight: 400;
   color: #1e1e1e;
@@ -76,7 +75,7 @@ export const SenderText = styled.Text`
 export const MailContent = styled.Text`
   color: rgba(0, 0, 0, 0.4);
   font-family: 'Rubik_Light';
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
 `;
 
@@ -85,13 +84,15 @@ export const MailContainer = styled.View`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  padding: 0px 20px 10px 20px;
+  gap: 2px;
 `;
 
 export const MailsContainer = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 15px;
+  gap: 10px;
 `;
 
 export const TitleAndSender = styled.View`
