@@ -1,6 +1,6 @@
 import { useFonts } from '@expo-google-fonts/rubik';
 import React from 'react';
-import LoginScreen from './src/pages/LoginScreen';
+import LoginScreen from './src/pages/login/LoginScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({

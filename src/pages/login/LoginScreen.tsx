@@ -1,19 +1,18 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { Logo } from '../svg/Logo';
+import { TouchableOpacity } from 'react-native';
+import { Input } from '../../components/Input';
+import { LockIcon } from '../../svg/Lock';
+import { Logo } from '../../svg/Logo';
+import { UserIcon } from '../../svg/User';
 import {
   ConnectButton,
   ConnectButtonText,
   ConnexionContainer,
   CreditsContainer,
   GreyText,
-  InputContainer,
-  LoginInput,
   LoginPageContainer,
 } from './LoginScreen.style';
-import { UserIcon } from '../svg/User';
-import { LockIcon } from '../svg/Lock';
-import { GetEmployee, GetEmployeeImage, GetEmployees, Login, getLeaders, getMe } from '../api/api';
+import { GetEmployee, GetEmployeeImage, GetEmployees, Login, getLeaders, getMe } from '../../api/api';
 
 function LoginScreen() {
   const [email, setEmail] = React.useState<string>('');

@@ -7898,6 +7898,11 @@ synckit@^0.8.5:
     "@pkgr/utils" "^2.3.1"
     tslib "^2.5.0"
 
+tabler-icons-react-native@^2.30.0:
+  version "2.30.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-react-native/-/tabler-icons-react-native-2.30.0.tgz#a9d13ace56d82f91f81db20e9909940a51c54b92"
+  integrity sha512-Ry4XAFTUsi13dylQZMCHu3PORza3Dc2NGNvNUmaaxSKIx683GTSIc0Dtg/uEPX3ZOguO1SSq1uIqX+0pL8dsig==
+
 tar@^6.0.2, tar@^6.0.5:
   version "6.1.15"
   resolved "https://registry.npmjs.org/tar/-/tar-6.1.15.tgz"
