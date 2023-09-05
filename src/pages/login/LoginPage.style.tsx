@@ -7,6 +7,7 @@ export const LoginPageContainer = styled.View`
   justify-content: center;
   gap: 230px;
   padding-top: 120px;
+  background-color: #fffafa;
 `;
 
 export const ConnexionContainer = styled.View`
@@ -45,4 +46,13 @@ export const CreditsContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const InputContainer = styled.View`
+  display: flex;
+  flex-direction: clolumn;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  gap: 35px;
 `;
