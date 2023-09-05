@@ -1,28 +1,33 @@
 import styled from 'styled-components/native';
 import { WidgetSize } from '../../types/widgetType';
 
-const WIDGET_SIZE: { [key in WidgetSize]: { width: string; height: string } } =
-  {
-    [WidgetSize.BIG]: {
-      width: '100%',
-      height: '200px',
-    },
-    [WidgetSize.MEDIUM]: {
-      width: '100%',
-      height: '80px',
-    },
-    [WidgetSize.SMALL]: {
-      width: '100%',
-      height: '47px',
-    },
-    [WidgetSize.HEADER]: {
-      width: '150px',
-      height: '150px',
-    },
-  };
+const WIDGET_SIZE: {
+  [key in WidgetSize]: { width: string; height: string; padding: string };
+} = {
+  [WidgetSize.LARGE]: {
+    width: '100%',
+    height: '200px',
+    padding: '20px',
+  },
+  [WidgetSize.MEDIUM]: {
+    width: '100%',
+    height: '80px',
+    padding: '10px 20px',
+  },
+  [WidgetSize.SMALL]: {
+    width: '150px',
+    height: '150px',
+    padding: '10px',
+  },
+  [WidgetSize.HEADER]: {
+    width: '100%',
+    height: '47px',
+    padding: '15px',
+  },
+};
 
 export const WidgetContainer = styled.View<{
-  size: 'BIG' | 'MEDIUM' | 'SMALL' | 'HEADER';
+  size: 'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER';
 }>`
   display: flex;
   flex-direction: column;
@@ -30,8 +35,9 @@ export const WidgetContainer = styled.View<{
   justify-content: flex-start;
   width: ${({ size }) => WIDGET_SIZE[size].width};
   height: ${({ size }) => WIDGET_SIZE[size].height};
-  padding: 0 20px;
-  padding-top: 20px;
+  max-width: ${({ size }) => WIDGET_SIZE[size].width};
+  max-height: ${({ size }) => WIDGET_SIZE[size].height};
+  padding: ${({ size }) => WIDGET_SIZE[size].padding};
   border: 1px solid rgba(154, 151, 151, 0.2);
   border-radius: 10px;
 `;

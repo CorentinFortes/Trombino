@@ -1,6 +1,6 @@
 import React from 'react';
 import { WidgetType } from '../../types/widgetType';
-import { WidgetContainer, WidgetTitle } from './Widget.style';
+import { WidgetContainer } from './Widget.style';
 
 const WidgetComponent: React.FC<WidgetType> = ({
   size,
@@ -11,10 +11,6 @@ const WidgetComponent: React.FC<WidgetType> = ({
 }) => {
   return (
     <WidgetContainer size={size} {...props}>
-      <WidgetTitle>
-        {icon}
-        {title}
-      </WidgetTitle>
       {children}
     </WidgetContainer>
   );

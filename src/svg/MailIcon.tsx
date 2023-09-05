@@ -13,5 +13,5 @@ type SvgProps = {
 };
 
 export const MailIcon: React.FC<SvgProps> = ({ width, height }) => {
-  return <SvgXml xml={xml} width={width ?? 28} height={height ?? 20} />;
+  return <SvgXml xml={xml} width={width ?? 24} height={height ?? 20} />;
 };

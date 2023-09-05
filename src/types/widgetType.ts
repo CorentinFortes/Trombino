@@ -1,14 +1,14 @@
 import React from 'react';
 
 export enum WidgetSize {
-  BIG = 'BIG',
+  LARGE = 'LARGE',
   MEDIUM = 'MEDIUM',
   SMALL = 'SMALL',
   HEADER = 'HEADER',
 }
 
 export type WidgetType = {
-  size: 'BIG' | 'MEDIUM' | 'SMALL' | 'HEADER';
+  size: 'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER';
   icon?: React.ReactNode;
   title?: React.ReactNode;
   children?: React.ReactNode;

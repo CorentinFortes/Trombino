@@ -8,7 +8,10 @@ export const HomePage: React.FC = () => {
   return (
     <PageContainer>
       <Text>Bhahaha</Text>
-      <MailWidget nbUnread={1} mails={tmpMail} size="BIG" />
+      <MailWidget nbUnread={1} mails={tmpMail} size="LARGE" />
+      <MailWidget nbUnread={1} mails={tmpMail} size="HEADER" />
+      <MailWidget nbUnread={1} mails={tmpMail} size="SMALL" />
+      <MailWidget nbUnread={1} mails={tmpMail} size="MEDIUM" />
     </PageContainer>
   );
 };
