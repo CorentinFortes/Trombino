@@ -7,11 +7,6 @@ const xml = `
 </svg>
 `;
 
-type SvgProps = {
-  width?: number;
-  height?: number;
-};
-
-export const UserIcon: React.FC<SvgProps> = ({ width, height }) => {
-  return <SvgXml xml={xml} width={width ? width : 12} height={height} />;
+export const UserIcon = () => {
+  return <SvgXml xml={xml} width="12" height="18" />;
 };
