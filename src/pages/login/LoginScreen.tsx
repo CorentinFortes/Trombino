@@ -1,36 +1,25 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { Logo } from '../svg/Logo';
+import { TouchableOpacity } from 'react-native';
+import { Input } from '../../components/Input';
+import { LockIcon } from '../../svg/Lock';
+import { Logo } from '../../svg/Logo';
+import { UserIcon } from '../../svg/User';
 import {
   ConnectButton,
   ConnectButtonText,
   ConnexionContainer,
   CreditsContainer,
   GreyText,
-  InputContainer,
-  LoginInput,
   LoginPageContainer,
 } from './LoginScreen.style';
-import { UserIcon } from '../svg/User';
-import { LockIcon } from '../svg/Lock';
 
 function LoginScreen() {
   return (
     <LoginPageContainer>
       <Logo />
       <ConnexionContainer>
-        <InputContainer>
-          <UserIcon />
-          <LoginInput placeholder="E-mail" autoCapitalize="none" />
-        </InputContainer>
-        <InputContainer>
-          <LockIcon />
-          <LoginInput
-            placeholder="Password"
-            secureTextEntry={true}
-            autoCapitalize="none"
-          />
-        </InputContainer>
+        <Input icon={<UserIcon />} type="text" placeholder="E-mail" />
+        <Input icon={<LockIcon />} type="password" placeholder="Password" />
         <ConnectButton>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
