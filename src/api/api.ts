@@ -88,7 +88,7 @@ export const getLeaders = async (token: string) => {
         'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
       },
     });
-    console.log("ALALALA");
+    console.log('ALALALA');
     console.log(res.data);
     const leaders: Employee[] = res.data;
     console.log(leaders);
@@ -115,20 +115,13 @@ export const GetEmployee = async (token: string, id: number) => {
   }
 };
 
-export const GetEmployeeImage = async (token: string, id: number) => {
-  try {
-    const res = await axios.get(
-      `https://masurao.fr/api/employees/${id}/image`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
-        },
-      },
-    );
-    console.log(res.data);
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
+export const GetEmployeeImage = (token: string, id: number) => {
+  const res = {
+    uri: `https://masurao.fr/api/employees/${id}/image`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+    },
+  };
+  return res;
 };
