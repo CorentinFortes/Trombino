@@ -15,10 +15,28 @@ import {
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
+import {
+  GetEmployee,
+  GetEmployeeImage,
+  GetEmployees,
+  Login,
+  getLeaders,
+  getMe,
+} from '../../api/api';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
 export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
+  const [email, setEmail] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
+  const [token, setToken] = React.useState<string>('');
+
+  function handleLogin(email: string, password: string) {
+    Login(email, password).then((token) => {
+      setToken(token!);
+    });
+  }
+
   return (
     <LoginPageContainer>
       <Logo />
@@ -27,6 +45,7 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
           <Input icon={<UserIcon />} type="text" placeholder="E-mail" />
           <Input icon={<LockIcon />} type="password" placeholder="Password" />
         </InputContainer>
+        {/* <ConnectButton onPress={() => handleLogin(email, password)}> */}
         <ConnectButton onPress={() => navigation.navigate('Home')}>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
