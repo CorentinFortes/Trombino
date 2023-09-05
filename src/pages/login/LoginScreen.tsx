@@ -12,7 +12,14 @@ import {
   GreyText,
   LoginPageContainer,
 } from './LoginScreen.style';
-import { GetEmployee, GetEmployeeImage, GetEmployees, Login, getLeaders, getMe } from '../../api/api';
+import {
+  GetEmployee,
+  GetEmployeeImage,
+  GetEmployees,
+  Login,
+  getLeaders,
+  getMe,
+} from '../../api/api';
 
 function LoginScreen() {
   const [email, setEmail] = React.useState<string>('');
@@ -29,27 +36,20 @@ function LoginScreen() {
     <LoginPageContainer>
       <Logo />
       <ConnexionContainer>
-        <InputContainer>
-          <UserIcon />
-          <LoginInput
-            placeholder="E-mail"
-            autoCapitalize="none"
-            onChangeText={setEmail}
-          />
-        </InputContainer>
-        <InputContainer>
-          <LockIcon />
-          <LoginInput
-            placeholder="Password"
-            secureTextEntry={true}
-            autoCapitalize="none"
-            onChangeText={setPassword}
-          />
-        </InputContainer>
-        <ConnectButton>
-          <ConnectButtonText onPress={() => handleLogin(email, password)}>
-            Connect
-          </ConnectButtonText>
+        <Input
+          icon={<UserIcon />}
+          type="text"
+          placeholder="E-mail"
+          onChangeText={setEmail}
+        />
+        <Input
+          icon={<LockIcon />}
+          type="password"
+          placeholder="Password"
+          onChangeText={setPassword}
+        />
+        <ConnectButton onPress={() => handleLogin(email, password)}>
+          <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
         <TouchableOpacity>
           <GreyText>Forgot password ?</GreyText>

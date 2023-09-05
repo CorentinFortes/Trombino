@@ -6993,7 +6993,7 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-native-svg@13.9.0:
+react-native-svg@>=13.x, react-native-svg@13.9.0:
   version "13.9.0"
   resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-13.9.0.tgz"
   integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
@@ -7056,7 +7056,7 @@ react-shallow-renderer@^16.15.0:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
-react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, "react@>= 16.8.0", react@18.2.0:
+react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, "react@>= 16.8.0", react@>=18.x, react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -7900,7 +7900,7 @@ synckit@^0.8.5:
 
 tabler-icons-react-native@^2.30.0:
   version "2.30.0"
-  resolved "https://registry.yarnpkg.com/tabler-icons-react-native/-/tabler-icons-react-native-2.30.0.tgz#a9d13ace56d82f91f81db20e9909940a51c54b92"
+  resolved "https://registry.npmjs.org/tabler-icons-react-native/-/tabler-icons-react-native-2.30.0.tgz"
   integrity sha512-Ry4XAFTUsi13dylQZMCHu3PORza3Dc2NGNvNUmaaxSKIx683GTSIc0Dtg/uEPX3ZOguO1SSq1uIqX+0pL8dsig==
 
 tar@^6.0.2, tar@^6.0.5:

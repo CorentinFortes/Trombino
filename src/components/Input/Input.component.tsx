@@ -6,6 +6,7 @@ type InputProps = {
   type: 'text' | 'password';
   value?: string;
   placeholder?: string;
+  onChangeText?: (text: string) => void;
 };
 
 const InputComponent: React.FC<InputProps> = ({
@@ -13,6 +14,7 @@ const InputComponent: React.FC<InputProps> = ({
   type,
   value,
   placeholder,
+  onChangeText,
 }) => {
   return (
     <InputContainer>
@@ -22,6 +24,7 @@ const InputComponent: React.FC<InputProps> = ({
         autoCapitalize="none"
         secureTextEntry={type === 'password'}
         placeholder={placeholder}
+        onChangeText={onChangeText}
       />
     </InputContainer>
   );
