@@ -9,3 +9,4 @@ export type Employee = {
   subordinates: number[];
   image: string;
 };
+

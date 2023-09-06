@@ -1,5 +1,16 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import React from 'react';
+import { ActivityIndicator, Image } from 'react-native';
+import {
+  Employee,
+  EmployeeDetail,
+  GetEmployeeImage,
+  GetEmployees,
+  getMe,
+} from '../../api/api';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
+import { LogoIcon } from '../../svg/LogoIcon';
+import { PageContainer } from '../home/HomePage.style';
 import {
   ContactButton,
   ContactButtonText,
@@ -14,22 +25,10 @@ import {
   TopContainer,
   WorkText,
 } from './ProfilePage.style';
-import { LogoIcon } from '../../svg/LogoIcon';
-import React from 'react';
-import {
-  Employee,
-  EmployeeDetail,
-  GetEmployeeImage,
-  GetEmployees,
-  getMe,
-} from '../../api/api';
-import { ActivityIndicator, Image } from 'react-native';
-import { PageContainer } from '../home/HomePage.style';
-import { TrominoWidget } from '../../components/TrombinoscopeWidget/TrombinoscopeWidget';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
-export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
+export const ProfilePage: React.FC<ProfileProps> = ({ route }) => {
   const token = route.params.token;
   const [me, setMe] = React.useState<EmployeeDetail>();
   const [employees, setEmployees] = React.useState<Employee[]>();

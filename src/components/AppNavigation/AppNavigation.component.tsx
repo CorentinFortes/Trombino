@@ -6,7 +6,7 @@ import { LoginPage, HomePage } from '../../pages';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 
 export type RootStackParamList = {
-  Home: undefined;
+  Home: { token: string };
   Login: undefined;
   Settings: undefined;
   Profile: {

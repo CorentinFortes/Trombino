@@ -1,44 +1,124 @@
+import { AntDesign } from '@expo/vector-icons';
+import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { WeatherWidget } from '../../components/WeatherWidget';
 import {
-  FavoritesContent,
-  PageContainer,
-  FavoritesWrapper,
-} from './HomePage.style';
+  Employee,
+  EmployeeDetail,
+  GetEmployeeImage,
+  GetEmployees,
+  getMe,
+} from '../../api/api';
+import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { MailWidget } from '../../components/MailWidget';
+import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
+import { WeatherWidget } from '../../components/WeatherWidget';
+import { SmallLogo } from '../../svg/SmallLogo';
 import { tmpMail } from '../../utils/mock/mail';
-import { ScrollView } from 'react-native';
+import {
+  ContentContainer,
+  FavoritesContent,
+  FavoritesWrapper,
+  HeaderProfileContainer,
+  HeaderProfileLeftWrapper,
+  HeaderText,
+  HorizontalScrollView,
+  PageContainer,
+  ProfileImage,
+  ScrollContent,
+  SectionContainer,
+  SectionTitle,
+} from './HomePage.style';
 
-export const HomePage: React.FC = () => {
+type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
+
+export const HomePage: React.FC<HomePageProps> = ({ route }) => {
+  const token = route.params.token;
+  const [me, setMe] = React.useState<EmployeeDetail>();
+  const [employees, setEmployees] = React.useState<Employee[]>();
+
+  React.useEffect(() => {
+    if (token) {
+      getMe(token).then((me) => {
+        if (me !== undefined) {
+          me.surname = me.surname.toUpperCase();
+        }
+        setMe(me);
+      });
+      GetEmployees(token).then((employees) => {
+        if (employees !== undefined) {
+          setEmployees(employees!);
+        }
+      });
+    }
+  }, [token]);
   return (
     <PageContainer>
-      <FavoritesContent>
-        <ScrollView
-          contentContainerStyle={{
-            justifyContent: 'space-evenly',
-            rowGap: 10,
-          }}
-          horizontal
-          alwaysBounceHorizontal={true}
-          bounces={true}
-          decelerationRate="fast"
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={200}
-          pagingEnabled={true}
-        >
-          <FavoritesWrapper>
+      <SmallLogo />
+      {me && (
+        <HeaderProfileContainer>
+          <HeaderProfileLeftWrapper>
+            <ProfileImage source={GetEmployeeImage(token, me.id)} />
+            <HeaderText>{me.name}</HeaderText>
+          </HeaderProfileLeftWrapper>
+          <HeaderText>
+            <AntDesign
+              name="arrowright"
+              size={32}
+              color="#1E1E1E"
+              onPress={() => console.log('tete')}
+            />
+          </HeaderText>
+        </HeaderProfileContainer>
+      )}
+      <ScrollContent>
+        <ContentContainer>
+          <SectionContainer>
+            <SectionTitle>Your trombinoscope</SectionTitle>
+            <TrombinoscopeWidget
+              size="LARGE"
+              token={token}
+              employees={employees}
+            />
+          </SectionContainer>
+          <SectionContainer>
+            <SectionTitle>Must-haves</SectionTitle>
+            <FavoritesContent>
+              <HorizontalScrollView
+                horizontal
+                alwaysBounceHorizontal={true}
+                bounces={true}
+                decelerationRate="fast"
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={200}
+                pagingEnabled={true}
+              >
+                <FavoritesWrapper>
+                  <WeatherWidget
+                    size="SMALL"
+                    localization="Marseille, FR"
+                    weather="Clear"
+                    temperature={20}
+                    description="Sunny"
+                    night={false}
+                  />
+                  <MailWidget mails={tmpMail} nbUnread={1} size="SMALL" />
+                </FavoritesWrapper>
+              </HorizontalScrollView>
+            </FavoritesContent>
+          </SectionContainer>
+          <SectionContainer>
+            <SectionTitle>Your Widgets</SectionTitle>
             <WeatherWidget
-              size="SMALL"
+              size="HEADER"
               localization="Marseille, FR"
-              weather="Clear"
               temperature={20}
+              weather="Clear"
               description="Sunny"
               night={false}
             />
-            <MailWidget mails={tmpMail} nbUnread={1} size="SMALL" />
-          </FavoritesWrapper>
-        </ScrollView>
-      </FavoritesContent>
+          </SectionContainer>
+        </ContentContainer>
+      </ScrollContent>
     </PageContainer>
   );
 };
