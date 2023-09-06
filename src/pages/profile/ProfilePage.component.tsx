@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { ActivityIndicator, Image } from 'react-native';
+import { ActivityIndicator, Image, Linking } from 'react-native';
 import {
   Employee,
   EmployeeDetail,
@@ -87,7 +87,7 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route }) => {
             <RepInfoText>{me?.birth_date}</RepInfoText>
           </LineInfoContainer>
         </ProfileInfoContainer>
-        <ContactButton>
+        <ContactButton onPress={() => Linking.openURL('mailto:' + me?.email)}>
           <ContactButtonText>Contact</ContactButtonText>
         </ContactButton>
       </ProfilePageContainer>
