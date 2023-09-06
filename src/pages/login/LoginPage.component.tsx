@@ -27,8 +27,8 @@ import {
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
 export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
-  const [email, setEmail] = React.useState<string>('');
-  const [password, setPassword] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('oliver.lewis@masurao.jp');
+  const [password, setPassword] = React.useState<string>('password');
   const [token, setToken] = React.useState<string>('');
 
   function handleLogin(email: string, password: string) {
@@ -37,16 +37,33 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
     });
   }
 
+  React.useEffect(() => {
+    if (token) {
+      navigation.navigate('Profile', { token });
+    }
+  }, [token]);
+
   return (
     <LoginPageContainer>
       <Logo />
       <ConnexionContainer>
         <InputContainer>
-          <Input icon={<UserIcon />} type="text" placeholder="E-mail" />
-          <Input icon={<LockIcon />} type="password" placeholder="Password" />
+          <Input
+            icon={<UserIcon />}
+            type="text"
+            placeholder="E-mail"
+            onChangeText={setEmail}
+            value={email}
+          />
+          <Input
+            icon={<LockIcon />}
+            type="password"
+            placeholder="Password"
+            onChangeText={setPassword}
+            value={password}
+          />
         </InputContainer>
-        {/* <ConnectButton onPress={() => handleLogin(email, password)}> */}
-        <ConnectButton onPress={() => navigation.navigate('Home')}>
+        <ConnectButton onPress={() => handleLogin(email, password)}>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
         <TouchableOpacity>
