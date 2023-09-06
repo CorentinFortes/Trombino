@@ -23,6 +23,7 @@ import {
   ContactButtonText,
   ImageContainer,
   LineInfoContainer,
+  LogoutButton,
   NameText,
   NameWorkContainer,
   ProfileInfoContainer,
@@ -33,6 +34,7 @@ import {
   WorkText,
 } from './ProfilePage.style';
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
@@ -117,6 +119,18 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
         <ContactButton onPress={() => Linking.openURL('mailto:' + me?.email)}>
           <ContactButtonText>Contact</ContactButtonText>
         </ContactButton>
+        {route.params.id === undefined && (
+          <LogoutButton
+            onPress={() => {
+              AsyncStorage.removeItem('token');
+              navigation.navigate('Login');
+            }}
+          >
+            <ContactButtonText style={{ color: '#1E1E1E' }}>
+              Log out
+            </ContactButtonText>
+          </LogoutButton>
+        )}
       </ProfilePageContainer>
     </PageContainer>
   );
