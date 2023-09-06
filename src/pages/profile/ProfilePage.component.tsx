@@ -16,15 +16,23 @@ import {
 } from './ProfilePage.style';
 import { LogoIcon } from '../../svg/LogoIcon';
 import React from 'react';
-import { EmployeeDetail, GetEmployeeImage, getMe } from '../../api/api';
+import {
+  Employee,
+  EmployeeDetail,
+  GetEmployeeImage,
+  GetEmployees,
+  getMe,
+} from '../../api/api';
 import { ActivityIndicator, Image } from 'react-native';
 import { PageContainer } from '../home/HomePage.style';
+import { TrominoWidget } from '../../components/TrombinoscopeWidget/TrombinoscopeWidget';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
 export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
   const token = route.params.token;
   const [me, setMe] = React.useState<EmployeeDetail>();
+  const [employees, setEmployees] = React.useState<Employee[]>();
 
   React.useEffect(() => {
     if (token) {
@@ -32,8 +40,12 @@ export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
         if (me !== undefined) {
           me.surname = me.surname.toUpperCase();
         }
-        console.log(me);
         setMe(me);
+      });
+      GetEmployees(token).then((employees) => {
+        if (employees !== undefined) {
+          setEmployees(employees!);
+        }
       });
     }
   }, [token]);
