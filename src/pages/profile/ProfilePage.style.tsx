@@ -15,7 +15,7 @@ export const ProfilePageContainer = styled.View`
   justify-content: space-between;
   height: 90%;
   width: 100%;
-  padding-top: 100px;
+  padding-top: 50px;
   background-color: #fffafa;
   margin-bottom: 40%;
 `;
@@ -105,4 +105,8 @@ export const ContactButtonText = styled.Text`
   font-family: 'Rubik_Medium';
   font-weight: 500;
   padding: 8px 33px;
+`;
+
+export const ArrowButton = styled.TouchableOpacity`
+  align-self: flex-start;
 `;

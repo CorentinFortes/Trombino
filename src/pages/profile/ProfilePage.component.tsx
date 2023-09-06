@@ -18,6 +18,7 @@ import { RootStackParamList } from '../../components/AppNavigation/AppNavigation
 import { LogoIcon } from '../../svg/LogoIcon';
 import { PageContainer } from '../home/HomePage.style';
 import {
+  ArrowButton,
   ContactButton,
   ContactButtonText,
   ImageContainer,
@@ -68,14 +69,16 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
   return (
     <PageContainer>
       <ProfilePageContainer>
-        {route.params.id !== undefined && (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Trombinoscope', { token })}
-            style={{ alignSelf: 'flex-start' }}
-          >
-            <AntDesign name="arrowleft" size={24} color="black" />
-          </TouchableOpacity>
-        )}
+        <ArrowButton
+          onPress={() =>
+            navigation.navigate(
+              route.params.id === undefined ? 'Home' : 'Trombinoscope',
+              { token },
+            )
+          }
+        >
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </ArrowButton>
         <TopContainer>
           <LogoIcon />
           {me !== undefined ? (

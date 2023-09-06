@@ -35,7 +35,7 @@ export const TrombinoscopePage: React.FC<TrombinoscopeProps> = ({
 
   return (
     <PageContainer>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home', { token })}>
         <AntDesign name="arrowleft" size={24} color="black" />
       </TouchableOpacity>
       <TopContent>

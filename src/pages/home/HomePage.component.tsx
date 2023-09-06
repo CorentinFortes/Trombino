@@ -31,7 +31,7 @@ import {
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
-export const HomePage: React.FC<HomePageProps> = ({ route }) => {
+export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
   const token = route.params.token;
   const [me, setMe] = React.useState<EmployeeDetail>();
   const [employees, setEmployees] = React.useState<Employee[]>();
@@ -65,7 +65,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route }) => {
               name="arrowright"
               size={32}
               color="#1E1E1E"
-              onPress={() => console.log('tete')}
+              onPress={() => navigation.navigate('Profile', { token })}
             />
           </HeaderText>
         </HeaderProfileContainer>
@@ -78,6 +78,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route }) => {
               size="LARGE"
               token={token}
               employees={employees}
+              onPress={() => navigation.navigate('Trombinoscope', { token })}
             />
           </SectionContainer>
           <SectionContainer>
