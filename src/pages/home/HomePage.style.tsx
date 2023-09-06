@@ -41,7 +41,6 @@ export const FavoritesContent = styled.View`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: fit-content;
   padding: 5px 0;
   gap: 10px;
 `;
@@ -60,7 +59,7 @@ export const FavoritesWrapper = styled.View`
 export const ProfileImage = styled.Image`
   width: 40px;
   height: 40px;
-  border-radius: 100%;
+  border-radius: 100px;
 `;
 
 export const ScrollContent = styled.ScrollView`

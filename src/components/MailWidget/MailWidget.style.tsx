@@ -80,7 +80,7 @@ export const SmallMailTitle = styled.Text`
 export const PointUnread = styled.View`
   width: 5px;
   height: 5px;
-  border-radius: 100%;
+  border-radius: 100px;
   color: #f13838;
   background-color: #f13838;
 `;

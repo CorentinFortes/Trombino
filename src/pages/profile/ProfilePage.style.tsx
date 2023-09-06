@@ -35,7 +35,7 @@ export const ImageContainer = styled.View`
   justify-content: center;
   width: 205px;
   height: 205px;
-  border-radius: 100%;
+  border-radius: 100px;
   border: 5px solid rgba(154, 151, 151, 0.4);
 `;
 
