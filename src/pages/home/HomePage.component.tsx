@@ -28,6 +28,9 @@ import {
   SectionContainer,
   SectionTitle,
 } from './HomePage.style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WeatherData, getWeather } from '../../api/weather';
+import { WeatherModeType } from '../../types/Widget/weather';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -35,6 +38,9 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
   const token = route.params.token;
   const [me, setMe] = React.useState<EmployeeDetail>();
   const [employees, setEmployees] = React.useState<Employee[]>();
+  const [lat, setLat] = React.useState<number>();
+  const [long, setLong] = React.useState<number>();
+  const [weather, setWeather] = React.useState<WeatherData>();
 
   React.useEffect(() => {
     if (token) {
@@ -51,6 +57,30 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
       });
     }
   }, [token]);
+
+  React.useEffect(() => {
+    AsyncStorage.getItem('lat').then((res) => {
+      if (res !== null) {
+        setLat(parseFloat(res));
+      }
+    });
+    AsyncStorage.getItem('long').then((res) => {
+      if (res !== null) {
+        setLong(parseFloat(res));
+      }
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (lat && long) {
+      getWeather(lat, long).then((weather) => {
+        if (weather !== undefined) {
+          setWeather(weather);
+        }
+      });
+    }
+  }, [lat, long]);
+
   return (
     <PageContainer>
       <SmallLogo />
@@ -96,10 +126,22 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 <FavoritesWrapper>
                   <WeatherWidget
                     size="SMALL"
-                    localization="Marseille, FR"
-                    weather="Clear"
-                    temperature={20}
-                    description="Sunny"
+                    localization={
+                      weather !== undefined
+                        ? weather.city + ', ' + weather.country
+                        : 'Marseille, FR'
+                    }
+                    weather={
+                      weather !== undefined
+                        ? (weather.main as WeatherModeType)
+                        : 'Clear'
+                    }
+                    temperature={
+                      weather !== undefined ? weather.temperature : 20
+                    }
+                    description={
+                      weather !== undefined ? weather.description : 'Sunny'
+                    }
                     night={false}
                   />
                   <MailWidget mails={tmpMail} nbUnread={1} size="SMALL" />
@@ -111,10 +153,20 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
             <SectionTitle>Your Widgets</SectionTitle>
             <WeatherWidget
               size="HEADER"
-              localization="Marseille, FR"
-              temperature={20}
-              weather="Clear"
-              description="Sunny"
+              localization={
+                weather !== undefined
+                  ? weather.city + ', ' + weather.country
+                  : 'Marseille, FR'
+              }
+              weather={
+                weather !== undefined
+                  ? (weather.main as WeatherModeType)
+                  : 'Clear'
+              }
+              temperature={weather !== undefined ? weather.temperature : 20}
+              description={
+                weather !== undefined ? weather.description : 'Sunny'
+              }
               night={false}
             />
           </SectionContainer>

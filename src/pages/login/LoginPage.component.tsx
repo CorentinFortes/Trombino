@@ -16,6 +16,8 @@ import {
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
+import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
@@ -23,6 +25,7 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
   const [email, setEmail] = React.useState<string>('oliver.lewis@masurao.jp');
   const [password, setPassword] = React.useState<string>('password');
   const [token, setToken] = React.useState<string>('');
+  const [location, setLocation] = React.useState<Location.LocationObject>();
 
   function handleLogin(email: string, password: string) {
     Login(email, password).then((token) => {
@@ -35,6 +38,31 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
       navigation.navigate('Home', { token });
     }
   }, [token]);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Permission to access location was denied');
+          return;
+        }
+
+        const locationData = await Location.getCurrentPositionAsync({});
+        setLocation(locationData);
+        AsyncStorage.setItem(
+          'lat',
+          JSON.stringify(locationData.coords.latitude),
+        );
+        AsyncStorage.setItem(
+          'long',
+          JSON.stringify(locationData.coords.longitude),
+        );
+      } catch (error) {
+        console.error('Error getting location:', error);
+      }
+    })();
+  }, []);
 
   return (
     <LoginPageContainer>
