@@ -23,7 +23,7 @@ import {
   GetEmployees,
   getMe,
 } from '../../api/api';
-import { ActivityIndicator, Image } from 'react-native';
+import { ActivityIndicator, Image, Linking } from 'react-native';
 import { PageContainer } from '../home/HomePage.style';
 import { TrominoWidget } from '../../components/TrombinoscopeWidget/TrombinoscopeWidget';
 
@@ -88,7 +88,7 @@ export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
             <RepInfoText>{me?.birth_date}</RepInfoText>
           </LineInfoContainer>
         </ProfileInfoContainer>
-        <ContactButton>
+        <ContactButton onPress={() => Linking.openURL('mailto:' + me?.email)}>
           <ContactButtonText>Contact</ContactButtonText>
         </ContactButton>
       </ProfilePageContainer>
