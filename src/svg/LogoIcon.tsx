@@ -1,0 +1,12 @@
+import React from 'react';
+import { SvgXml } from 'react-native-svg';
+
+const xml = `
+<svg width="37" height="32" viewBox="0 0 37 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.899902 0H11.5666V7.46667H0.899902V0ZM14.7666 0H25.4332H36.0999V7.46667H25.4332H22.2332V21.3333V32H14.7666V21.3333V7.46667V0Z" fill="#1E1E1E"/>
+</svg>
+`;
+
+export const LogoIcon = () => {
+  return <SvgXml xml={xml} width="37" height="32" />;
+};
