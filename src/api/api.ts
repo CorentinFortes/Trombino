@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface Token {
   access_token: string;
@@ -41,6 +42,7 @@ export const Login = async (email: string, password: string) => {
       },
     );
     const tokenRes: Token = res.data;
+    AsyncStorage.setItem('token', tokenRes.access_token);
     return tokenRes.access_token;
   } catch (error) {
     console.log(error);
@@ -56,7 +58,6 @@ export const GetEmployees = async (token: string) => {
       },
     });
     const employees: Employee[] = res.data;
-    console.log(employees);
     return employees;
   } catch (error) {
     console.log(error);
@@ -71,9 +72,7 @@ export const getMe = async (token: string) => {
         'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
       },
     });
-    console.log(res.data);
     const me: EmployeeDetail = res.data;
-    console.log(me);
     return me;
   } catch (error) {
     console.log(error);
@@ -88,10 +87,7 @@ export const getLeaders = async (token: string) => {
         'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
       },
     });
-    console.log('ALALALA');
-    console.log(res.data);
     const leaders: Employee[] = res.data;
-    console.log(leaders);
     return leaders;
   } catch (error) {
     console.log(error);
@@ -106,9 +102,7 @@ export const GetEmployee = async (token: string, id: number) => {
         'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
       },
     });
-    console.log(res.data);
     const employee: EmployeeDetail = res.data;
-    console.log(employee);
     return employee;
   } catch (error) {
     console.log(error);

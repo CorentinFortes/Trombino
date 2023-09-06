@@ -96,6 +96,14 @@ export const RepInfoText = styled.Text`
 export const ContactButton = styled.TouchableOpacity`
   background-color: #1e1e1e;
   border-radius: 10px;
+  margin-top: 10%;
+`;
+
+export const LogoutButton = styled.TouchableOpacity`
+  background-color: #fffafa;
+  border-radius: 10px;
+  border: 1px solid #1e1e1e;
+  margin-top: 20%;
 `;
 
 export const ContactButtonText = styled.Text`
