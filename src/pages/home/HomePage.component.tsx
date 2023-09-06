@@ -1,4 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import {
@@ -8,11 +9,14 @@ import {
   GetEmployees,
   getMe,
 } from '../../api/api';
+import { WeatherData, getWeather } from '../../api/weather';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { MailWidget } from '../../components/MailWidget';
 import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SmallLogo } from '../../svg/SmallLogo';
+import { WeatherModeType } from '../../types/Widget/weather';
+import { CustomWidgetProps } from '../../types/widgetType';
 import { tmpMail } from '../../utils/mock/mail';
 import {
   ContentContainer,
@@ -28,9 +32,7 @@ import {
   SectionContainer,
   SectionTitle,
 } from './HomePage.style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { WeatherData, getWeather } from '../../api/weather';
-import { WeatherModeType } from '../../types/Widget/weather';
+import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -41,6 +43,9 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
   const [lat, setLat] = React.useState<number>();
   const [long, setLong] = React.useState<number>();
   const [weather, setWeather] = React.useState<WeatherData>();
+  const [customWidgets, setCustomWidgets] = React.useState<CustomWidgetProps[]>(
+    [],
+  );
 
   React.useEffect(() => {
     if (token) {
@@ -80,6 +85,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
       });
     }
   }, [lat, long]);
+
+  console.log('custom widgets', customWidgets);
 
   return (
     <PageContainer>
@@ -163,23 +170,47 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
           </SectionContainer>
           <SectionContainer>
             <SectionTitle>Your Widgets</SectionTitle>
-            <WeatherWidget
-              size="HEADER"
-              localization={
-                weather !== undefined
-                  ? weather.city + ', ' + weather.country
-                  : 'Marseille, FR'
-              }
-              weather={
-                weather !== undefined
-                  ? (weather.main as WeatherModeType)
-                  : 'Clear'
-              }
-              temperature={weather !== undefined ? weather.temperature : 20}
-              description={
-                weather !== undefined ? weather.description : 'Sunny'
-              }
-              night={false}
+            {customWidgets.map((widget) =>
+              widget.widget === 'Mail' ? (
+                <MailWidget
+                  key={widget.id}
+                  nbUnread={1}
+                  mails={tmpMail}
+                  size={widget.size}
+                />
+              ) : widget.widget === 'Trombino' ? (
+                <TrombinoscopeWidget
+                  size={widget.size}
+                  token={token}
+                  employees={employees}
+                  onPress={() =>
+                    navigation.navigate('Trombinoscope', { token })
+                  }
+                />
+              ) : widget.widget === 'Weather' ? (
+                <WeatherWidget
+                  size={widget.size}
+                  localization={
+                    weather !== undefined
+                      ? weather.city + ', ' + weather.country
+                      : 'Marseille, FR'
+                  }
+                  weather={
+                    weather !== undefined
+                      ? (weather.main as WeatherModeType)
+                      : 'Clear'
+                  }
+                  temperature={weather !== undefined ? weather.temperature : 20}
+                  description={
+                    weather !== undefined ? weather.description : 'Sunny'
+                  }
+                  night={false}
+                />
+              ) : null,
+            )}
+            <AddWidget
+              customWidgets={customWidgets}
+              setCustomWidgets={setCustomWidgets}
             />
           </SectionContainer>
         </ContentContainer>

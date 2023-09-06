@@ -108,6 +108,7 @@ export const LocalizationText = styled.Text<{
     size === 'large' ? '16px' : size === 'medium' ? '14px' : '12px'};
   color: ${({ color }) => color};
   font-family: 'Rubik_SemiBold';
+  ${({ size }) => size === 'small' && 'max-width: 105px'};
 `;
 
 export const WeatherText = styled.Text<{

@@ -139,12 +139,12 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
                     size={24}
                     color={getTextColor()}
                   />
-                  <WeatherText color={getTextColor()} size="medium">
+                  <WeatherText color={getTextColor()} size="small">
                     {description}
                   </WeatherText>
                 </InfoContent>
               </HeaderLeftWrapper>
-              <LocalizationText color={getTextColor()} size="large">
+              <LocalizationText color={getTextColor()} size="medium">
                 {localization}
               </LocalizationText>
             </HeaderContent>
@@ -183,7 +183,11 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
                     size={24}
                     color={getTextColor()}
                   />
-                  <LocalizationText color={getTextColor()} size="medium">
+                  <LocalizationText
+                    color={getTextColor()}
+                    size="small"
+                    numberOfLines={1}
+                  >
                     {localization}
                   </LocalizationText>
                 </InfoContent>

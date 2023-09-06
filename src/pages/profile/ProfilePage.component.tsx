@@ -111,9 +111,12 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
             <RepInfoText>{me?.birth_date}</RepInfoText>
           </LineInfoContainer>
         </ProfileInfoContainer>
-        <ContactButton onPress={() => Linking.openURL('mailto:' + me?.email)}>
-          <ContactButtonText>Contact</ContactButtonText>
-        </ContactButton>
+
+        {route.params.id !== undefined && (
+          <ContactButton onPress={() => Linking.openURL('mailto:' + me?.email)}>
+            <ContactButtonText>Contact</ContactButtonText>
+          </ContactButton>
+        )}
         {route.params.id === undefined && (
           <LogoutButton
             onPress={() => {

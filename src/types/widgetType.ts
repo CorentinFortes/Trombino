@@ -14,3 +14,11 @@ export type WidgetType = {
   children?: React.ReactNode;
   onLongPress?: () => void;
 };
+
+export type WidgetsType = 'Mail' | 'Trombino' | 'Weather';
+
+export type CustomWidgetProps = {
+  id: number;
+  widget: WidgetsType;
+  size: WidgetSize;
+};
