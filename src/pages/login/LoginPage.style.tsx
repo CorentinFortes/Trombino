@@ -4,9 +4,9 @@ export const LoginPageContainer = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 230px;
-  padding-top: 120px;
+  justify-content: space-between;
+  height: 100%;
+  padding-top: 100px;
   background-color: #fffafa;
 `;
 
@@ -17,7 +17,6 @@ export const ConnexionContainer = styled.View`
   align-items: center;
   justify-content: center;
   gap: 25px;
-  padding-top: 10px;
 `;
 
 export const ConnectButton = styled.TouchableOpacity`
@@ -46,6 +45,7 @@ export const CreditsContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 20px;
 `;
 
 export const InputContainer = styled.View`
