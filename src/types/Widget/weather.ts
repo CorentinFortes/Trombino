@@ -22,4 +22,5 @@ export type WeatherType = {
   temperature: number;
   weather: WeatherModeType;
   description: string;
+  night: boolean;
 };

@@ -12,8 +12,12 @@ const WeatherBackground: { [key in WeatherModeType]: string } = {
   Mist: '#6DBBE7',
 };
 
-export const Widget = styled(_Widget)<{ weather: WeatherModeType }>`
-  background-color: ${({ weather }) => WeatherBackground[weather]};
+export const Widget = styled(_Widget)<{
+  weather: WeatherModeType;
+  night: boolean;
+}>`
+  background-color: ${({ night, weather }) =>
+    night ? '#06132C' : WeatherBackground[weather]};
   padding: 0;
 `;
 
@@ -72,11 +76,11 @@ export const TopLeftContent = styled.View`
   gap: 6px;
 `;
 
-export const TitleWidget = styled.Text<{ small?: boolean }>`
+export const TitleWidget = styled.Text<{ small?: boolean; color: string }>`
   font-size: ${({ small }) => (small ? '14px' : '24px')};
   font-family: 'Rubik_Medium';
   font-weight: 600;
-  color: #0c3247;
+  color: ${({ color }) => color};
 `;
 
 export const SmallTitleWidget = styled.Text`
@@ -98,19 +102,21 @@ export const InfoContent = styled.View<{ small?: boolean }>`
 
 export const LocalizationText = styled.Text<{
   size: 'large' | 'medium' | 'small';
+  color: string;
 }>`
   font-size: ${({ size }) =>
     size === 'large' ? '16px' : size === 'medium' ? '14px' : '12px'};
-  color: #0c3247;
+  color: ${({ color }) => color};
   font-family: 'Rubik_SemiBold';
 `;
 
 export const WeatherText = styled.Text<{
   size: 'large' | 'medium' | 'small';
+  color: string;
 }>`
   font-size: ${({ size }) =>
     size === 'large' ? '16px' : size === 'medium' ? '14px' : '12px'};
-  color: #0c3247;
+  color: ${({ color }) => color};
   font-family: 'Rubik_Regular';
 `;
 
@@ -132,10 +138,10 @@ export const InfosWrapper = styled.View`
   gap: 5px;
 `;
 
-export const TemperatureText = styled.Text<{ small?: boolean }>`
+export const TemperatureText = styled.Text<{ small?: boolean; color: string }>`
   font-size: ${({ small }) => (small ? '40px' : '64px')};
   font-family: 'Rubik_SemiBold';
-  color: rgba(12, 50, 71, 0.49);
+  color: ${({ color }) => color};
 `;
 
 export const MediumBotContent = styled.View`
