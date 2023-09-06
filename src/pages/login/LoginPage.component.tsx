@@ -1,6 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import { Login } from '../../api/api';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { Input } from '../../components/Input';
 import { LockIcon } from '../../svg/Lock';
@@ -15,7 +16,6 @@ import {
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
-import { Login } from '../../api/api';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
@@ -32,7 +32,7 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
 
   React.useEffect(() => {
     if (token) {
-      navigation.navigate('Trombinoscope', { token });
+      navigation.navigate('Home', { token });
     }
   }, [token]);
 

@@ -7,7 +7,7 @@ import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
 
 export type RootStackParamList = {
-  Home: undefined;
+  Home: { token: string };
   Login: undefined;
   Settings: undefined;
   Profile: {

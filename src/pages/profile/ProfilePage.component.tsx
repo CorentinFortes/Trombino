@@ -1,5 +1,22 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import React from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
+import {
+  Employee,
+  EmployeeDetail,
+  GetEmployee,
+  GetEmployeeImage,
+  GetEmployees,
+  getMe,
+} from '../../api/api';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
+import { LogoIcon } from '../../svg/LogoIcon';
+import { PageContainer } from '../home/HomePage.style';
 import {
   ContactButton,
   ContactButtonText,
@@ -14,28 +31,11 @@ import {
   TopContainer,
   WorkText,
 } from './ProfilePage.style';
-import { LogoIcon } from '../../svg/LogoIcon';
-import React from 'react';
-import {
-  Employee,
-  EmployeeDetail,
-  GetEmployee,
-  GetEmployeeImage,
-  GetEmployees,
-  getMe,
-} from '../../api/api';
-import {
-  ActivityIndicator,
-  Image,
-  Linking,
-  TouchableOpacity,
-} from 'react-native';
-import { PageContainer } from '../home/HomePage.style';
 import { AntDesign } from '@expo/vector-icons';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
-export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
+export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
   const token = route.params.token;
   const [me, setMe] = React.useState<EmployeeDetail>();
   const [employees, setEmployees] = React.useState<Employee[]>();

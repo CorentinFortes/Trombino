@@ -156,4 +156,4 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
   );
 };
 
-export const TrominoWidget = React.memo(TrominoWidgetComponent);
+export const TrombinoscopeWidget = React.memo(TrominoWidgetComponent);
