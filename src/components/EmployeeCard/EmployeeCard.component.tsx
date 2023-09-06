@@ -6,11 +6,21 @@ import {
   TextName,
 } from './EmployeeCard.style';
 
+export enum CardSize {
+  MEDIUM = 'MEDIUM',
+  SMALL = 'SMALL',
+}
+
+export type CardType = {
+  size: 'MEDIUM' | 'SMALL';
+};
+
 type EmployeeCardProps = {
   image: React.ReactNode;
   name: string;
   surname: string;
   email: string;
+  size?: 'MEDIUM' | 'SMALL';
 };
 
 const EmployeeCardComponent: React.FC<EmployeeCardProps> = ({
@@ -18,17 +28,34 @@ const EmployeeCardComponent: React.FC<EmployeeCardProps> = ({
   name,
   surname,
   email,
+  size,
 }) => {
-  return (
-    <CardContainer>
-      {image}
-      <InfoContainer>
-        <TextName>
-          {name} {surname}
-        </TextName>
-        <TextEmail>{email}</TextEmail>
-      </InfoContainer>
-    </CardContainer>
+  return size === 'MEDIUM' ? (
+    <>
+      <CardContainer width={110} height={157}>
+        {image}
+        <InfoContainer>
+          <TextName fontSize={10} numberOfLines={1}>
+            {name} {surname}
+          </TextName>
+          <TextEmail fontSize={7.5} numberOfLines={1}>
+            {email}
+          </TextEmail>
+        </InfoContainer>
+      </CardContainer>
+    </>
+  ) : (
+    <>
+      <CardContainer>
+        {image}
+        <InfoContainer>
+          <TextName>
+            {name} {surname}
+          </TextName>
+          <TextEmail>{email}</TextEmail>
+        </InfoContainer>
+      </CardContainer>
+    </>
   );
 };
 

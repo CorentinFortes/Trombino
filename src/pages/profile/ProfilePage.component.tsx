@@ -25,7 +25,7 @@ import {
 } from '../../api/api';
 import { ActivityIndicator, Image, Linking } from 'react-native';
 import { PageContainer } from '../home/HomePage.style';
-import { TrominoWidget } from '../../components/TrombinoscopeWidget/TrombinoscopeWidget';
+
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 

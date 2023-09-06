@@ -15,14 +15,7 @@ import {
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
-import {
-  GetEmployee,
-  GetEmployeeImage,
-  GetEmployees,
-  Login,
-  getLeaders,
-  getMe,
-} from '../../api/api';
+import { Login } from '../../api/api';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
@@ -39,7 +32,7 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
 
   React.useEffect(() => {
     if (token) {
-      navigation.navigate('Profile', { token });
+      navigation.navigate('Trombinoscope', { token });
     }
   }, [token]);
 
