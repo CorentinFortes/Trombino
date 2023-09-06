@@ -24,10 +24,10 @@ import {
   SizeButton,
   SizeContainer,
 } from '../Widget/Widget.style';
-import { LargeSizeIcon } from '../../svg/LargeSIzeIcon';
-import { MediumSizeIcon } from '../../svg/MediumSIzeIcon';
-import { SmallSizeIcon } from '../../svg/SmallSIzeIcon';
-import { HeaderSizeIcon } from '../../svg/HeaderSIzeIcon';
+import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
+import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
+import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
+import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 
 type TrombinoWidgetProps = {
   employees: Employee[] | undefined;

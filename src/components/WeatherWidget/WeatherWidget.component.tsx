@@ -1,9 +1,9 @@
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { HeaderSizeIcon } from '../../svg/HeaderSIzeIcon';
-import { LargeSizeIcon } from '../../svg/LargeSIzeIcon';
-import { MediumSizeIcon } from '../../svg/MediumSIzeIcon';
-import { SmallSizeIcon } from '../../svg/SmallSIzeIcon';
+import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
+import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
+import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
+import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 import { featherIconType } from '../../types/Icon/icon';
 import { WeatherModeType, WeatherType } from '../../types/Widget/weather';
 import { WidgetSize, WidgetType } from '../../types/widgetType';
