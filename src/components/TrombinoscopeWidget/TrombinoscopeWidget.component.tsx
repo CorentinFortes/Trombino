@@ -47,7 +47,7 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
               <MaterialCommunityIcons name="wall" size={26} color="black" />
               <TextMedium>Trombinoscope</TextMedium>
             </TopContent>
-            <TextMedium fontSize={10}>Let's discover the team!</TextMedium>
+            <TextMedium fontSize={10}>Let&apos;s discover the team!</TextMedium>
             <EmployeeContainer>
               {employees != undefined ? (
                 <EmployeeCard
@@ -115,7 +115,7 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
                   {lastTeamMemnber} is on Trombino!
                 </TextMedium>
                 <TextRegular fontSize={10}>
-                  Let's discover the other team members !
+                  Let&apos;s discover the other team members !
                 </TextRegular>
               </HeaderContainer>
             </TopContent>
@@ -145,8 +145,8 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
                 {lastTeamMemnber} is on Trombino!
               </TextMedium>
               <TextRegular fontSize={10}>
-                {nbMembers - 1} other team members are also present! Let's find
-                out who they are
+                `${nbMembers - 1} other team members are also present!
+                Let&apos;s find out who they are
               </TextRegular>
             </HeaderContainer>
           </>

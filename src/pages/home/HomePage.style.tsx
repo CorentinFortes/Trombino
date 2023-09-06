@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 export const PageContainer = styled.View`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: center;
   padding: 20px;
   padding-top: 75px;
   height: 100%;
