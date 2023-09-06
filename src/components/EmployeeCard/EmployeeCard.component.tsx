@@ -5,6 +5,7 @@ import {
   TextEmail,
   TextName,
 } from './EmployeeCard.style';
+import { TouchableOpacity } from 'react-native';
 
 export enum CardSize {
   MEDIUM = 'MEDIUM',
@@ -21,6 +22,7 @@ type EmployeeCardProps = {
   surname: string;
   email: string;
   size?: 'MEDIUM' | 'SMALL';
+  func?: () => void;
 };
 
 const EmployeeCardComponent: React.FC<EmployeeCardProps> = ({
@@ -29,20 +31,23 @@ const EmployeeCardComponent: React.FC<EmployeeCardProps> = ({
   surname,
   email,
   size,
+  func,
 }) => {
   return size === 'MEDIUM' ? (
     <>
-      <CardContainer width={110} height={157}>
-        {image}
-        <InfoContainer>
-          <TextName fontSize={10} numberOfLines={1}>
-            {name} {surname}
-          </TextName>
-          <TextEmail fontSize={7.5} numberOfLines={1}>
-            {email}
-          </TextEmail>
-        </InfoContainer>
-      </CardContainer>
+      <TouchableOpacity onPress={func}>
+        <CardContainer width={110} height={157}>
+          {image}
+          <InfoContainer>
+            <TextName fontSize={10} numberOfLines={1}>
+              {name} {surname}
+            </TextName>
+            <TextEmail fontSize={7.5} numberOfLines={1}>
+              {email}
+            </TextEmail>
+          </InfoContainer>
+        </CardContainer>
+      </TouchableOpacity>
     </>
   ) : (
     <>

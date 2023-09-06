@@ -19,13 +19,19 @@ import React from 'react';
 import {
   Employee,
   EmployeeDetail,
+  GetEmployee,
   GetEmployeeImage,
   GetEmployees,
   getMe,
 } from '../../api/api';
-import { ActivityIndicator, Image, Linking } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import { PageContainer } from '../home/HomePage.style';
-
+import { AntDesign } from '@expo/vector-icons';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
@@ -36,12 +42,21 @@ export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
 
   React.useEffect(() => {
     if (token) {
-      getMe(token).then((me) => {
-        if (me !== undefined) {
-          me.surname = me.surname.toUpperCase();
-        }
-        setMe(me);
-      });
+      if (route.params.id === undefined) {
+        getMe(token).then((me) => {
+          if (me !== undefined) {
+            me.surname = me.surname.toUpperCase();
+          }
+          setMe(me);
+        });
+      } else {
+        GetEmployee(token, route.params.id).then((me) => {
+          if (me !== undefined) {
+            me.surname = me.surname.toUpperCase();
+          }
+          setMe(me);
+        });
+      }
       GetEmployees(token).then((employees) => {
         if (employees !== undefined) {
           setEmployees(employees!);
@@ -53,6 +68,14 @@ export const ProfilePage: React.FC<ProfileProps> = ({ navigation, route }) => {
   return (
     <PageContainer>
       <ProfilePageContainer>
+        {route.params.id !== undefined && (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Trombinoscope', { token })}
+            style={{ alignSelf: 'flex-start' }}
+          >
+            <AntDesign name="arrowleft" size={24} color="black" />
+          </TouchableOpacity>
+        )}
         <TopContainer>
           <LogoIcon />
           {me !== undefined ? (

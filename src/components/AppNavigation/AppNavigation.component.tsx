@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Settings: undefined;
   Profile: {
     token: string;
+    id?: number;
   };
   Trombinoscope: {
     token: string;

@@ -62,6 +62,12 @@ export const TrombinoscopePage: React.FC<TrombinoscopeProps> = ({
                     />
                   }
                   size="MEDIUM"
+                  func={() =>
+                    navigation.navigate('Profile', {
+                      token: token,
+                      id: employee.id,
+                    })
+                  }
                 />
               ))}
             </>
