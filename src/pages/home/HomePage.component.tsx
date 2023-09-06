@@ -1,17 +1,47 @@
 import React from 'react';
+import { WeatherWidget } from '../../components/WeatherWidget';
 import { PageContainer } from './HomePage.style';
-import { Text } from 'react-native';
-import { MailWidget } from '../../components/MailWidget/MailWidget';
+import { MailWidget } from '../../components/MailWidget';
 import { tmpMail } from '../../utils/mock/mail';
 
 export const HomePage: React.FC = () => {
   return (
     <PageContainer>
-      <Text>Bhahaha</Text>
-      <MailWidget nbUnread={1} mails={tmpMail} size="LARGE" />
-      <MailWidget nbUnread={1} mails={tmpMail} size="HEADER" />
-      <MailWidget nbUnread={1} mails={tmpMail} size="SMALL" />
-      <MailWidget nbUnread={1} mails={tmpMail} size="MEDIUM" />
+      <WeatherWidget
+        size="SMALL"
+        localization="Marseille, FR"
+        weather="Clear"
+        temperature={20}
+        description="Sunny"
+      />
+      <WeatherWidget
+        size="SMALL"
+        localization="Marseille, FR"
+        weather="Clouds"
+        temperature={20}
+        description="Sunny"
+      />
+      <WeatherWidget
+        size="SMALL"
+        localization="Marseille, FR"
+        weather="Thunderstorm"
+        temperature={20}
+        description="Sunny"
+      />
+      <WeatherWidget
+        size="SMALL"
+        localization="Marseille, FR"
+        weather="Rain"
+        temperature={20}
+        description="Sunny"
+      />
+      <WeatherWidget
+        size="SMALL"
+        localization="Marseille, FR"
+        weather="Snow"
+        temperature={20}
+        description="Sunny"
+      />
     </PageContainer>
   );
 };
