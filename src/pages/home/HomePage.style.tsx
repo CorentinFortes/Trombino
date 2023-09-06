@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const PageContainer = styled.View`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 20px;
   padding-top: 75px;
@@ -49,9 +49,10 @@ export const FavoritesContent = styled.View`
 export const FavoritesWrapper = styled.View`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
 `;
@@ -74,6 +75,7 @@ export const ContentContainer = styled.View`
   align-items: flex-start;
   justify-content: flex-start;
   gap: 30px;
+  padding-bottom: 50px;
 `;
 
 export const SectionContainer = styled.View`

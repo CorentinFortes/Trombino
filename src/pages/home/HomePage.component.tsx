@@ -70,7 +70,10 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
           </HeaderText>
         </HeaderProfileContainer>
       )}
-      <ScrollContent>
+      <ScrollContent
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         <ContentContainer>
           <SectionContainer>
             <SectionTitle>Your trombinoscope</SectionTitle>
@@ -90,6 +93,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 bounces={true}
                 decelerationRate="fast"
                 showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 scrollEventThrottle={200}
                 pagingEnabled={true}
               >
@@ -103,6 +107,14 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                     night={false}
                   />
                   <MailWidget mails={tmpMail} nbUnread={1} size="SMALL" />
+                  <TrombinoscopeWidget
+                    size="SMALL"
+                    token={token}
+                    employees={employees}
+                    onPress={() =>
+                      navigation.navigate('Trombinoscope', { token })
+                    }
+                  />
                 </FavoritesWrapper>
               </HorizontalScrollView>
             </FavoritesContent>

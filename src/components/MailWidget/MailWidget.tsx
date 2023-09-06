@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text } from 'react-native';
 import { BoxIcon } from '../../svg/BoxIcon';
 import { MailIcon } from '../../svg/MailIcon';
-import { WidgetType } from '../../types/widgetType';
+import { WidgetSize, WidgetType } from '../../types/widgetType';
 import { Widget } from '../Widget';
 import {
   HeaderContainer,
@@ -31,6 +31,21 @@ import {
   TopLeftContent,
   TopRightContent,
 } from './MailWidget.style';
+import {
+  CrossButton,
+  ModalContainer,
+  ModalContent,
+  ModalHeader,
+  ModalTitle,
+  SelectSizeContainer,
+  SizeButton,
+  SizeContainer,
+} from '../Widget/Widget.style';
+import { LargeSizeIcon } from '../../svg/LargeSIzeIcon';
+import { MediumSizeIcon } from '../../svg/MediumSIzeIcon';
+import { SmallSizeIcon } from '../../svg/SmallSIzeIcon';
+import { HeaderSizeIcon } from '../../svg/HeaderSIzeIcon';
+import { AntDesign } from '@expo/vector-icons';
 
 export type Mail = {
   title: string;
@@ -49,126 +64,168 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
   mails,
   size,
 }) => {
+  const [openSizeModal, setOpenSizeModal] = useState(false);
+  const [currentSize, setCurrentSize] = useState<
+    'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
+  >(size);
+  const changeSize = (targetSize: WidgetSize) => {
+    setCurrentSize(targetSize);
+    setOpenSizeModal(false);
+  };
   return (
-    <Widget size={size} icon={<MailIcon />}>
-      <>
-        {size === 'LARGE' && (
-          <>
-            <TopContent>
-              <TopLeftContent>
+    <>
+      <Widget
+        size={currentSize}
+        icon={<MailIcon />}
+        onLongPress={() => setOpenSizeModal(true)}
+      >
+        <>
+          {currentSize === 'LARGE' && (
+            <>
+              <TopContent>
+                <TopLeftContent>
+                  <MailIcon />
+                  <TitleWidget>Mail</TitleWidget>
+                </TopLeftContent>
+                <TopRightContent>
+                  <BoxIcon />
+                  <TextUnread>
+                    {nbUnread}
+                    {` `}
+                    {`unread${nbUnread > 1 ? 's' : ''}`}
+                  </TextUnread>
+                </TopRightContent>
+              </TopContent>
+              <MailsContainer>
+                <MailContainer>
+                  <TitleAndSender>
+                    <TopLeftContent>
+                      {!mails[0].read && <PointUnread />}
+                      <MailTitle>{mails[0].title}</MailTitle>
+                    </TopLeftContent>
+                    <SenderText>from {mails[0].sender}</SenderText>
+                  </TitleAndSender>
+                  <MailContent numberOfLines={2}>
+                    <Text>{mails[0].content}</Text>
+                  </MailContent>
+                </MailContainer>
+                <MailContainer>
+                  <TitleAndSender>
+                    <TopLeftContent>
+                      {!mails[1].read && <PointUnread />}
+                      <MailTitle>{mails[1].title}</MailTitle>
+                    </TopLeftContent>
+                    <SenderText>from {mails[1].sender}</SenderText>
+                  </TitleAndSender>
+                  <MailContent numberOfLines={2}>
+                    <Text>{mails[1].content}</Text>
+                  </MailContent>
+                </MailContainer>
+              </MailsContainer>
+            </>
+          )}
+          {currentSize === 'HEADER' && (
+            <HeaderContainer>
+              <HeaderLeftWrapper>
                 <MailIcon />
-                <TitleWidget>Mail</TitleWidget>
-              </TopLeftContent>
-              <TopRightContent>
-                <BoxIcon />
-                <TextUnread>
-                  {nbUnread}
-                  {` `}
-                  {`unread${nbUnread > 1 ? 's' : ''}`}
-                </TextUnread>
-              </TopRightContent>
-            </TopContent>
-            <MailsContainer>
-              <MailContainer>
-                <TitleAndSender>
-                  <TopLeftContent>
-                    {!mails[0].read && <PointUnread />}
-                    <MailTitle>{mails[0].title}</MailTitle>
-                  </TopLeftContent>
-                  <SenderText>from {mails[0].sender}</SenderText>
-                </TitleAndSender>
-                <MailContent numberOfLines={2}>
-                  <Text>{mails[0].content}</Text>
-                </MailContent>
-              </MailContainer>
-              <MailContainer>
-                <TitleAndSender>
-                  <TopLeftContent>
-                    {!mails[1].read && <PointUnread />}
-                    <MailTitle>{mails[1].title}</MailTitle>
-                  </TopLeftContent>
-                  <SenderText>from {mails[1].sender}</SenderText>
-                </TitleAndSender>
-                <MailContent numberOfLines={2}>
-                  <Text>{mails[1].content}</Text>
-                </MailContent>
-              </MailContainer>
-            </MailsContainer>
-          </>
-        )}
-        {size === 'HEADER' && (
-          <HeaderContainer>
-            <HeaderLeftWrapper>
-              <MailIcon />
-              <TopLeftContent>
-                {!mails[0].read && <PointUnread />}
-                <MailTitle>{mails[0].title}</MailTitle>
-              </TopLeftContent>
-            </HeaderLeftWrapper>
-            <SenderText>from {mails[0].sender}</SenderText>
-          </HeaderContainer>
-        )}
-        {size === 'SMALL' && (
-          <>
-            <TopContent>
-              <TopLeftContent>
-                <MailIcon />
-                <SmallTitleWidget>Mail</SmallTitleWidget>
-              </TopLeftContent>
-            </TopContent>
-            <SmallContent>
-              <MailsNumber>40</MailsNumber>
-              <TopRightContent>
-                <BoxIcon />
-                <SmallTextUnread>
-                  {nbUnread}
-                  {` `}
-                  {`unread${nbUnread > 1 ? 's' : ''}`}
-                </SmallTextUnread>
-              </TopRightContent>
-              <SmallBotContent>
-                <LastReceivedText>Last received:</LastReceivedText>
-                <SmallLastReceivedText>
-                  from {mails[0].sender}
-                </SmallLastReceivedText>
-              </SmallBotContent>
-            </SmallContent>
-          </>
-        )}
-        {size === 'MEDIUM' && (
-          <>
-            <TopContent>
-              <TopLeftContent>
-                <MailIcon />
-                <SmallTitleWidget>Mail</SmallTitleWidget>
-              </TopLeftContent>
-              <TopRightContent>
-                <BoxIcon />
-                <SmallTextUnread>
-                  {nbUnread}
-                  {` `}
-                  {`unread${nbUnread > 1 ? 's' : ''}`}
-                </SmallTextUnread>
-              </TopRightContent>
-            </TopContent>
-            <MailsMediumContainer>
-              <MailContainer>
-                <TitleAndSender>
-                  <TopLeftContent>
-                    {!mails[0].read && <PointUnread />}
-                    <SmallMailTitle>{mails[0].title}</SmallMailTitle>
-                  </TopLeftContent>
-                  <SmallSenderText>from {mails[0].sender}</SmallSenderText>
-                </TitleAndSender>
-                <MailSmallContent numberOfLines={2}>
-                  <Text>{mails[0].content}</Text>
-                </MailSmallContent>
-              </MailContainer>
-            </MailsMediumContainer>
-          </>
-        )}
-      </>
-    </Widget>
+                <TopLeftContent>
+                  {!mails[0].read && <PointUnread />}
+                  <MailTitle>{mails[0].title}</MailTitle>
+                </TopLeftContent>
+              </HeaderLeftWrapper>
+              <SenderText>from {mails[0].sender}</SenderText>
+            </HeaderContainer>
+          )}
+          {currentSize === 'SMALL' && (
+            <>
+              <TopContent>
+                <TopLeftContent>
+                  <MailIcon />
+                  <SmallTitleWidget>Mail</SmallTitleWidget>
+                </TopLeftContent>
+              </TopContent>
+              <SmallContent>
+                <MailsNumber>40</MailsNumber>
+                <TopRightContent>
+                  <BoxIcon />
+                  <SmallTextUnread>
+                    {nbUnread}
+                    {` `}
+                    {`unread${nbUnread > 1 ? 's' : ''}`}
+                  </SmallTextUnread>
+                </TopRightContent>
+                <SmallBotContent>
+                  <LastReceivedText>Last received:</LastReceivedText>
+                  <SmallLastReceivedText>
+                    from {mails[0].sender}
+                  </SmallLastReceivedText>
+                </SmallBotContent>
+              </SmallContent>
+            </>
+          )}
+          {currentSize === 'MEDIUM' && (
+            <>
+              <TopContent>
+                <TopLeftContent>
+                  <MailIcon />
+                  <SmallTitleWidget>Mail</SmallTitleWidget>
+                </TopLeftContent>
+                <TopRightContent>
+                  <BoxIcon />
+                  <SmallTextUnread>
+                    {nbUnread}
+                    {` `}
+                    {`unread${nbUnread > 1 ? 's' : ''}`}
+                  </SmallTextUnread>
+                </TopRightContent>
+              </TopContent>
+              <MailsMediumContainer>
+                <MailContainer>
+                  <TitleAndSender>
+                    <TopLeftContent>
+                      {!mails[0].read && <PointUnread />}
+                      <SmallMailTitle>{mails[0].title}</SmallMailTitle>
+                    </TopLeftContent>
+                    <SmallSenderText>from {mails[0].sender}</SmallSenderText>
+                  </TitleAndSender>
+                  <MailSmallContent numberOfLines={2}>
+                    <Text>{mails[0].content}</Text>
+                  </MailSmallContent>
+                </MailContainer>
+              </MailsMediumContainer>
+            </>
+          )}
+        </>
+      </Widget>
+      {openSizeModal && (
+        <ModalContainer transparent>
+          <ModalContent>
+            <SelectSizeContainer>
+              <ModalHeader>
+                <ModalTitle>Select your size</ModalTitle>
+                <CrossButton onPress={() => setOpenSizeModal(false)}>
+                  <AntDesign name="close" size={24} color="#1E1E1E" />
+                </CrossButton>
+              </ModalHeader>
+              <SizeContainer>
+                <SizeButton onPress={() => changeSize(WidgetSize.LARGE)}>
+                  <LargeSizeIcon />
+                </SizeButton>
+                <SizeButton onPress={() => changeSize(WidgetSize.MEDIUM)}>
+                  <MediumSizeIcon />
+                </SizeButton>
+                <SizeButton onPress={() => changeSize(WidgetSize.SMALL)}>
+                  <SmallSizeIcon />
+                </SizeButton>
+                <SizeButton onPress={() => changeSize(WidgetSize.HEADER)}>
+                  <HeaderSizeIcon />
+                </SizeButton>
+              </SizeContainer>
+            </SelectSizeContainer>
+          </ModalContent>
+        </ModalContainer>
+      )}
+    </>
   );
 };
 

@@ -1,11 +1,7 @@
+import { AntDesign } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Linking,
-  TouchableOpacity,
-} from 'react-native';
+import { ActivityIndicator, Image, Linking } from 'react-native';
 import {
   Employee,
   EmployeeDetail,
@@ -32,7 +28,6 @@ import {
   TopContainer,
   WorkText,
 } from './ProfilePage.style';
-import { AntDesign } from '@expo/vector-icons';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 

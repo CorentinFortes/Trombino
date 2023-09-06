@@ -12,4 +12,5 @@ export type WidgetType = {
   icon?: React.ReactNode;
   title?: React.ReactNode;
   children?: React.ReactNode;
+  onLongPress?: () => void;
 };
