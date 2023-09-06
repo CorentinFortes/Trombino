@@ -58,6 +58,11 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
           'long',
           JSON.stringify(locationData.coords.longitude),
         );
+        await AsyncStorage.getItem('token').then((token) => {
+          if (token) {
+            navigation.navigate('Home', { token });
+          }
+        });
       } catch (error) {
         console.error('Error getting location:', error);
       }

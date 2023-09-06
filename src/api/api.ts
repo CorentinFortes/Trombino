@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface Token {
   access_token: string;
@@ -41,6 +42,7 @@ export const Login = async (email: string, password: string) => {
       },
     );
     const tokenRes: Token = res.data;
+    AsyncStorage.setItem('token', tokenRes.access_token);
     return tokenRes.access_token;
   } catch (error) {
     console.log(error);
