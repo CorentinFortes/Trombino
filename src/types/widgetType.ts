@@ -18,7 +18,12 @@ export type WidgetType = {
   deleteFunction: (id: number) => void;
 };
 
-export type WidgetsType = 'Mail' | 'Trombino' | 'Weather' | 'Calendar';
+export type WidgetsType =
+  | 'Mail'
+  | 'Trombino'
+  | 'Weather'
+  | 'Calendar'
+  | 'Cloud';
 
 export type CustomWidgetProps = {
   id: number;

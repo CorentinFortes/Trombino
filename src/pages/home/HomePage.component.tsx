@@ -36,6 +36,7 @@ import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
 import { CalendarWidget } from '../../components/CalendarWidget';
 import { Dimensions } from 'react-native';
+import { CloudWidget } from '../../components/CloudWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -207,6 +208,14 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   key={widget.id}
                   size={widget.size}
                   deleteFunction={deleteWidget}
+                />
+              ) : widget.widget === 'Cloud' ? (
+                <CloudWidget
+                  id={widget.id}
+                  key={widget.id}
+                  size={widget.size}
+                  deleteFunction={deleteWidget}
+                  downloading={false}
                 />
               ) : null,
             )}
