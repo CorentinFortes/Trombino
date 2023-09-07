@@ -34,6 +34,7 @@ import {
 } from './HomePage.style';
 import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
+import { CalendarWidget } from '../../components/CalendarWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -166,6 +167,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 </FavoritesWrapper>
               </HorizontalScrollView>
             </FavoritesContent>
+            <CalendarWidget size="HEADER" />
           </SectionContainer>
           <SectionTitle>Your Widgets</SectionTitle>
           <CustomsWidgetsContainer>
@@ -207,6 +209,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   }
                   night={false}
                 />
+              ) : widget.widget === 'Calendar' ? (
+                <CalendarWidget key={widget.id} size={widget.size} />
               ) : null,
             )}
             <AddWidget

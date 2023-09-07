@@ -50,6 +50,7 @@ export const WidgetContainer = styled.TouchableOpacity<{
   justify-content: ${({ size }) => WIDGET_SIZE[size].justifyContent};
   width: ${({ size }) => WIDGET_SIZE[size].width};
   height: ${({ size }) => WIDGET_SIZE[size].height};
+  min-width: ${({ size }) => WIDGET_SIZE[size].width};
   max-width: ${({ size }) => WIDGET_SIZE[size].width};
   max-height: ${({ size }) => WIDGET_SIZE[size].height};
   padding: ${({ size }) => WIDGET_SIZE[size].padding};

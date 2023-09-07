@@ -15,7 +15,7 @@ export type WidgetType = {
   onLongPress?: () => void;
 };
 
-export type WidgetsType = 'Mail' | 'Trombino' | 'Weather';
+export type WidgetsType = 'Mail' | 'Trombino' | 'Weather' | 'Calendar';
 
 export type CustomWidgetProps = {
   id: number;

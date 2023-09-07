@@ -17,7 +17,12 @@ import {
   WidgetButton,
   WidgetTitle,
 } from './AddWidget.style';
-import { AntDesign, Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  AntDesign,
+  Feather,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import { Text } from 'react-native';
 import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
@@ -94,6 +99,19 @@ export const AddWidget: React.FC<Props> = ({
                 >
                   <Ionicons name="cloud-outline" size={24} color="#1E1E1E" />
                   <WidgetTitle>Weather</WidgetTitle>
+                </WidgetButton>
+                <WidgetButton
+                  onPress={() => {
+                    setWidgetType('Calendar');
+                    setStep(2);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="calendar"
+                    size={24}
+                    color="black"
+                  />
+                  <WidgetTitle>Calendar</WidgetTitle>
                 </WidgetButton>
               </SizeContainer>
             </SelectSizeContainer>
