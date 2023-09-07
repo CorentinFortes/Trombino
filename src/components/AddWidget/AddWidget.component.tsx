@@ -36,14 +36,14 @@ export const AddWidget: React.FC<Props> = ({
   const [step, setStep] = React.useState<number>(0);
   const [widgetType, setWidgetType] = React.useState<WidgetsType>();
   const [widgetSize, setWidgetSize] = React.useState<WidgetSize>();
-  const addNewWidget = (size: WidgetSize) => {
-    setWidgetSize(size);
+  const addNewWidget = (sizeTmp: WidgetSize) => {
+    setWidgetSize(sizeTmp);
     setStep(0);
-    if (widgetType && widgetSize) {
+    if (widgetType && sizeTmp) {
       const newWidget: CustomWidgetProps = {
         id: customWidgets.length + 1,
         widget: widgetType,
-        size: widgetSize,
+        size: sizeTmp,
       };
       setCustomWidgets([...customWidgets, newWidget]);
     }
@@ -58,7 +58,7 @@ export const AddWidget: React.FC<Props> = ({
           <ModalContent>
             <SelectSizeContainer>
               <ModalHeader>
-                <ModalTitle>Select your size</ModalTitle>
+                <ModalTitle>Select your widget</ModalTitle>
                 <CrossButton onPress={() => setStep(0)}>
                   <AntDesign name="close" size={24} color="#1E1E1E" />
                 </CrossButton>
