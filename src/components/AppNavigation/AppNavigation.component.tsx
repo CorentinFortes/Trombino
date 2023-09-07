@@ -6,6 +6,7 @@ import { LoginPage, HomePage } from '../../pages';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
 import { EmailPage } from '../../pages/email/EmailPage.component';
+import { ChatPage } from '../../pages/chat/ChatPage.component';
 
 export type RootStackParamList = {
   Home: { token: string };
@@ -19,6 +20,7 @@ export type RootStackParamList = {
     token: string;
   };
   Email: { token: string; unread?: number };
+  Chat: { token: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -35,6 +37,7 @@ function AppNavigation() {
         <Stack.Screen name="Profile" component={ProfilePage} />
         <Stack.Screen name="Trombinoscope" component={TrombinoscopePage} />
         <Stack.Screen name="Email" component={EmailPage} />
+        <Stack.Screen name="Chat" component={ChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

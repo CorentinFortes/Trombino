@@ -34,6 +34,7 @@ import {
 } from './HomePage.style';
 import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
+import { ChatWidget } from '../../components/ChatWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
