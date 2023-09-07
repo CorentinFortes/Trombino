@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LoginPage, HomePage } from '../../pages';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
+import { EmailPage } from '../../pages/email/EmailPage.component';
 
 export type RootStackParamList = {
   Home: { token: string };
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   Trombinoscope: {
     token: string;
   };
+  Email: { token: string; unread?: number };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -32,6 +34,7 @@ function AppNavigation() {
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Profile" component={ProfilePage} />
         <Stack.Screen name="Trombinoscope" component={TrombinoscopePage} />
+        <Stack.Screen name="Email" component={EmailPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -46,23 +46,28 @@ import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
 import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
 import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 import { AntDesign } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type Mail = {
   title: string;
   content: string;
   sender: string;
   read: boolean;
+  time: string;
+  date: string;
 };
 
 type MailWidgetProps = {
   nbUnread: number;
   mails: Mail[];
+  onPress?: () => void;
 } & WidgetType;
 
 const MailWidgetComponent: React.FC<MailWidgetProps> = ({
   nbUnread,
   mails,
   size,
+  onPress,
 }) => {
   const [openSizeModal, setOpenSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState<
@@ -73,7 +78,7 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
     setOpenSizeModal(false);
   };
   return (
-    <>
+    <TouchableOpacity onPress={onPress}>
       <Widget
         size={currentSize}
         icon={<MailIcon />}
@@ -225,7 +230,7 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
           </ModalContent>
         </ModalContainer>
       )}
-    </>
+    </TouchableOpacity>
   );
 };
 

@@ -23,7 +23,6 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
-import { Text } from 'react-native';
 import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
 import { SmallSizeIcon } from '../../svg/SmallSizeIcon';

@@ -8,6 +8,7 @@ const WidgetComponent: React.FC<WidgetType> = ({
   title,
   children,
   onLongPress,
+  onPress,
   ...props
 }) => {
   return (

@@ -2,24 +2,21 @@ import { Mail } from '../../components/MailWidget/MailWidget';
 
 export const tmpMail: Mail[] = [
   {
-    title: 'Je suis un rat',
+    title: 'Applications',
     content:
-      'Salut FLorian, je suis vraiment trop une merde je casse trop les couilles et surtout je suis le plus gros BDG de la terre putain Anais voulait plus qu’on baise putain j’ai FAIM j’ai FAAAAAAAAAAAAAAIM',
-    sender: 'Adam le rat',
+      'Salut je voulais avoir des informations sur l’application pour savoir quelles nouvelles fonctionnalités nous pourrions implémenter pour le prochain sprint',
+    sender: 'Adam',
     read: false,
+    time: '11:03',
+    date: '09-07-2023',
   },
   {
-    title: 'Je suis le clown',
+    title: 'Réunion',
     content:
-      'Salut Flo, pour te dire que j’ai reçu des sentiments pour ta personne, cette blague des clowns m’a ouvert les yeux donc je pense.',
-    sender: 'Lucas',
+      'Bonjour je vous envoie ce mail pour vous informer que la réunion de ce soir est annulée. Nous la reporterons à la semaine prochaine. Merci de votre compréhension',
+    sender: 'Corentin',
     read: true,
-  },
-  {
-    title: 'Je suis le clown',
-    content:
-      'Salut Flo, pour te dire que j’ai reçu des sentiments pour ta personne, cette blague des clowns m’a ouvert les yeux donc je pense.',
-    sender: 'Lucas',
-    read: true,
+    time: '10:07',
+    date: '09-06-2023',
   },
 ];

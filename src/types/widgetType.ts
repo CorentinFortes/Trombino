@@ -13,6 +13,7 @@ export type WidgetType = {
   title?: React.ReactNode;
   children?: React.ReactNode;
   onLongPress?: () => void;
+  onPress?: () => void;
 };
 
 export type WidgetsType = 'Mail' | 'Trombino' | 'Weather' | 'Calendar';
