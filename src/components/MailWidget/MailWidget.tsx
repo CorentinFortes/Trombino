@@ -33,6 +33,8 @@ import {
 } from './MailWidget.style';
 import {
   CrossButton,
+  DeleteButton,
+  DeleteButtonText,
   ModalContainer,
   ModalContent,
   ModalHeader,
@@ -69,6 +71,8 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
   mails,
   size,
   onPress,
+  deleteFunction,
+  id,
 }) => {
   const [openSizeModal, setOpenSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState<
@@ -78,12 +82,20 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
     setCurrentSize(targetSize);
     setOpenSizeModal(false);
   };
+  const deleteWidget = () => {
+    setOpenSizeModal(false);
+    deleteFunction(id);
+  };
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity
+      onPress={onPress}
+      onLongPress={() => setOpenSizeModal(true)}
+    >
       <Widget
         size={currentSize}
         icon={<MailIcon />}
-        onLongPress={() => setOpenSizeModal(true)}
+        id={id}
+        deleteFunction={deleteFunction}
       >
         <>
           {currentSize === 'LARGE' && (
@@ -227,6 +239,9 @@ const MailWidgetComponent: React.FC<MailWidgetProps> = ({
                   <HeaderSizeIcon />
                 </SizeButton>
               </SizeContainer>
+              <DeleteButton onPress={() => deleteWidget()}>
+                <DeleteButtonText>Delete</DeleteButtonText>
+              </DeleteButton>
             </SelectSizeContainer>
           </ModalContent>
         </ModalContainer>

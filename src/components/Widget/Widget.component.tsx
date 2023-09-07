@@ -7,8 +7,10 @@ const WidgetComponent: React.FC<WidgetType> = ({
   icon,
   title,
   children,
+  id,
   onLongPress,
   onPress,
+  deleteFunction,
   ...props
 }) => {
   return (

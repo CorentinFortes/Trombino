@@ -120,6 +120,7 @@ export const SizeContainer = styled.View`
   width: 100%;
   gap: 30px;
   padding-top: 10px;
+  justify-content: center;
 `;
 
 export const SizeButton = styled.TouchableOpacity`
@@ -127,4 +128,23 @@ export const SizeButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+`;
+
+export const DeleteButton = styled.TouchableOpacity`
+  background-color: #fafaff;
+  border-radius: 10px;
+  border: 1px solid #f13838;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+export const DeleteButtonText = styled.Text`
+  color: #f13838;
+  font-size: 20px;
+  padding: 10px;
+  font-family: 'Rubik_Medium';
+  font-weight: 500;
+  padding: 8px 33px;
 `;

@@ -12,8 +12,10 @@ export type WidgetType = {
   icon?: React.ReactNode;
   title?: React.ReactNode;
   children?: React.ReactNode;
+  id: number;
   onLongPress?: () => void;
   onPress?: () => void;
+  deleteFunction: (id: number) => void;
 };
 
 export type WidgetsType = 'Mail' | 'Trombino' | 'Weather' | 'Calendar';

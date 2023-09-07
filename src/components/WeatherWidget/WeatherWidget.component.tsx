@@ -9,6 +9,8 @@ import { WeatherModeType, WeatherType } from '../../types/Widget/weather';
 import { WidgetSize, WidgetType } from '../../types/widgetType';
 import {
   CrossButton,
+  DeleteButton,
+  DeleteButtonText,
   ModalContainer,
   ModalContent,
   ModalHeader,
@@ -52,6 +54,8 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
   description,
   size,
   night,
+  id,
+  deleteFunction,
 }) => {
   // todo : add weather icon for lage size
   const [openSizeModal, setOpenSizeModal] = useState(false);
@@ -74,6 +78,10 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
     }
     return 'rgba(12, 50, 71, 0.49)';
   };
+  const deleteWidget = () => {
+    setOpenSizeModal(false);
+    deleteFunction(id);
+  };
   return (
     <>
       <Widget
@@ -84,6 +92,8 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
         weather={weather}
         night={night}
         onLongPress={() => setOpenSizeModal(true)}
+        id={id}
+        deleteFunction={deleteFunction}
       >
         <>
           {currentSize === 'LARGE' && (
@@ -251,6 +261,9 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
                   <HeaderSizeIcon />
                 </SizeButton>
               </SizeContainer>
+              <DeleteButton onPress={() => deleteWidget()}>
+                <DeleteButtonText>Delete</DeleteButtonText>
+              </DeleteButton>
             </SelectSizeContainer>
           </ModalContent>
         </ModalContainer>

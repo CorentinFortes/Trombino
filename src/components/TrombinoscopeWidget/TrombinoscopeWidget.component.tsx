@@ -16,6 +16,8 @@ import { EmployeeCard } from '../EmployeeCard/EmployeeCard.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   CrossButton,
+  DeleteButton,
+  DeleteButtonText,
   ModalContainer,
   ModalContent,
   ModalHeader,
@@ -40,6 +42,8 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
   token,
   size,
   onPress,
+  id,
+  deleteFunction,
 }) => {
   const [lastTeamMemnber, setLastTeamMember] =
     React.useState<string>('Loading...');
@@ -59,7 +63,10 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
       setNbMembers(employees.length);
     }
   }, [employees]);
-
+  const deleteWidget = () => {
+    setOpenSizeModal(false);
+    deleteFunction(id);
+  };
   return (
     <>
       <TouchableOpacity
@@ -69,6 +76,8 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
         <Widget
           size={currentSize}
           icon={<MaterialCommunityIcons name="wall" size={24} color="black" />}
+          id={id}
+          deleteFunction={deleteFunction}
         >
           <>
             {currentSize === 'LARGE' && (
@@ -210,6 +219,11 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
                   <HeaderSizeIcon />
                 </SizeButton>
               </SizeContainer>
+              {id != -1 && (
+                <DeleteButton onPress={() => deleteWidget()}>
+                  <DeleteButtonText>Delete</DeleteButtonText>
+                </DeleteButton>
+              )}
             </SelectSizeContainer>
           </ModalContent>
         </ModalContainer>

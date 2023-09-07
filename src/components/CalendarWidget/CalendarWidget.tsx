@@ -4,6 +4,8 @@ import { WidgetSize, WidgetType } from '../../types/widgetType';
 import { TouchableOpacity } from 'react-native';
 import {
   CrossButton,
+  DeleteButton,
+  DeleteButtonText,
   ModalContainer,
   ModalContent,
   ModalHeader,
@@ -28,7 +30,11 @@ import {
 } from './CalendarWidget.style';
 import moment from 'moment';
 
-const CalendarWidgetComponent: React.FC<WidgetType> = ({ size }) => {
+const CalendarWidgetComponent: React.FC<WidgetType> = ({
+  size,
+  deleteFunction,
+  id,
+}) => {
   const [openSizeModal, setOpenSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
@@ -38,6 +44,10 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({ size }) => {
     setOpenSizeModal(false);
   };
   const date = moment().format('L');
+  const deleteWidget = () => {
+    setOpenSizeModal(false);
+    deleteFunction(id);
+  };
   return (
     <>
       <TouchableOpacity onLongPress={() => setOpenSizeModal(true)}>
@@ -155,6 +165,9 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({ size }) => {
                   <HeaderSizeIcon />
                 </SizeButton>
               </SizeContainer>
+              <DeleteButton onPress={() => deleteWidget()}>
+                <DeleteButtonText>Delete</DeleteButtonText>
+              </DeleteButton>
             </SelectSizeContainer>
           </ModalContent>
         </ModalContainer>

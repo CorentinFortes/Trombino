@@ -15,7 +15,7 @@ import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SmallLogo } from '../../svg/SmallLogo';
 import { WeatherModeType } from '../../types/Widget/weather';
-import { CustomWidgetProps } from '../../types/widgetType';
+import { CustomWidgetProps, WidgetSize } from '../../types/widgetType';
 import { tmpMail } from '../../utils/mock/mail';
 import {
   ContentContainer,
@@ -47,7 +47,28 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
   const [long, setLong] = React.useState<number>();
   const [weather, setWeather] = React.useState<WeatherData>();
   const [customWidgets, setCustomWidgets] = React.useState<CustomWidgetProps[]>(
-    [],
+    [
+      {
+        id: 0,
+        widget: 'Weather',
+        size: WidgetSize.MEDIUM,
+      },
+      {
+        id: 1,
+        widget: 'Calendar',
+        size: WidgetSize.HEADER,
+      },
+      {
+        id: 2,
+        widget: 'Mail',
+        size: WidgetSize.SMALL,
+      },
+      {
+        id: 3,
+        widget: 'Trombino',
+        size: WidgetSize.SMALL,
+      },
+    ],
   );
 
   React.useEffect(() => {
@@ -89,6 +110,10 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
     }
   }, [lat, long]);
 
+  const deleteWidget = (id: number) => {
+    setCustomWidgets(customWidgets.filter((widget) => widget.id !== id));
+  };
+
   return (
     <PageContainer>
       <SmallLogo />
@@ -116,6 +141,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
           <SectionContainer>
             <SectionTitle>Your trombinoscope</SectionTitle>
             <TrombinoscopeWidget
+              id={-1}
+              deleteFunction={deleteWidget}
               size="LARGE"
               token={token}
               employees={employees}
@@ -127,6 +154,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
             {customWidgets.map((widget) =>
               widget.widget === 'Mail' ? (
                 <MailWidget
+                  id={widget.id}
+                  deleteFunction={deleteWidget}
                   key={widget.id}
                   nbUnread={1}
                   mails={tmpMail}
@@ -140,6 +169,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 />
               ) : widget.widget === 'Trombino' ? (
                 <TrombinoscopeWidget
+                  deleteFunction={deleteWidget}
+                  id={widget.id}
                   key={widget.id}
                   size={widget.size}
                   token={token}
@@ -150,6 +181,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 />
               ) : widget.widget === 'Weather' ? (
                 <WeatherWidget
+                  id={widget.id}
+                  deleteFunction={deleteWidget}
                   key={widget.id}
                   size={widget.size}
                   localization={
@@ -169,7 +202,12 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   night={false}
                 />
               ) : widget.widget === 'Calendar' ? (
-                <CalendarWidget key={widget.id} size={widget.size} />
+                <CalendarWidget
+                  id={widget.id}
+                  key={widget.id}
+                  size={widget.size}
+                  deleteFunction={deleteWidget}
+                />
               ) : null,
             )}
             <AddWidget
