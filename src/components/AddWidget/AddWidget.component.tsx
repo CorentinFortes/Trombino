@@ -14,8 +14,10 @@ import {
   SelectSizeContainer,
   SizeButton,
   SizeContainer,
+  WidgetButton,
+  WidgetTitle,
 } from './AddWidget.style';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text } from 'react-native';
 import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
@@ -62,30 +64,37 @@ export const AddWidget: React.FC<Props> = ({
                 </CrossButton>
               </ModalHeader>
               <SizeContainer>
-                <SizeButton
+                <WidgetButton
                   onPress={() => {
                     setWidgetType('Mail');
                     setStep(2);
                   }}
                 >
-                  <Text>Mail</Text>
-                </SizeButton>
-                <SizeButton
+                  <Feather name="mail" size={24} color="#1E1E1E" />
+                  <WidgetTitle>Mail</WidgetTitle>
+                </WidgetButton>
+                <WidgetButton
                   onPress={() => {
                     setWidgetType('Trombino');
                     setStep(2);
                   }}
                 >
-                  <Text>Trombinoscope</Text>
-                </SizeButton>
-                <SizeButton
+                  <MaterialCommunityIcons
+                    name="wall"
+                    size={26}
+                    color="#1E1E1E"
+                  />
+                  <WidgetTitle>Trombino</WidgetTitle>
+                </WidgetButton>
+                <WidgetButton
                   onPress={() => {
                     setWidgetType('Weather');
                     setStep(2);
                   }}
                 >
-                  <Text>Weather</Text>
-                </SizeButton>
+                  <Ionicons name="cloud-outline" size={24} color="#1E1E1E" />
+                  <WidgetTitle>Weather</WidgetTitle>
+                </WidgetButton>
               </SizeContainer>
             </SelectSizeContainer>
           </ModalContent>
