@@ -153,7 +153,17 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                     }
                     night={false}
                   />
-                  <MailWidget mails={tmpMail} nbUnread={1} size="SMALL" />
+                  <MailWidget
+                    mails={tmpMail}
+                    nbUnread={1}
+                    size="SMALL"
+                    onPress={() =>
+                      navigation.navigate('Email', {
+                        token,
+                        unread: 1,
+                      })
+                    }
+                  />
                   <TrombinoscopeWidget
                     size="SMALL"
                     token={token}
@@ -175,6 +185,12 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   nbUnread={1}
                   mails={tmpMail}
                   size={widget.size}
+                  onPress={() =>
+                    navigation.navigate('Email', {
+                      token,
+                      unread: 1,
+                    })
+                  }
                 />
               ) : widget.widget === 'Trombino' ? (
                 <TrombinoscopeWidget
