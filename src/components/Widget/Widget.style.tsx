@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { WidgetSize } from '../../types/widgetType';
 import { Modal } from 'react-native';
+import { Dimensions } from 'react-native';
 
 const WIDGET_SIZE: {
   [key in WidgetSize]: {
@@ -12,14 +13,14 @@ const WIDGET_SIZE: {
   };
 } = {
   [WidgetSize.LARGE]: {
-    width: '100%',
+    width: (Dimensions.get('window').width - 40).toString() + 'px',
     height: '200px',
     padding: '20px',
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
   [WidgetSize.MEDIUM]: {
-    width: '100%',
+    width: (Dimensions.get('window').width - 40).toString() + 'px',
     height: '80px',
     padding: '10px 20px',
     alignItems: 'center',
@@ -33,7 +34,7 @@ const WIDGET_SIZE: {
     justifyContent: 'flex-start',
   },
   [WidgetSize.HEADER]: {
-    width: '100%',
+    width: (Dimensions.get('window').width - 40).toString() + 'px',
     height: '47px',
     padding: '10px',
     alignItems: 'center',

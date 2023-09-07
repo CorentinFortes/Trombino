@@ -35,6 +35,7 @@ import {
 import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
 import { CalendarWidget } from '../../components/CalendarWidget';
+import { Dimensions } from 'react-native';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -120,64 +121,6 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
               employees={employees}
               onPress={() => navigation.navigate('Trombinoscope', { token })}
             />
-          </SectionContainer>
-          <SectionContainer>
-            <SectionTitle>Must-haves</SectionTitle>
-            <FavoritesContent>
-              <HorizontalScrollView
-                horizontal
-                alwaysBounceHorizontal={true}
-                bounces={true}
-                decelerationRate="fast"
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                scrollEventThrottle={200}
-                pagingEnabled={true}
-              >
-                <FavoritesWrapper>
-                  <WeatherWidget
-                    size="SMALL"
-                    localization={
-                      weather !== undefined
-                        ? weather.city + ', ' + weather.country
-                        : 'Marseille, FR'
-                    }
-                    weather={
-                      weather !== undefined
-                        ? (weather.main as WeatherModeType)
-                        : 'Clear'
-                    }
-                    temperature={
-                      weather !== undefined ? weather.temperature : 20
-                    }
-                    description={
-                      weather !== undefined ? weather.description : 'Sunny'
-                    }
-                    night={false}
-                  />
-                  <MailWidget
-                    mails={tmpMail}
-                    nbUnread={1}
-                    size="SMALL"
-                    onPress={() =>
-                      navigation.navigate('Email', {
-                        token,
-                        unread: 1,
-                      })
-                    }
-                  />
-                  <TrombinoscopeWidget
-                    size="SMALL"
-                    token={token}
-                    employees={employees}
-                    onPress={() =>
-                      navigation.navigate('Trombinoscope', { token })
-                    }
-                  />
-                </FavoritesWrapper>
-              </HorizontalScrollView>
-            </FavoritesContent>
-            <CalendarWidget size="HEADER" />
           </SectionContainer>
           <SectionTitle>Your Widgets</SectionTitle>
           <CustomsWidgetsContainer>
