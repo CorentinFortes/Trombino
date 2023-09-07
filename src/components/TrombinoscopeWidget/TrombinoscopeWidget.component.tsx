@@ -34,7 +34,6 @@ import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 type TrombinoWidgetProps = {
   employees: Employee[] | undefined;
   token: string;
-  onPress: () => void;
 } & WidgetType;
 
 const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({

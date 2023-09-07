@@ -36,6 +36,7 @@ import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
 import { CalendarWidget } from '../../components/CalendarWidget';
 import { Dimensions } from 'react-native';
+import { ChatWidget } from '../../components/ChatWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
