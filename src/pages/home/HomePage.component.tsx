@@ -11,7 +11,6 @@ import {
 } from '../../api/api';
 import { WeatherData, getWeather } from '../../api/weather';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
-import { MailWidget } from '../../components/MailWidget';
 import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SmallLogo } from '../../svg/SmallLogo';
@@ -31,8 +30,10 @@ import {
   ScrollContent,
   SectionContainer,
   SectionTitle,
+  CustomsWidgetsContainer,
 } from './HomePage.style';
 import { AddWidget } from '../../components/AddWidget/AddWidget.component';
+import { MailWidget } from '../../components/MailWidget/MailWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -176,8 +177,8 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
               </HorizontalScrollView>
             </FavoritesContent>
           </SectionContainer>
-          <SectionContainer>
-            <SectionTitle>Your Widgets</SectionTitle>
+          <SectionTitle>Your Widgets</SectionTitle>
+          <CustomsWidgetsContainer>
             {customWidgets.map((widget) =>
               widget.widget === 'Mail' ? (
                 <MailWidget
@@ -228,7 +229,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
               customWidgets={customWidgets}
               setCustomWidgets={setCustomWidgets}
             />
-          </SectionContainer>
+          </CustomsWidgetsContainer>
         </ContentContainer>
       </ScrollContent>
     </PageContainer>

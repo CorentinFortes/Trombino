@@ -97,3 +97,12 @@ export const HorizontalScrollView = styled.ScrollView`
   width: 100%;
   padding: 0;
 `;
+
+export const CustomsWidgetsContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  align-items: flex-start;
+`;
