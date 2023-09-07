@@ -74,3 +74,22 @@ export const SizeButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
+
+export const WidgetButton = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(78, 78, 78, 0.3);
+  border-radius: 10px;
+  width: 45%;
+  height: 100px;
+  padding: 20px;
+  gap: 5px;
+`;
+
+export const WidgetTitle = styled.Text`
+  font-family: 'Rubik_Medium';
+  font-size: 14px;
+  color: #1e1e1e;
+`;
