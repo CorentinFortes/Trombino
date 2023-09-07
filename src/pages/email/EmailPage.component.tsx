@@ -1,7 +1,7 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import {
   MailContainer,
@@ -54,8 +54,8 @@ export const EmailPage: React.FC<EmailProps> = ({ route, navigation }) => {
         <ScrollMail>
           <MailsContent>
             {tmpMail.map((mail) => (
-              <>
-                <MailContainer key={mail.title}>
+              <View key={mail.id} style={{ width: '100%' }}>
+                <MailContainer key={mail.id}>
                   <MailTopContent>
                     <MailTopLeftWrapper>
                       {!mail.read && <PointUnread />}
@@ -75,7 +75,7 @@ export const EmailPage: React.FC<EmailProps> = ({ route, navigation }) => {
                   </MailTopContent>
                 </MailContainer>
                 <MailSeparator />
-              </>
+              </View>
             ))}
           </MailsContent>
         </ScrollMail>

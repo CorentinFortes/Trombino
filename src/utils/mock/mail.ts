@@ -2,6 +2,7 @@ import { Mail } from '../../components/MailWidget/MailWidget';
 
 export const tmpMail: Mail[] = [
   {
+    id: 1,
     title: 'Applications',
     content:
       'Salut je voulais avoir des informations sur l’application pour savoir quelles nouvelles fonctionnalités nous pourrions implémenter pour le prochain sprint',
@@ -11,6 +12,7 @@ export const tmpMail: Mail[] = [
     date: '09-07-2023',
   },
   {
+    id: 2,
     title: 'Réunion',
     content:
       'Bonjour je vous envoie ce mail pour vous informer que la réunion de ce soir est annulée. Nous la reporterons à la semaine prochaine. Merci de votre compréhension',

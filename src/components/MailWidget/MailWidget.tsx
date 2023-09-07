@@ -49,6 +49,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type Mail = {
+  id: number;
   title: string;
   content: string;
   sender: string;
