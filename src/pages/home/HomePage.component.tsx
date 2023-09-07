@@ -86,8 +86,6 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
     }
   }, [lat, long]);
 
-  console.log('custom widgets', customWidgets);
-
   return (
     <PageContainer>
       <SmallLogo />
@@ -180,6 +178,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 />
               ) : widget.widget === 'Trombino' ? (
                 <TrombinoscopeWidget
+                  key={widget.id}
                   size={widget.size}
                   token={token}
                   employees={employees}
@@ -189,6 +188,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 />
               ) : widget.widget === 'Weather' ? (
                 <WeatherWidget
+                  key={widget.id}
                   size={widget.size}
                   localization={
                     weather !== undefined
