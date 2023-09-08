@@ -18,6 +18,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
   size,
   deleteFunction,
   id,
+  onPress,
 }) => {
   const [openSizeModal, setOpenSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState<
@@ -27,7 +28,10 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
 
   return (
     <>
-      <TouchableOpacity onLongPress={() => setOpenSizeModal(true)}>
+      <TouchableOpacity
+        onLongPress={() => setOpenSizeModal(true)}
+        onPress={onPress}
+      >
         <Widget
           size={currentSize}
           icon={
@@ -39,6 +43,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
           openSizeModal={openSizeModal}
           id={id}
           deleteFunction={deleteFunction}
+          onPress={onPress}
         >
           {currentSize === 'LARGE' && (
             <>

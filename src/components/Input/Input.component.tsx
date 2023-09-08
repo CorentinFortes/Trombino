@@ -7,6 +7,7 @@ type InputProps = {
   value?: string;
   placeholder?: string;
   onChangeText?: (text: string) => void;
+  placeholderTextColor?: string;
 };
 
 const InputComponent: React.FC<InputProps> = ({
@@ -15,6 +16,7 @@ const InputComponent: React.FC<InputProps> = ({
   value,
   placeholder,
   onChangeText,
+  placeholderTextColor,
 }) => {
   return (
     <InputContainer>
@@ -25,6 +27,7 @@ const InputComponent: React.FC<InputProps> = ({
         secureTextEntry={type === 'password'}
         placeholder={placeholder}
         onChangeText={onChangeText}
+        placeholderTextColor={placeholderTextColor}
       />
     </InputContainer>
   );
