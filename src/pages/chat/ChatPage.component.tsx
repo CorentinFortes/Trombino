@@ -134,10 +134,13 @@ export const ChatPage: React.FC<ChatProps> = ({ route, navigation }) => {
     <PageContainer keyboardIsOpen={keyboardIsOpen}>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate(fromChat ? 'CurrentChat' : 'Home', { token })
+          navigation.navigate('Profile', {
+            token: token,
+            id: receiverId,
+          })
         }
       >
-        <AntDesign name="arrowleft" size={24} color="black" />
+        <AntDesign name="arrowleft" size={32} color="black" />
       </TouchableOpacity>
       <TopContent>
         <Ionicons name="ios-chatbubble-outline" size={24} color="#08374B" />

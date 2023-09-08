@@ -167,7 +167,7 @@ export const AddWidget: React.FC<Props> = ({
             <SelectSizeContainer>
               <ModalHeader>
                 <CrossButton onPress={() => setStep(1)}>
-                  <AntDesign name="arrowleft" size={24} color="black" />
+                  <AntDesign name="arrowleft" size={32} color="black" />
                 </CrossButton>
                 <ModalTitle>Select your size</ModalTitle>
                 <CrossButton onPress={() => setStep(0)}>

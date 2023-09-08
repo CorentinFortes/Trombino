@@ -77,7 +77,7 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
             )
           }
         >
-          <AntDesign name="arrowleft" size={24} color="black" />
+          <AntDesign name="arrowleft" size={32} color="black" />
         </ArrowButton>
         <TopContainer>
           <LogoIcon />
