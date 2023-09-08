@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Button, TouchableOpacity, View } from 'react-native';
 import { Login } from '../../api/api';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { Input } from '../../components/Input';
@@ -18,6 +18,8 @@ import {
 } from './LoginPage.style';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FIRESTORE_DB } from '../../../firebaseConfig';
+import { addDoc, collection } from 'firebase/firestore';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
@@ -69,11 +71,22 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
     })();
   }, []);
 
+  const testFirebase = async () => {
+    const doc = addDoc(collection(FIRESTORE_DB, 'message'), {
+      sender: 'oliver',
+      done: false,
+    });
+    console.log(`doc: ${doc}`);
+  };
+
   return (
     <LoginPageContainer>
       <Logo />
       <ConnexionContainer>
         <InputContainer>
+          <View>
+            <Button title="Try to crash" onPress={() => testFirebase()} />
+          </View>
           <Input
             icon={<UserIcon />}
             type="text"

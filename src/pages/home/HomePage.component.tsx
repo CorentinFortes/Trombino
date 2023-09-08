@@ -10,7 +10,10 @@ import {
   getMe,
 } from '../../api/api';
 import { WeatherData, getWeather } from '../../api/weather';
+import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
+import { CalendarWidget } from '../../components/CalendarWidget';
+import { MailWidget } from '../../components/MailWidget/MailWidget';
 import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SmallLogo } from '../../svg/SmallLogo';
@@ -19,23 +22,16 @@ import { CustomWidgetProps, WidgetSize } from '../../types/widgetType';
 import { tmpMail } from '../../utils/mock/mail';
 import {
   ContentContainer,
-  FavoritesContent,
-  FavoritesWrapper,
+  CustomsWidgetsContainer,
   HeaderProfileContainer,
   HeaderProfileLeftWrapper,
   HeaderText,
-  HorizontalScrollView,
   PageContainer,
   ProfileImage,
   ScrollContent,
   SectionContainer,
   SectionTitle,
-  CustomsWidgetsContainer,
 } from './HomePage.style';
-import { AddWidget } from '../../components/AddWidget/AddWidget.component';
-import { MailWidget } from '../../components/MailWidget/MailWidget';
-import { CalendarWidget } from '../../components/CalendarWidget';
-import { Dimensions } from 'react-native';
 import { CloudWidget } from '../../components/CloudWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
