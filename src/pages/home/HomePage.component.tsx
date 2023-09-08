@@ -33,6 +33,7 @@ import {
   SectionTitle,
 } from './HomePage.style';
 import { CloudWidget } from '../../components/CloudWidget';
+import { TodoWidget } from '../../components/TodoWidget/TodoWidget.component';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -145,6 +146,11 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
               employees={employees}
               onPress={() => navigation.navigate('Trombinoscope', { token })}
             />
+            <TodoWidget
+              todos={[]}
+              onPress={() => navigation.navigate('Todo', { token })}
+              size="LARGE"
+            />
           </SectionContainer>
           <SectionTitle>Your Widgets</SectionTitle>
           <CustomsWidgetsContainer>
@@ -212,6 +218,14 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   size={widget.size}
                   deleteFunction={deleteWidget}
                   downloading={false}
+                />
+              ) : widget.widget === 'Todo' ? (
+                <TodoWidget
+                  id={widget.id}
+                  key={widget.id}
+                  todos={[]}
+                  onPress={() => navigation.navigate('Todo', { token })}
+                  size={widget.size}
                 />
               ) : null,
             )}

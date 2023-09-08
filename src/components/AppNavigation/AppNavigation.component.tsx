@@ -8,6 +8,7 @@ import { ChatPage } from '../../pages/chat/ChatPage.component';
 import { EmailPage } from '../../pages/email/EmailPage.component';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
+import { TodoPage } from '../../pages/todo/TodoPage.component';
 
 export type RootStackParamList = {
   Home: { token: string };
@@ -22,6 +23,7 @@ export type RootStackParamList = {
   };
   Email: { token: string; unread?: number };
   Chat: { token: string; targetEmployee: EmployeeDetail; fromChat: boolean };
+  Todo: { token: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -39,6 +41,7 @@ function AppNavigation() {
         <Stack.Screen name="Trombinoscope" component={TrombinoscopePage} />
         <Stack.Screen name="Email" component={EmailPage} />
         <Stack.Screen name="Chat" component={ChatPage} />
+        <Stack.Screen name="Todo" component={TodoPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
