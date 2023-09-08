@@ -28,6 +28,7 @@ import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
 import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
 import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 import { Animated, FlatList, View } from 'react-native';
+import Paginator from '../Paginator/Paginator';
 
 type Props = {
   customWidgets: CustomWidgetProps[];
@@ -153,6 +154,7 @@ export const AddWidget: React.FC<Props> = ({
                   { useNativeDriver: false },
                 )}
               />
+              <Paginator data={[1, 2]} scrollX={scrollX} />
             </SelectSizeContainer>
           </ModalContent>
         </ModalContainer>
