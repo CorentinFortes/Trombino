@@ -1,11 +1,13 @@
 // Navigation.js
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginPage, HomePage } from '../../pages';
+import React from 'react';
+import { EmployeeDetail } from '../../api/api';
+import { HomePage, LoginPage } from '../../pages';
+import { ChatPage } from '../../pages/chat/ChatPage.component';
+import { EmailPage } from '../../pages/email/EmailPage.component';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
-import { EmailPage } from '../../pages/email/EmailPage.component';
 import { CalendarPage } from '../../pages/calendar/CalendarPage';
 
 export type RootStackParamList = {
@@ -21,6 +23,7 @@ export type RootStackParamList = {
   };
   Email: { token: string; unread?: number };
   Calendar: { token: string };
+  Chat: { token: string; targetEmployee: EmployeeDetail; fromChat: boolean };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -38,6 +41,7 @@ function AppNavigation() {
         <Stack.Screen name="Trombinoscope" component={TrombinoscopePage} />
         <Stack.Screen name="Email" component={EmailPage} />
         <Stack.Screen name="Calendar" component={CalendarPage} />
+        <Stack.Screen name="Chat" component={ChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

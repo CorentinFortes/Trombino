@@ -1,4 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
+import * as Location from 'expo-location';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Login } from '../../api/api';
@@ -16,8 +18,6 @@ import {
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
-import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 

@@ -118,3 +118,11 @@ export const ContactButtonText = styled.Text`
 export const ArrowButton = styled.TouchableOpacity`
   align-self: flex-start;
 `;
+
+export const ButtonContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+`;

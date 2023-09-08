@@ -32,7 +32,7 @@ export const EmailPage: React.FC<EmailProps> = ({ route, navigation }) => {
   return (
     <PageContainer>
       <TouchableOpacity onPress={() => navigation.navigate('Home', { token })}>
-        <AntDesign name="arrowleft" size={24} color="black" />
+        <AntDesign name="arrowleft" size={32} color="black" />
       </TouchableOpacity>
       <TopContent>
         <TopLeftWrapper>

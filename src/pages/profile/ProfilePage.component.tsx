@@ -15,6 +15,7 @@ import { LogoIcon } from '../../svg/LogoIcon';
 import { PageContainer } from '../home/HomePage.style';
 import {
   ArrowButton,
+  ButtonContainer,
   ContactButton,
   ContactButtonText,
   ImageContainer,
@@ -44,15 +45,15 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
         getMe(token).then((me) => {
           if (me !== undefined) {
             me.surname = me.surname.toUpperCase();
+            setMe(me);
           }
-          setMe(me);
         });
       } else {
         GetEmployee(token, route.params.id).then((me) => {
           if (me !== undefined) {
             me.surname = me.surname.toUpperCase();
+            setMe(me);
           }
-          setMe(me);
         });
       }
       GetEmployees(token).then((employees) => {
@@ -62,6 +63,8 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
       });
     }
   }, [token]);
+
+  const id = route.params.id;
 
   return (
     <PageContainer>
@@ -74,7 +77,7 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
             )
           }
         >
-          <AntDesign name="arrowleft" size={24} color="black" />
+          <AntDesign name="arrowleft" size={32} color="black" />
         </ArrowButton>
         <TopContainer>
           <LogoIcon />
@@ -112,12 +115,27 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
           </LineInfoContainer>
         </ProfileInfoContainer>
 
-        {route.params.id !== undefined && (
-          <ContactButton onPress={() => Linking.openURL('mailto:' + me?.email)}>
-            <ContactButtonText>Contact</ContactButtonText>
-          </ContactButton>
-        )}
-        {route.params.id === undefined && (
+        {id && me ? (
+          <ButtonContainer>
+            <ContactButton
+              onPress={() => Linking.openURL('mailto:' + me?.email)}
+            >
+              <ContactButtonText>Contact</ContactButtonText>
+            </ContactButton>
+            <ContactButton
+              onPress={() =>
+                navigation.navigate('Chat', {
+                  token,
+                  targetEmployee: me,
+                  fromChat: false,
+                })
+              }
+            >
+              <ContactButtonText>Message</ContactButtonText>
+            </ContactButton>
+          </ButtonContainer>
+        ) : null}
+        {!id && (
           <LogoutButton
             onPress={() => {
               AsyncStorage.removeItem('token');
