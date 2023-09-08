@@ -100,7 +100,7 @@ export const MessageContainer = styled.View<{ receiver: boolean }>`
 export const Avatar = styled.Image`
   width: 50px;
   height: 50px;
-  border-radius: 100%;
+  border-radius: 100px;
 `;
 
 export const AvatarContainer = styled.View`

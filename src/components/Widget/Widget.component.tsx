@@ -34,12 +34,12 @@ const WidgetComponent: React.FC<WidgetType> = ({
   ...props
 }) => {
   const changeSize = (targetSize: WidgetSize) => {
-    setCurrentSize(targetSize);
-    setOpenSizeModal(false);
+    setCurrentSize!(targetSize);
+    setOpenSizeModal!(false);
   };
   const deleteWidget = () => {
-    setOpenSizeModal(false);
-    deleteFunction(id);
+    setOpenSizeModal!(false);
+    deleteFunction!(id!);
   };
   return (
     <>
@@ -57,7 +57,7 @@ const WidgetComponent: React.FC<WidgetType> = ({
             <SelectSizeContainer>
               <ModalHeader>
                 <ModalTitle>Select your size</ModalTitle>
-                <CrossButton onPress={() => setOpenSizeModal(false)}>
+                <CrossButton onPress={() => setOpenSizeModal!(false)}>
                   <AntDesign name="close" size={24} color="#1E1E1E" />
                 </CrossButton>
               </ModalHeader>
