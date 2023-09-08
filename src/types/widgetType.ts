@@ -15,10 +15,18 @@ export type WidgetType = {
   id?: number;
   onLongPress?: () => void;
   onPress?: () => void;
-  deleteFunction?: (id: number) => void;
+  deleteFunction: (id: number) => void;
+  setCurrentSize: (size: WidgetSize) => void;
+  setOpenSizeModal: (open: boolean) => void;
+  openSizeModal: boolean;
 };
 
-export type WidgetsType = 'Mail' | 'Trombino' | 'Weather' | 'Calendar';
+export type WidgetsType =
+  | 'Mail'
+  | 'Trombino'
+  | 'Weather'
+  | 'Calendar'
+  | 'Cloud';
 
 export type CustomWidgetProps = {
   id: number;

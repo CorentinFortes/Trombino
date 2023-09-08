@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Text } from 'react-native';
-import { WidgetSize, WidgetType } from '../../types/widgetType';
+import { WidgetType } from '../../types/widgetType';
 import {
   EmployeeContainer,
   TextMedium,
@@ -10,26 +10,10 @@ import {
   TextRegular,
   TeamTextContainer,
 } from './TrombinoscopeWidget.style';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Employee, GetEmployeeImage } from '../../api/api';
 import { EmployeeCard } from '../EmployeeCard/EmployeeCard.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {
-  CrossButton,
-  DeleteButton,
-  DeleteButtonText,
-  ModalContainer,
-  ModalContent,
-  ModalHeader,
-  ModalTitle,
-  SelectSizeContainer,
-  SizeButton,
-  SizeContainer,
-} from '../Widget/Widget.style';
-import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
-import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
-import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
-import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 
 type TrombinoWidgetProps = {
   employees: Employee[] | undefined;
@@ -51,23 +35,12 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
-  const changeSize = (targetSize: WidgetSize) => {
-    setCurrentSize(targetSize);
-    setOpenSizeModal(false);
-  };
-
   React.useEffect(() => {
     if (employees != undefined) {
       setLastTeamMember(employees[employees.length - 1].name);
       setNbMembers(employees.length);
     }
   }, [employees]);
-  const deleteWidget = () => {
-    setOpenSizeModal(false);
-    if (deleteFunction && id) {
-      deleteFunction(id);
-    }
-  };
   return (
     <>
       <TouchableOpacity
@@ -79,6 +52,9 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
           icon={<MaterialCommunityIcons name="wall" size={24} color="black" />}
           id={id}
           deleteFunction={deleteFunction}
+          setCurrentSize={setCurrentSize}
+          setOpenSizeModal={setOpenSizeModal}
+          openSizeModal={openSizeModal}
         >
           <>
             {currentSize === 'LARGE' && (
@@ -196,39 +172,6 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
           </>
         </Widget>
       </TouchableOpacity>
-      {openSizeModal && (
-        <ModalContainer transparent>
-          <ModalContent>
-            <SelectSizeContainer>
-              <ModalHeader>
-                <ModalTitle>Select your size</ModalTitle>
-                <CrossButton onPress={() => setOpenSizeModal(false)}>
-                  <AntDesign name="close" size={24} color="#1E1E1E" />
-                </CrossButton>
-              </ModalHeader>
-              <SizeContainer>
-                <SizeButton onPress={() => changeSize(WidgetSize.LARGE)}>
-                  <LargeSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.MEDIUM)}>
-                  <MediumSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.SMALL)}>
-                  <SmallSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.HEADER)}>
-                  <HeaderSizeIcon />
-                </SizeButton>
-              </SizeContainer>
-              {id != -1 && (
-                <DeleteButton onPress={() => deleteWidget()}>
-                  <DeleteButtonText>Delete</DeleteButtonText>
-                </DeleteButton>
-              )}
-            </SelectSizeContainer>
-          </ModalContent>
-        </ModalContainer>
-      )}
     </>
   );
 };

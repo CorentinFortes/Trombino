@@ -32,7 +32,7 @@ import {
   SectionContainer,
   SectionTitle,
 } from './HomePage.style';
-import { ChatWidget } from '../../components/ChatWidget';
+import { CloudWidget } from '../../components/CloudWidget';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -204,6 +204,14 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   key={widget.id}
                   size={widget.size}
                   deleteFunction={deleteWidget}
+                />
+              ) : widget.widget === 'Cloud' ? (
+                <CloudWidget
+                  id={widget.id}
+                  key={widget.id}
+                  size={widget.size}
+                  deleteFunction={deleteWidget}
+                  downloading={false}
                 />
               ) : null,
             )}
