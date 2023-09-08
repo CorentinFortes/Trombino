@@ -221,7 +221,7 @@ const CalendarWidgetComponent: React.FC<CloudWidgetProps> = ({
           <ModalContent>
             <SelectSizeContainer>
               <ModalHeader>
-                <ModalTitle>Select your size</ModalTitle>
+                <ModalTitle>Select your zdzd</ModalTitle>
                 <CrossButton onPress={() => setOpenSizeModal(false)}>
                   <AntDesign name="close" size={24} color="#1E1E1E" />
                 </CrossButton>

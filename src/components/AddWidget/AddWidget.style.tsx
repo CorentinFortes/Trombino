@@ -1,4 +1,4 @@
-import { Modal } from 'react-native';
+import { Dimensions, Modal } from 'react-native';
 import styled from 'styled-components/native';
 
 export const AddWidgetContainer = styled.TouchableOpacity`
@@ -59,13 +59,16 @@ export const ModalTitle = styled.Text`
   color: #1e1e1e;
 `;
 
-export const SizeContainer = styled.View`
+export const SizeContainer = styled.View<{ center: boolean }>`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
   gap: 30px;
   padding-top: 10px;
+  max-width: ${Dimensions.get('window').width - 85}px;
+  min-width: ${Dimensions.get('window').width - 85}px;
+  justify-content: ${(props) => (props.center ? 'center' : 'flex-start')};
 `;
 
 export const SizeButton = styled.TouchableOpacity`
