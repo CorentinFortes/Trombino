@@ -15,7 +15,12 @@ const WidgetComponent: React.FC<WidgetType> = ({
 }) => {
   return (
     <>
-      <WidgetContainer size={size} onLongPress={onLongPress} {...props}>
+      <WidgetContainer
+        size={size}
+        onPress={onPress}
+        onLongPress={onLongPress}
+        {...props}
+      >
         {children}
       </WidgetContainer>
     </>

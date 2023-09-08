@@ -64,7 +64,9 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
   }, [employees]);
   const deleteWidget = () => {
     setOpenSizeModal(false);
-    deleteFunction(id);
+    if (deleteFunction && id) {
+      deleteFunction(id);
+    }
   };
   return (
     <>
