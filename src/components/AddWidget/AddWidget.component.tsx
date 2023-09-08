@@ -72,6 +72,8 @@ export const AddWidget: React.FC<Props> = ({
                 </CrossButton>
               </ModalHeader>
               <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 renderItem={() => (
                   <View
                     style={{ display: 'flex', flexDirection: 'row', gap: 10 }}

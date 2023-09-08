@@ -4,22 +4,32 @@ import { featherIconType } from '../../types/Icon/icon';
 import { WeatherModeType, WeatherType } from '../../types/Widget/weather';
 import { WidgetType } from '../../types/widgetType';
 import {
+  CloudIcon,
   HeaderContent,
   HeaderLeftWrapper,
   InfoContent,
   InfosWrapper,
+  LargeContainer,
   LargeContent,
   LocalizationText,
   MediumBotContent,
+  MoonIcon,
+  RainIcon,
   SmallContent,
+  SnowIcon,
+  SunIcon,
   TemperatureText,
+  ThunderIcon,
   TitleWidget,
   TopContent,
   TopLeftContent,
   WeatherGroup,
+  WeatherIconContainer,
   WeatherText,
   Widget,
+  WindIcon,
 } from './WeatherWidget.style';
+import { WeatherSunIcon } from '../../svg/WeatherSunIcon';
 
 const WeatherIcon: { [key in WeatherModeType]: featherIconType } = {
   Clear: 'sun',
@@ -29,6 +39,16 @@ const WeatherIcon: { [key in WeatherModeType]: featherIconType } = {
   Thunderstorm: 'cloud-lightning',
   Drizzle: 'cloud-drizzle',
   Mist: 'wind',
+};
+
+const WeatherImage: { [key in WeatherModeType]: React.ReactNode } = {
+  Clear: <SunIcon />,
+  Clouds: <CloudIcon />,
+  Rain: <RainIcon />,
+  Snow: <SnowIcon />,
+  Thunderstorm: <ThunderIcon />,
+  Drizzle: <RainIcon />,
+  Mist: <WindIcon />,
 };
 
 const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
@@ -76,45 +96,48 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
       >
         <>
           {currentSize === 'LARGE' && (
-            <LargeContent>
-              <TopContent>
-                <TopLeftContent>
-                  <Ionicons
-                    name="cloud-outline"
-                    size={24}
-                    color={getTextColor()}
-                  />
-                  <TitleWidget color={getTextColor()}>Weather</TitleWidget>
-                </TopLeftContent>
-              </TopContent>
-              <WeatherGroup>
-                <InfoContent>
-                  <Ionicons
-                    name="location-sharp"
-                    size={24}
-                    color={getTextColor()}
-                  />
-                  <LocalizationText color={getTextColor()} size="large">
-                    {localization}
-                  </LocalizationText>
-                </InfoContent>
-              </WeatherGroup>
-              <WeatherGroup>
-                <InfoContent>
-                  <Feather
-                    name={WeatherIcon[weather]}
-                    size={24}
-                    color={getTextColor()}
-                  />
-                  <WeatherText color={getTextColor()} size="large">
-                    {description}
-                  </WeatherText>
-                </InfoContent>
-                <TemperatureText color={getTemperatureColor()}>
-                  {temperature}°
-                </TemperatureText>
-              </WeatherGroup>
-            </LargeContent>
+            <LargeContainer>
+              <LargeContent>
+                <TopContent>
+                  <TopLeftContent>
+                    <Ionicons
+                      name="cloud-outline"
+                      size={24}
+                      color={getTextColor()}
+                    />
+                    <TitleWidget color={getTextColor()}>Weather</TitleWidget>
+                  </TopLeftContent>
+                </TopContent>
+                <WeatherGroup>
+                  <InfoContent>
+                    <Ionicons
+                      name="location-sharp"
+                      size={24}
+                      color={getTextColor()}
+                    />
+                    <LocalizationText color={getTextColor()} size="large">
+                      {localization}
+                    </LocalizationText>
+                  </InfoContent>
+                </WeatherGroup>
+                <WeatherGroup>
+                  <InfoContent>
+                    <Feather
+                      name={WeatherIcon[weather]}
+                      size={24}
+                      color={getTextColor()}
+                    />
+                    <WeatherText color={getTextColor()} size="large">
+                      {description}
+                    </WeatherText>
+                  </InfoContent>
+                  <TemperatureText color={getTemperatureColor()}>
+                    {temperature}°
+                  </TemperatureText>
+                </WeatherGroup>
+              </LargeContent>
+              {night ? <MoonIcon /> : WeatherImage[weather]}
+            </LargeContainer>
           )}
           {currentSize === 'HEADER' && (
             <HeaderContent>

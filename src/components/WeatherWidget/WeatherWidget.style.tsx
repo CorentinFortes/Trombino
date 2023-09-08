@@ -1,6 +1,12 @@
 import styled from 'styled-components/native';
 import { Widget as _Widget } from '../Widget';
 import { WeatherModeType } from '../../types/Widget/weather';
+import { WeatherSunIcon } from '../../svg/WeatherSunIcon';
+import { WeatherCloudIcon } from '../../svg/WeatherCloudIcon';
+import { WeatherSnowIcon } from '../../svg/WeatherSnowIcon';
+import { WeatherThunderIcon } from '../../svg/WeatherThunderIcon';
+import { WeatherWindIcon } from '../../svg/WeatherWindIcon';
+import { WeatherMoonIcon } from '../../svg/WeatherMoonIcon';
 
 const WeatherBackground: { [key in WeatherModeType]: string } = {
   Clear: '#7bd0ff',
@@ -30,6 +36,13 @@ export const LargeContent = styled.View`
   width: 100%;
   height: 100%;
   padding: 20px;
+`;
+
+export const LargeContainer = styled.View`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: 'hidden';
 `;
 
 export const HeaderContent = styled.View`
@@ -151,4 +164,46 @@ export const MediumBotContent = styled.View`
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
+`;
+
+export const SunIcon = styled(WeatherSunIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+`;
+
+export const CloudIcon = styled(WeatherCloudIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+`;
+
+export const RainIcon = styled(WeatherCloudIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+`;
+
+export const SnowIcon = styled(WeatherSnowIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+`;
+
+export const ThunderIcon = styled(WeatherThunderIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+`;
+
+export const WindIcon = styled(WeatherWindIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+`;
+
+export const MoonIcon = styled(WeatherMoonIcon)`
+  position: absolute;
+  right: -30px;
+  bottom: 0;
 `;
