@@ -60,3 +60,11 @@ export const getDate = () => {
   const date = `${tmp[2]}-${tmp[0]}-${tmp[1]}`;
   return date;
 };
+
+export const getFulldate = () => {
+  const tmp = moment().format('l').split('/');
+  const date = `${tmp[2]}-${tmp[0].length === 1 ? '0' + tmp[0] : tmp[0]}-${
+    tmp[1].length === 1 ? '0' + tmp[1] : tmp[1]
+  }`;
+  return date;
+};
