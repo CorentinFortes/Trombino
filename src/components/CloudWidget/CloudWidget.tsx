@@ -1,35 +1,11 @@
 import React, { useState } from 'react';
-import {
-  AntDesign,
-  Feather,
-  Ionicons,
-  MaterialCommunityIcons,
-  Octicons,
-} from '@expo/vector-icons';
-import { WidgetSize, WidgetType } from '../../types/widgetType';
+import { Feather, Ionicons, Octicons } from '@expo/vector-icons';
+import { WidgetType } from '../../types/widgetType';
 import { TouchableOpacity } from 'react-native';
 import {
-  CrossButton,
-  DeleteButton,
-  DeleteButtonText,
-  ModalContainer,
-  ModalContent,
-  ModalHeader,
-  ModalTitle,
-  SelectSizeContainer,
-  SizeButton,
-  SizeContainer,
-} from '../Widget/Widget.style';
-import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
-import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
-import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
-import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
-import {
-  EventContainer,
   FlexColumnContainer,
   HeaderContainer,
   HorizontalContainer,
-  MediumContainer,
   SmallContainer,
   TextMedium,
   TextRegular,
@@ -38,7 +14,6 @@ import {
   UploadContainer,
   Widget,
 } from './CloudWidget.style';
-import moment from 'moment';
 
 type CloudWidgetProps = {
   downloading: boolean;
@@ -54,15 +29,6 @@ const CalendarWidgetComponent: React.FC<CloudWidgetProps> = ({
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
-  const changeSize = (targetSize: WidgetSize) => {
-    setCurrentSize(targetSize);
-    setOpenSizeModal(false);
-  };
-  const date = moment().format('L');
-  const deleteWidget = () => {
-    setOpenSizeModal(false);
-    deleteFunction(id);
-  };
   return (
     <>
       <TouchableOpacity onLongPress={() => setOpenSizeModal(true)}>
@@ -72,6 +38,11 @@ const CalendarWidgetComponent: React.FC<CloudWidgetProps> = ({
             <Ionicons name="cloud-download-outline" size={24} color="black" />
           }
           onLongPress={() => setOpenSizeModal(true)}
+          setCurrentSize={setCurrentSize}
+          setOpenSizeModal={setOpenSizeModal}
+          openSizeModal={openSizeModal}
+          deleteFunction={deleteFunction}
+          id={id}
         >
           {currentSize === 'LARGE' && (
             <>
@@ -216,37 +187,6 @@ const CalendarWidgetComponent: React.FC<CloudWidgetProps> = ({
           )}
         </Widget>
       </TouchableOpacity>
-      {openSizeModal && (
-        <ModalContainer transparent>
-          <ModalContent>
-            <SelectSizeContainer>
-              <ModalHeader>
-                <ModalTitle>Select your zdzd</ModalTitle>
-                <CrossButton onPress={() => setOpenSizeModal(false)}>
-                  <AntDesign name="close" size={24} color="#1E1E1E" />
-                </CrossButton>
-              </ModalHeader>
-              <SizeContainer>
-                <SizeButton onPress={() => changeSize(WidgetSize.LARGE)}>
-                  <LargeSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.MEDIUM)}>
-                  <MediumSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.SMALL)}>
-                  <SmallSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.HEADER)}>
-                  <HeaderSizeIcon />
-                </SizeButton>
-              </SizeContainer>
-              <DeleteButton onPress={() => deleteWidget()}>
-                <DeleteButtonText>Delete</DeleteButtonText>
-              </DeleteButton>
-            </SelectSizeContainer>
-          </ModalContent>
-        </ModalContainer>
-      )}
     </>
   );
 };

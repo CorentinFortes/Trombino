@@ -1,23 +1,7 @@
 import React, { useState } from 'react';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
-import { WidgetSize, WidgetType } from '../../types/widgetType';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { WidgetType } from '../../types/widgetType';
 import { TouchableOpacity } from 'react-native';
-import {
-  CrossButton,
-  DeleteButton,
-  DeleteButtonText,
-  ModalContainer,
-  ModalContent,
-  ModalHeader,
-  ModalTitle,
-  SelectSizeContainer,
-  SizeButton,
-  SizeContainer,
-} from '../Widget/Widget.style';
-import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
-import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
-import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
-import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import {
   EventContainer,
   FlexColumnContainer,
@@ -39,15 +23,8 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
-  const changeSize = (targetSize: WidgetSize) => {
-    setCurrentSize(targetSize);
-    setOpenSizeModal(false);
-  };
   const date = moment().format('L');
-  const deleteWidget = () => {
-    setOpenSizeModal(false);
-    deleteFunction(id);
-  };
+
   return (
     <>
       <TouchableOpacity onLongPress={() => setOpenSizeModal(true)}>
@@ -57,6 +34,11 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
             <MaterialCommunityIcons name="calendar" size={24} color="black" />
           }
           onLongPress={() => setOpenSizeModal(true)}
+          setCurrentSize={setCurrentSize}
+          setOpenSizeModal={setOpenSizeModal}
+          openSizeModal={openSizeModal}
+          id={id}
+          deleteFunction={deleteFunction}
         >
           {currentSize === 'LARGE' && (
             <>
@@ -141,37 +123,6 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
           )}
         </Widget>
       </TouchableOpacity>
-      {openSizeModal && (
-        <ModalContainer transparent>
-          <ModalContent>
-            <SelectSizeContainer>
-              <ModalHeader>
-                <ModalTitle>Select your size</ModalTitle>
-                <CrossButton onPress={() => setOpenSizeModal(false)}>
-                  <AntDesign name="close" size={24} color="#1E1E1E" />
-                </CrossButton>
-              </ModalHeader>
-              <SizeContainer>
-                <SizeButton onPress={() => changeSize(WidgetSize.LARGE)}>
-                  <LargeSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.MEDIUM)}>
-                  <MediumSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.SMALL)}>
-                  <SmallSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.HEADER)}>
-                  <HeaderSizeIcon />
-                </SizeButton>
-              </SizeContainer>
-              <DeleteButton onPress={() => deleteWidget()}>
-                <DeleteButtonText>Delete</DeleteButtonText>
-              </DeleteButton>
-            </SelectSizeContainer>
-          </ModalContent>
-        </ModalContainer>
-      )}
     </>
   );
 };

@@ -1,24 +1,8 @@
-import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
-import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
-import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
-import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
 import { featherIconType } from '../../types/Icon/icon';
 import { WeatherModeType, WeatherType } from '../../types/Widget/weather';
-import { WidgetSize, WidgetType } from '../../types/widgetType';
-import {
-  CrossButton,
-  DeleteButton,
-  DeleteButtonText,
-  ModalContainer,
-  ModalContent,
-  ModalHeader,
-  ModalTitle,
-  SelectSizeContainer,
-  SizeButton,
-  SizeContainer,
-} from '../Widget/Widget.style';
+import { WidgetType } from '../../types/widgetType';
 import {
   HeaderContent,
   HeaderLeftWrapper,
@@ -62,10 +46,6 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
-  const changeSize = (targetSize: WidgetSize) => {
-    setCurrentSize(targetSize);
-    setOpenSizeModal(false);
-  };
   const getTextColor = () => {
     if (night) {
       return '#69A1BF';
@@ -77,10 +57,6 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
       return 'rgba(105, 161, 191, 0.49)';
     }
     return 'rgba(12, 50, 71, 0.49)';
-  };
-  const deleteWidget = () => {
-    setOpenSizeModal(false);
-    deleteFunction(id);
   };
   return (
     <>
@@ -94,6 +70,9 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
         onLongPress={() => setOpenSizeModal(true)}
         id={id}
         deleteFunction={deleteFunction}
+        setCurrentSize={setCurrentSize}
+        setOpenSizeModal={setOpenSizeModal}
+        openSizeModal={openSizeModal}
       >
         <>
           {currentSize === 'LARGE' && (
@@ -237,37 +216,6 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
           )}
         </>
       </Widget>
-      {openSizeModal && (
-        <ModalContainer transparent>
-          <ModalContent>
-            <SelectSizeContainer>
-              <ModalHeader>
-                <ModalTitle>Select your size</ModalTitle>
-                <CrossButton onPress={() => setOpenSizeModal(false)}>
-                  <AntDesign name="close" size={24} color="#1E1E1E" />
-                </CrossButton>
-              </ModalHeader>
-              <SizeContainer>
-                <SizeButton onPress={() => changeSize(WidgetSize.LARGE)}>
-                  <LargeSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.MEDIUM)}>
-                  <MediumSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.SMALL)}>
-                  <SmallSizeIcon />
-                </SizeButton>
-                <SizeButton onPress={() => changeSize(WidgetSize.HEADER)}>
-                  <HeaderSizeIcon />
-                </SizeButton>
-              </SizeContainer>
-              <DeleteButton onPress={() => deleteWidget()}>
-                <DeleteButtonText>Delete</DeleteButtonText>
-              </DeleteButton>
-            </SelectSizeContainer>
-          </ModalContent>
-        </ModalContainer>
-      )}
     </>
   );
 };

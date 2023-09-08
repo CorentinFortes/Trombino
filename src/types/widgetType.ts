@@ -16,6 +16,9 @@ export type WidgetType = {
   onLongPress?: () => void;
   onPress?: () => void;
   deleteFunction: (id: number) => void;
+  setCurrentSize: (size: WidgetSize) => void;
+  setOpenSizeModal: (open: boolean) => void;
+  openSizeModal: boolean;
 };
 
 export type WidgetsType =
