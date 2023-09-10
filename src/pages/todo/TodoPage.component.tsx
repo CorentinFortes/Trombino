@@ -1,7 +1,8 @@
 import { AntDesign, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 import { EmployeeDetail, getMe } from '../../api/api';
 import { addTodo } from '../../api/todo';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
@@ -13,18 +14,15 @@ import {
   ConnectButton,
   ConnectButtonText,
   CrossButton,
-  ItemContainer,
-  ItemText,
   ModalContainer,
   ModalContent,
   ModalHeader,
   PageContainer,
   TaskCircle,
-  TaskTypeDropdown,
   TitleText,
   TopContent,
 } from './TodoPage.style';
-import { Dropdown } from 'react-native-element-dropdown';
+import { TodoType } from '../../types/todo';
 
 type TodoProps = StackScreenProps<RootStackParamList, 'Todo'>;
 
@@ -97,8 +95,7 @@ export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
   const [typeValue, setTypeValue] = useState<'urgent' | 'important' | 'normal'>(
     'normal',
   );
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  const [todos, setTodos] = useState<TodoType[]>([]);
 
   useEffect(() => {
     if (token) {
@@ -176,11 +173,8 @@ export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
                 labelField="label"
                 valueField="value"
                 value={typeValue}
-                placeholder={!isFocus ? 'Select item' : '...'}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
+                placeholder={'Select item'}
                 onChange={(item) => {
-                  setValue(item.value);
                   setTypeValue(item.value);
                 }}
                 renderLeftIcon={() => <TaskCircle type={typeValue} />}
