@@ -22,6 +22,7 @@ import {
   Feather,
   Ionicons,
   MaterialCommunityIcons,
+  Octicons,
 } from '@expo/vector-icons';
 import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
@@ -42,7 +43,6 @@ export const AddWidget: React.FC<Props> = ({
   const [step, setStep] = React.useState<number>(0);
   const [widgetType, setWidgetType] = React.useState<WidgetsType>();
   const [widgetSize, setWidgetSize] = React.useState<WidgetSize>();
-  const [currentIndex, setCurrentIndex] = React.useState<number>(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const addNewWidget = (sizeTmp: WidgetSize) => {
     setWidgetSize(sizeTmp);
@@ -142,12 +142,20 @@ export const AddWidget: React.FC<Props> = ({
                         />
                         <WidgetTitle>Cloud</WidgetTitle>
                       </WidgetButton>
+                      <WidgetButton
+                        onPress={() => {
+                          setWidgetType('Todo');
+                          setStep(2);
+                        }}
+                      >
+                        <Octicons name="checklist" size={24} color="#1E1E1E" />
+                        <WidgetTitle>Todo</WidgetTitle>
+                      </WidgetButton>
                     </SizeContainer>
                   </View>
                 )}
                 data={[1]}
                 horizontal
-                showsHorizontalScrollIndicator
                 pagingEnabled
                 bounces={false}
                 // keyExtractor={(item) => item.id}

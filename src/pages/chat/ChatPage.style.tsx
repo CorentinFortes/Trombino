@@ -83,7 +83,7 @@ export const TopContent = styled.View`
 
 export const TitleText = styled.Text`
   color: #08374b;
-  font-family: 'Rubik_Regular';
+  font-family: 'Rubik_SemiBold';
   font-size: 24px;
   font-weight: 500;
 `;

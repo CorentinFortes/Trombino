@@ -26,7 +26,8 @@ export type WidgetsType =
   | 'Trombino'
   | 'Weather'
   | 'Calendar'
-  | 'Cloud';
+  | 'Cloud'
+  | 'Todo';
 
 export type CustomWidgetProps = {
   id: number;
