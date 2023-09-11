@@ -10,6 +10,7 @@ import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
 import { TodoPage } from '../../pages/todo/TodoPage.component';
 import { TodoType } from '../../types/todo';
+import { CalendarPage } from '../../pages/calendar/CalendarPage';
 
 export type RootStackParamList = {
   Home: { token: string };
@@ -23,6 +24,7 @@ export type RootStackParamList = {
     token: string;
   };
   Email: { token: string; unread?: number };
+  Calendar: { token: string };
   Chat: { token: string; targetEmployee: EmployeeDetail; fromChat: boolean };
   Todo: { token: string; profile: EmployeeDetail; todos: TodoType[] };
 };
@@ -41,6 +43,7 @@ function AppNavigation() {
         <Stack.Screen name="Profile" component={ProfilePage} />
         <Stack.Screen name="Trombinoscope" component={TrombinoscopePage} />
         <Stack.Screen name="Email" component={EmailPage} />
+        <Stack.Screen name="Calendar" component={CalendarPage} />
         <Stack.Screen name="Chat" component={ChatPage} />
         <Stack.Screen name="Todo" component={TodoPage} />
       </Stack.Navigator>

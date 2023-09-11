@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { WidgetType } from '../../types/widgetType';
 import { TouchableOpacity } from 'react-native';
@@ -13,21 +13,39 @@ import {
   Widget,
 } from './CalendarWidget.style';
 import moment from 'moment';
+import { getNbEvents } from '.';
+import { getEvents, getFulldate } from '../../pages/calendar';
 
 const CalendarWidgetComponent: React.FC<WidgetType> = ({
   size,
   deleteFunction,
   id,
+  onPress,
 }) => {
   const [openSizeModal, setOpenSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
   const date = moment().format('L');
+  const [nbEvents, setNbEvents] = useState<number>(0);
+
+  useEffect(() => {
+    getEvents().then((events) => {
+      if (events.nbEvents > 0) {
+        const tmpDate = getFulldate();
+        if (events && events.events[tmpDate]) {
+          setNbEvents(events.events[tmpDate].length);
+        }
+      }
+    });
+  }, []);
 
   return (
     <>
-      <TouchableOpacity onLongPress={() => setOpenSizeModal(true)}>
+      <TouchableOpacity
+        onLongPress={() => setOpenSizeModal(true)}
+        onPress={onPress}
+      >
         <Widget
           size={currentSize}
           icon={
@@ -39,6 +57,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
           openSizeModal={openSizeModal}
           id={id}
           deleteFunction={deleteFunction}
+          onPress={onPress}
         >
           {currentSize === 'LARGE' && (
             <>
@@ -57,7 +76,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
                   color="white"
                 />
                 <TextMedium color="#FFF" fontSize={12}>
-                  1 event
+                  {nbEvents} event today!
                 </TextMedium>
               </EventContainer>
               <TextMedium
@@ -78,7 +97,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
                     size={18}
                     color="#49136A"
                   />
-                  <TextMedium fontSize={14}>1 event today!</TextMedium>
+                  <TextMedium fontSize={14}>{nbEvents} event today!</TextMedium>
                 </TopContent>
                 <TextRegular fontSize={10} color="#9970B3">
                   {date}
@@ -96,7 +115,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
                 />
                 <TextMedium fontSize={12}>Calendar</TextMedium>
               </TopContent>
-              <TextMedium fontSize={32}>1</TextMedium>
+              <TextMedium fontSize={32}>{nbEvents}</TextMedium>
               <FlexColumnContainer>
                 <TextMedium fontSize={14}>Event Today</TextMedium>
                 <TextRegular fontSize={12}>{date}</TextRegular>
@@ -115,7 +134,7 @@ const CalendarWidgetComponent: React.FC<WidgetType> = ({
                   <TextMedium fontSize={12}>Calendar</TextMedium>
                 </TopContent>
                 <HeaderContainer style={{ paddingTop: 5 }}>
-                  <TextMedium fontSize={14}>1 event today!</TextMedium>
+                  <TextMedium fontSize={14}>{nbEvents} event today!</TextMedium>
                   <TextRegular fontSize={16}>{date}</TextRegular>
                 </HeaderContainer>
               </MediumContainer>

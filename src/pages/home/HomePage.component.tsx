@@ -212,6 +212,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                     key={widget.id}
                     size={widget.size}
                     deleteFunction={deleteWidget}
+                    onPress={() => navigation.navigate('Calendar', { token })}
                   />
                 ) : widget.widget === 'Cloud' ? (
                   <CloudWidget
