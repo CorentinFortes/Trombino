@@ -9,6 +9,7 @@ import { EmailPage } from '../../pages/email/EmailPage.component';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
 import { TodoPage } from '../../pages/todo/TodoPage.component';
+import { TodoType } from '../../types/todo';
 
 export type RootStackParamList = {
   Home: { token: string };
@@ -23,7 +24,7 @@ export type RootStackParamList = {
   };
   Email: { token: string; unread?: number };
   Chat: { token: string; targetEmployee: EmployeeDetail; fromChat: boolean };
-  Todo: { token: string };
+  Todo: { token: string; profile: EmployeeDetail; todos: TodoType[] };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

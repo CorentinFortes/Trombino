@@ -1,64 +1,160 @@
-import React, { useRef } from 'react';
-import { Swipeable } from 'react-native-gesture-handler';
-import { Animated } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import React, { useRef, useState } from 'react';
 import {
+  AnimatedText,
+  ButtonsContainer,
+  CancelButton,
+  CancelButtonText,
+  ConfirmButtonText,
+  ConfirmDeleteContainer,
+  ConfirmDeleteText,
+  ConfirmtButton,
+  LeftActionWrapper,
+  ModalContainer,
+  ModalContent,
+  RightActionWrapper,
+  SwipeableContainer,
   TaskCardContainer,
   TaskCardContent,
   TaskDescription,
   TaskTexts,
   TaskTitle,
   TaskTypePoint,
-  ValidationContainer,
-  ValidationText,
 } from './TaskCard.style';
-import { Ionicons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 
 type TaskProps = {
+  id: string;
   title: string;
   description: string;
   done: boolean;
   type: 'urgent' | 'important' | 'normal';
   small?: boolean;
+  toRemove?: (id: string) => Promise<void>;
+  toDone?: (id: string, done: boolean) => Promise<void>;
+};
+
+const LeftActions = (done: boolean) => {
+  return (
+    <LeftActionWrapper>
+      <AnimatedText>{done ? 'Not done' : 'Done'}</AnimatedText>
+    </LeftActionWrapper>
+  );
+};
+
+const RightActions = () => {
+  return (
+    <RightActionWrapper>
+      <AnimatedText>Delete</AnimatedText>
+    </RightActionWrapper>
+  );
 };
 
 const TaskComponent: React.FC<TaskProps> = ({
+  id,
   title,
   description,
   done,
   type,
   small,
+  toRemove,
+  toDone,
+  ...props
 }) => {
-  const animatedValue = useRef(new Animated.Value(0)).current;
-
-  const rightAction = () => {
-    return (
-      <ValidationContainer>
-        <ValidationText>Make done</ValidationText>
-      </ValidationContainer>
-    );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDoneModal, setIsDoneModal] = useState(false);
+  const swipeableRef = useRef(null);
+  const animation: React.LegacyRef<LottieView> = useRef(null);
+  const onSwipe = (direction: 'left' | 'right') => {
+    if (direction === 'left' && toDone) {
+      if (done === false) {
+        setIsDoneModal(true);
+        animation.current?.play();
+      }
+      toDone(id, !done);
+      swipeableRef.current.close();
+    }
+    if (direction === 'right') {
+      setIsModalOpen(true);
+    }
   };
-
+  const deleteTask = () => {
+    if (toRemove) {
+      toRemove(id);
+    }
+    setIsModalOpen(false);
+    swipeableRef.current.close();
+  };
   return (
-    <TaskCardContainer small={small}>
-      <Swipeable
-        renderRightActions={rightAction}
-        onSwipeableOpen={console.log('open')}
-      >
-        <TaskCardContent small={small}>
-          {done ? (
-            <Ionicons name="checkmark-circle-sharp" size={20} color="#58C3A3" />
-          ) : (
-            <TaskTypePoint type={type} small={small} />
-          )}
-          <TaskTexts small={small}>
-            <TaskTitle small={small}>{title}</TaskTitle>
-            <TaskDescription small={small} numberOfLines={3}>
-              {description}
-            </TaskDescription>
-          </TaskTexts>
-        </TaskCardContent>
-      </Swipeable>
-    </TaskCardContainer>
+    <>
+      <TaskCardContainer {...props}>
+        <SwipeableContainer
+          enabled={toRemove !== undefined && toDone !== undefined}
+          ref={swipeableRef}
+          renderLeftActions={() => LeftActions(done)}
+          renderRightActions={RightActions}
+          onSwipeableOpen={(direction) => onSwipe(direction)}
+        >
+          <TaskCardContent>
+            {done ? (
+              <Ionicons
+                name="checkmark-circle-sharp"
+                size={16}
+                color="#58C3A3"
+              />
+            ) : (
+              <TaskTypePoint type={type} small={small} />
+            )}
+            <TaskTexts small={small}>
+              <TaskTitle small={small}>{title}</TaskTitle>
+              <TaskDescription small={small} numberOfLines={small ? 1 : 3}>
+                {description}
+              </TaskDescription>
+            </TaskTexts>
+          </TaskCardContent>
+        </SwipeableContainer>
+      </TaskCardContainer>
+      {isModalOpen && (
+        <ModalContainer>
+          <ModalContent>
+            <ConfirmDeleteContainer>
+              <ConfirmDeleteText>
+                Are you sure you want to delete this task?
+              </ConfirmDeleteText>
+              <ButtonsContainer>
+                <ConfirmtButton onPress={() => deleteTask()}>
+                  <ConfirmButtonText>Confirm</ConfirmButtonText>
+                </ConfirmtButton>
+                <CancelButton
+                  onPress={() => {
+                    setIsModalOpen(false);
+                    swipeableRef.current.close();
+                  }}
+                >
+                  <CancelButtonText>Cancel</CancelButtonText>
+                </CancelButton>
+              </ButtonsContainer>
+            </ConfirmDeleteContainer>
+          </ModalContent>
+        </ModalContainer>
+      )}
+      {isDoneModal && (
+        <ModalContainer>
+          <ModalContent>
+            <LottieView
+              ref={animation}
+              source={require('../../../assets/animation_confirmation.json')}
+              loop={false}
+              onAnimationFinish={() => setIsDoneModal(false)}
+              style={{
+                width: 200,
+                height: 200,
+              }}
+            />
+          </ModalContent>
+        </ModalContainer>
+      )}
+    </>
   );
 };
 

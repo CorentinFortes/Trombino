@@ -131,3 +131,15 @@ export const ModalHeader = styled.View`
   width: 100%;
   margin-bottom: 10px;
 `;
+
+export const ScrollTodos = styled.ScrollView`
+  width: 100%;
+  padding-bottom: 20px;
+`;
+
+export const TodosContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+`;

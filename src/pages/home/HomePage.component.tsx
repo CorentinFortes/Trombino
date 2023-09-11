@@ -9,15 +9,19 @@ import {
   GetEmployees,
   getMe,
 } from '../../api/api';
+import { getTodo } from '../../api/todo';
 import { WeatherData, getWeather } from '../../api/weather';
 import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { CalendarWidget } from '../../components/CalendarWidget';
+import { CloudWidget } from '../../components/CloudWidget';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
+import { TodoWidget } from '../../components/TodoWidget/TodoWidget.component';
 import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SmallLogo } from '../../svg/SmallLogo';
 import { WeatherModeType } from '../../types/Widget/weather';
+import { TodoType } from '../../types/todo';
 import { CustomWidgetProps, WidgetSize } from '../../types/widgetType';
 import { tmpMail } from '../../utils/mock/mail';
 import {
@@ -32,8 +36,6 @@ import {
   SectionContainer,
   SectionTitle,
 } from './HomePage.style';
-import { CloudWidget } from '../../components/CloudWidget';
-import { TodoWidget } from '../../components/TodoWidget/TodoWidget.component';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -44,6 +46,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
   const [lat, setLat] = React.useState<number>();
   const [long, setLong] = React.useState<number>();
   const [weather, setWeather] = React.useState<WeatherData>();
+  const [todos, setTodos] = React.useState<TodoType[]>([]);
   const [customWidgets, setCustomWidgets] = React.useState<CustomWidgetProps[]>(
     [
       {
@@ -74,8 +77,9 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
       getMe(token).then((me) => {
         if (me !== undefined) {
           me.surname = me.surname.toUpperCase();
+          setMe(me);
+          getTodo(setTodos, me);
         }
-        setMe(me);
       });
       GetEmployees(token).then((employees) => {
         if (employees !== undefined) {
@@ -146,94 +150,95 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
               employees={employees}
               onPress={() => navigation.navigate('Trombinoscope', { token })}
             />
-            <TodoWidget
-              todos={[]}
-              onPress={() => navigation.navigate('Todo', { token })}
-              size="LARGE"
-            />
           </SectionContainer>
           <SectionTitle>Your Widgets</SectionTitle>
-          <CustomsWidgetsContainer>
-            {customWidgets.map((widget) =>
-              widget.widget === 'Mail' ? (
-                <MailWidget
-                  id={widget.id}
-                  deleteFunction={deleteWidget}
-                  key={widget.id}
-                  nbUnread={1}
-                  mails={tmpMail}
-                  size={widget.size}
-                  onPress={() =>
-                    navigation.navigate('Email', {
-                      token,
-                      unread: 1,
-                    })
-                  }
-                />
-              ) : widget.widget === 'Trombino' ? (
-                <TrombinoscopeWidget
-                  deleteFunction={deleteWidget}
-                  id={widget.id}
-                  key={widget.id}
-                  size={widget.size}
-                  token={token}
-                  employees={employees}
-                  onPress={() =>
-                    navigation.navigate('Trombinoscope', { token })
-                  }
-                />
-              ) : widget.widget === 'Weather' ? (
-                <WeatherWidget
-                  id={widget.id}
-                  deleteFunction={deleteWidget}
-                  key={widget.id}
-                  size={widget.size}
-                  localization={
-                    weather !== undefined
-                      ? weather.city + ', ' + weather.country
-                      : 'Marseille, FR'
-                  }
-                  weather={
-                    weather !== undefined
-                      ? (weather.main as WeatherModeType)
-                      : 'Clear'
-                  }
-                  temperature={weather !== undefined ? weather.temperature : 20}
-                  description={
-                    weather !== undefined ? weather.description : 'Sunny'
-                  }
-                  night={false}
-                />
-              ) : widget.widget === 'Calendar' ? (
-                <CalendarWidget
-                  id={widget.id}
-                  key={widget.id}
-                  size={widget.size}
-                  deleteFunction={deleteWidget}
-                />
-              ) : widget.widget === 'Cloud' ? (
-                <CloudWidget
-                  id={widget.id}
-                  key={widget.id}
-                  size={widget.size}
-                  deleteFunction={deleteWidget}
-                  downloading={false}
-                />
-              ) : widget.widget === 'Todo' ? (
-                <TodoWidget
-                  id={widget.id}
-                  key={widget.id}
-                  todos={[]}
-                  onPress={() => navigation.navigate('Todo', { token })}
-                  size={widget.size}
-                />
-              ) : null,
-            )}
-            <AddWidget
-              customWidgets={customWidgets}
-              setCustomWidgets={setCustomWidgets}
-            />
-          </CustomsWidgetsContainer>
+          {me && (
+            <CustomsWidgetsContainer>
+              {customWidgets.map((widget) =>
+                widget.widget === 'Mail' ? (
+                  <MailWidget
+                    id={widget.id}
+                    deleteFunction={deleteWidget}
+                    key={widget.id}
+                    nbUnread={1}
+                    mails={tmpMail}
+                    size={widget.size}
+                    onPress={() =>
+                      navigation.navigate('Email', {
+                        token,
+                        unread: 1,
+                      })
+                    }
+                  />
+                ) : widget.widget === 'Trombino' ? (
+                  <TrombinoscopeWidget
+                    deleteFunction={deleteWidget}
+                    id={widget.id}
+                    key={widget.id}
+                    size={widget.size}
+                    token={token}
+                    employees={employees}
+                    onPress={() =>
+                      navigation.navigate('Trombinoscope', { token })
+                    }
+                  />
+                ) : widget.widget === 'Weather' ? (
+                  <WeatherWidget
+                    id={widget.id}
+                    deleteFunction={deleteWidget}
+                    key={widget.id}
+                    size={widget.size}
+                    localization={
+                      weather !== undefined
+                        ? weather.city + ', ' + weather.country
+                        : 'Marseille, FR'
+                    }
+                    weather={
+                      weather !== undefined
+                        ? (weather.main as WeatherModeType)
+                        : 'Clear'
+                    }
+                    temperature={
+                      weather !== undefined ? weather.temperature : 20
+                    }
+                    description={
+                      weather !== undefined ? weather.description : 'Sunny'
+                    }
+                    night={false}
+                  />
+                ) : widget.widget === 'Calendar' ? (
+                  <CalendarWidget
+                    id={widget.id}
+                    key={widget.id}
+                    size={widget.size}
+                    deleteFunction={deleteWidget}
+                  />
+                ) : widget.widget === 'Cloud' ? (
+                  <CloudWidget
+                    id={widget.id}
+                    key={widget.id}
+                    size={widget.size}
+                    deleteFunction={deleteWidget}
+                    downloading={false}
+                  />
+                ) : widget.widget === 'Todo' ? (
+                  <TodoWidget
+                    id={widget.id}
+                    todos={todos.slice(0, 2)}
+                    key={widget.id}
+                    onPress={() =>
+                      navigation.navigate('Todo', { token, profile: me, todos })
+                    }
+                    size={widget.size}
+                  />
+                ) : null,
+              )}
+              <AddWidget
+                customWidgets={customWidgets}
+                setCustomWidgets={setCustomWidgets}
+              />
+            </CustomsWidgetsContainer>
+          )}
         </ContentContainer>
       </ScrollContent>
     </PageContainer>

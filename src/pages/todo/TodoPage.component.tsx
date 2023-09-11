@@ -1,13 +1,14 @@
 import { AntDesign, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { EmployeeDetail, getMe } from '../../api/api';
-import { addTodo } from '../../api/todo';
+import { EmployeeDetail } from '../../api/api';
+import { addTodo, getTodo, removeTodo, updateDoneTask } from '../../api/todo';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { Input } from '../../components/Input';
 import { TaskCard } from '../../components/TaskCard';
+import { TodoType } from '../../types/todo';
 import {
   AddTodoContainer,
   AddTodoTitle,
@@ -18,11 +19,12 @@ import {
   ModalContent,
   ModalHeader,
   PageContainer,
+  ScrollTodos,
   TaskCircle,
   TitleText,
+  TodosContainer,
   TopContent,
 } from './TodoPage.style';
-import { TodoType } from '../../types/todo';
 
 type TodoProps = StackScreenProps<RootStackParamList, 'Todo'>;
 
@@ -87,32 +89,40 @@ const styles = StyleSheet.create({
 });
 
 export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
-  const { token } = route.params;
-  const [profile, setProfile] = useState<EmployeeDetail>();
+  const { token, profile, todos } = route.params;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titleValue, setTitleValue] = useState<string>('');
   const [descValue, setDescValue] = useState<string>('');
   const [typeValue, setTypeValue] = useState<'urgent' | 'important' | 'normal'>(
     'normal',
   );
-  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [newTodos, setTodos] = useState<TodoType[]>(todos);
 
   useEffect(() => {
-    if (token) {
-      getMe(token).then((me) => {
-        if (me !== undefined) {
-          me.surname = me.surname.toUpperCase();
-          setProfile(me);
-        }
-      });
-    }
+    getTodos(profile);
   });
   const pressAddTodo = () => {
     if (profile) {
+      setDescValue('');
+      setTitleValue('');
+      setTypeValue('normal');
       addTodo(profile, titleValue, descValue, typeValue);
+      getTodos(profile);
     }
     setIsModalOpen(false);
   };
+  const getTodos = async (profile: EmployeeDetail) => {
+    getTodo(setTodos, profile);
+  };
+  const delTodo = async (id: string) => {
+    removeTodo(id);
+    getTodos(profile!);
+  };
+  const updateTodo = async (id: string, done: boolean) => {
+    updateDoneTask(id, done);
+    getTodos(profile!);
+  };
+  const scrollViewRef = useRef();
   return (
     <>
       <PageContainer>
@@ -129,14 +139,37 @@ export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
           <Octicons name="checklist" size={24} color="#480D49" />
           <TitleText>Todo</TitleText>
         </TopContent>
-        <TaskCard
-          title="Faire les courses"
-          description="Acheter du pain"
-          done={false}
-          type="normal"
-        />
-        <TouchableOpacity onPress={() => setIsModalOpen(true)}>
-          <MaterialIcons name="add-circle" size={48} color="#480D49" />
+        <ScrollTodos
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          ref={scrollViewRef}
+          onContentSizeChange={() =>
+            scrollViewRef!.current!.scrollToEnd({ animated: true })
+          }
+        >
+          <TodosContainer>
+            {newTodos.map((todo) => (
+              <TaskCard
+                key={todo.id}
+                id={todo.id}
+                title={todo.title}
+                description={todo.description}
+                done={todo.done}
+                type={todo.type}
+                toRemove={delTodo}
+                toDone={() => updateTodo(todo.id, !todo.done)}
+              />
+            ))}
+          </TodosContainer>
+        </ScrollTodos>
+        <TouchableOpacity
+          onPress={() => setIsModalOpen(true)}
+          style={{
+            width: '100%',
+            alignItems: 'flex-end',
+          }}
+        >
+          <MaterialIcons name="add-circle" size={64} color="#480D49" />
         </TouchableOpacity>
       </PageContainer>
       {isModalOpen && (
