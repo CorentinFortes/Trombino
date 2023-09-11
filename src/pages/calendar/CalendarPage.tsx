@@ -23,7 +23,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Input } from '../../components/Input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { changeKeyOfStorage, findItemInStorage, getDate, getEvents } from '.';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 type CalendarProps = StackScreenProps<RootStackParamList, 'Calendar'>;
 
@@ -39,9 +39,8 @@ export const CalendarPage: React.FC<CalendarProps> = ({
   const [modalEvent, setModalEvent] = React.useState<boolean>(false);
   const [eventSelectedName, setEventSelectedName] = React.useState<string>('');
   const [eventSelectedDate, setEventSelectedDate] = React.useState<string>('');
-  const [newDate, setNewDate] = React.useState<string>('');
-  const [newContent, setNewContent] = React.useState<string>('');
-  const actualDate = getDate();
+  const [actualDate, setActualDate] = React.useState<string>(getDate());
+  const [dateForPicker, setDateForPicker] = React.useState<Date>(new Date());
   React.useEffect(() => {
     getEvents().then((events) => {
       if (events.nbEvents > 0) {
@@ -113,6 +112,14 @@ export const CalendarPage: React.FC<CalendarProps> = ({
       addEvent(content, date !== '' ? date : eventSelectedDate);
     }
     setModalEvent(false);
+  };
+  const handleDateChange = (event: any, selectedDate: any) => {
+    const date = selectedDate || dateForPicker;
+    setDateForPicker(date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    setDate(`${year}-${month}-${day}`);
   };
 
   return (
@@ -190,12 +197,15 @@ export const CalendarPage: React.FC<CalendarProps> = ({
                   placeholderTextColor="rgba(30, 30, 30, 0.40);"
                   onChangeText={setContent}
                 />
-                <Input
-                  placeholder="Date (YYYY-MM-DD)"
-                  type={'text'}
-                  placeholderTextColor="rgba(30, 30, 30, 0.40);"
-                  value={date}
-                  onChangeText={setDate}
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={dateForPicker}
+                  mode="date"
+                  is24Hour={true}
+                  display="spinner"
+                  onChange={handleDateChange}
+                  style={{ alignSelf: 'center' }}
+                  textColor="#49136A"
                 />
               </InputContainer>
               <ButtonsContainer>
@@ -222,17 +232,21 @@ export const CalendarPage: React.FC<CalendarProps> = ({
               </ModalHeader>
               <InputContainer>
                 <Input
+                  value={eventSelectedName}
                   placeholder="Enter the event name"
                   type={'text'}
                   placeholderTextColor="rgba(30, 30, 30, 0.40);"
                   onChangeText={setContent}
                 />
-                <Input
-                  placeholder="Date (YYYY-MM-DD)"
-                  type={'text'}
-                  placeholderTextColor="rgba(30, 30, 30, 0.40);"
-                  value={date}
-                  onChangeText={setDate}
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={dateForPicker}
+                  mode="date"
+                  is24Hour={true}
+                  display="spinner"
+                  onChange={handleDateChange}
+                  style={{ alignSelf: 'center' }}
+                  textColor="#49136A"
                 />
               </InputContainer>
               <ButtonsContainer>
