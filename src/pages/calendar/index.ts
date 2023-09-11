@@ -68,3 +68,35 @@ export const getFulldate = () => {
   }`;
   return date;
 };
+
+export const findItemInStorage = async (name: string) => {
+  let i = 1;
+  let tmp = true;
+  while (tmp) {
+    const res = await getEvent(`event${i}`);
+    if (res) {
+      if (res[Object.keys(res)[0]][0].name === name) {
+        return i;
+      }
+    } else {
+      tmp = false;
+    }
+    i++;
+  }
+  return -1;
+};
+
+export const changeKeyOfStorage = async (lastkey: number) => {
+  let i = lastkey + 1;
+  let tmp = true;
+  while (tmp) {
+    const res = await getEvent(`event${i}`);
+    if (res) {
+      await AsyncStorage.removeItem(`event${i}`);
+      await AsyncStorage.setItem(`event${i - 1}`, JSON.stringify(res));
+    } else {
+      tmp = false;
+    }
+    i++;
+  }
+};
