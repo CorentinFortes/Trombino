@@ -125,13 +125,35 @@ export const LocalizationText = styled.Text<{
 `;
 
 export const WeatherText = styled.Text<{
-  size: 'large' | 'medium' | 'small';
+  size: 'large' | 'medium' | 'small' | 'very-large';
   color: string;
 }>`
   font-size: ${({ size }) =>
-    size === 'large' ? '16px' : size === 'medium' ? '14px' : '12px'};
+    size === 'very-large'
+      ? '30px'
+      : size === 'large'
+      ? '16px'
+      : size === 'medium'
+      ? '14px'
+      : '12px'};
   color: ${({ color }) => color};
   font-family: 'Rubik_Regular';
+`;
+
+export const WeatherBigText = styled.Text<{
+  size: 'large' | 'medium' | 'small' | 'very-large';
+  color: string;
+}>`
+  font-size: ${({ size }) =>
+    size === 'very-large'
+      ? '24px'
+      : size === 'large'
+      ? '16px'
+      : size === 'medium'
+      ? '14px'
+      : '12px'};
+  color: ${({ color }) => color};
+  font-family: 'Rubik_Medium';
 `;
 
 export const WeatherGroup = styled.View`

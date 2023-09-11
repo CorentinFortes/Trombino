@@ -182,6 +182,13 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   deleteFunction={deleteWidget}
                   key={widget.id}
                   size={widget.size}
+                  onPress={() =>
+                    navigation.navigate('Weather', {
+                      token,
+                      weather,
+                      weathermode: weather?.main as WeatherModeType,
+                    })
+                  }
                   localization={
                     weather !== undefined
                       ? weather.city + ', ' + weather.country
