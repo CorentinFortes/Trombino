@@ -116,6 +116,13 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
     setCustomWidgets(customWidgets.filter((widget) => widget.id !== id));
   };
 
+  const getNewTodos = () => {
+    if (newTodos) {
+      return newTodos as TodoType[];
+    }
+    return todos;
+  };
+
   return (
     <PageContainer>
       <SmallLogo />
@@ -228,7 +235,11 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                     todos={newTodos ? newTodos.slice(0, 2) : todos.slice(0, 2)}
                     key={widget.id}
                     onPress={() =>
-                      navigation.navigate('Todo', { token, profile: me, todos })
+                      navigation.navigate('Todo', {
+                        token,
+                        profile: me,
+                        todos: getNewTodos(),
+                      })
                     }
                     size={widget.size}
                   />
