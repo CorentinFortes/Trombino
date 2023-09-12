@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import React, { useRef, useState } from 'react';
 import {
   AnimatedText,
@@ -30,6 +30,7 @@ type TaskProps = {
   done: boolean;
   type: 'urgent' | 'important' | 'normal';
   small?: boolean;
+  borderRadius?: boolean;
   toRemove?: (id: string) => Promise<void>;
   toDone?: (id: string, done: boolean) => Promise<void>;
 };
@@ -37,7 +38,13 @@ type TaskProps = {
 const LeftActions = (done: boolean) => {
   return (
     <LeftActionWrapper>
-      <AnimatedText>{done ? 'Not done' : 'Done'}</AnimatedText>
+      <AnimatedText>
+        {done ? (
+          <Feather name="x-square" size={24} color="white" />
+        ) : (
+          <Feather name="check-square" size={24} color="white" />
+        )}
+      </AnimatedText>
     </LeftActionWrapper>
   );
 };
@@ -45,7 +52,9 @@ const LeftActions = (done: boolean) => {
 const RightActions = () => {
   return (
     <RightActionWrapper>
-      <AnimatedText>Delete</AnimatedText>
+      <AnimatedText>
+        <Ionicons name="trash-bin-outline" size={24} color="white" />
+      </AnimatedText>
     </RightActionWrapper>
   );
 };
@@ -59,6 +68,7 @@ const TaskComponent: React.FC<TaskProps> = ({
   small,
   toRemove,
   toDone,
+  borderRadius,
   ...props
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -87,7 +97,7 @@ const TaskComponent: React.FC<TaskProps> = ({
   };
   return (
     <>
-      <TaskCardContainer {...props}>
+      <TaskCardContainer small={small} {...props} borderRadius={borderRadius}>
         <SwipeableContainer
           enabled={toRemove !== undefined && toDone !== undefined}
           ref={swipeableRef}
@@ -95,7 +105,7 @@ const TaskComponent: React.FC<TaskProps> = ({
           renderRightActions={RightActions}
           onSwipeableOpen={(direction) => onSwipe(direction)}
         >
-          <TaskCardContent>
+          <TaskCardContent small={small} borderRadius={borderRadius}>
             {done ? (
               <Ionicons
                 name="checkmark-circle-sharp"

@@ -40,7 +40,7 @@ import {
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
 export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
-  const token = route.params.token;
+  const { token, newTodos } = route.params;
   const [me, setMe] = React.useState<EmployeeDetail>();
   const [employees, setEmployees] = React.useState<Employee[]>();
   const [lat, setLat] = React.useState<number>();
@@ -114,6 +114,13 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
 
   const deleteWidget = (id: number) => {
     setCustomWidgets(customWidgets.filter((widget) => widget.id !== id));
+  };
+
+  const getNewTodos = () => {
+    if (newTodos) {
+      return newTodos as TodoType[];
+    }
+    return todos;
   };
 
   return (
@@ -224,10 +231,14 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 ) : widget.widget === 'Todo' ? (
                   <TodoWidget
                     id={widget.id}
-                    todos={todos.slice(0, 2)}
+                    todos={newTodos ? newTodos : todos}
                     key={widget.id}
                     onPress={() =>
-                      navigation.navigate('Todo', { token, profile: me, todos })
+                      navigation.navigate('Todo', {
+                        token,
+                        profile: me,
+                        todos: getNewTodos(),
+                      })
                     }
                     size={widget.size}
                   />

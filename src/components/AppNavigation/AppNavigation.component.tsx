@@ -13,7 +13,7 @@ import { TodoType } from '../../types/todo';
 import { CalendarPage } from '../../pages/calendar/CalendarPage';
 
 export type RootStackParamList = {
-  Home: { token: string };
+  Home: { token: string; newTodos?: TodoType[] };
   Login: undefined;
   Settings: undefined;
   Profile: {

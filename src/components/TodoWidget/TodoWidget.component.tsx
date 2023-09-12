@@ -49,17 +49,25 @@ export const TodoWidget: React.FC<TodoWidgetProps> = ({
             <TextMedium>Todo</TextMedium>
           </TopContent>
           <TaskContent>
-            {todos.slice(0, 2).map((todo) => (
-              <TaskCard
-                key={todo.id}
-                id={todo.id}
-                title={todo.title}
-                description={todo.description}
-                done={todo.done}
-                type={todo.type}
-                small
-              />
-            ))}
+            {todos.filter((item) => !item.done).slice(0, 3).length > 0 ? (
+              todos
+                .filter((item) => !item.done)
+                .slice(0, 3)
+                .map((todo) => (
+                  <TaskCard
+                    key={todo.id}
+                    id={todo.id}
+                    title={todo.title}
+                    description={todo.description}
+                    done={todo.done}
+                    type={todo.type}
+                    borderRadius
+                    small
+                  />
+                ))
+            ) : (
+              <TextMedium>No task to do</TextMedium>
+            )}
           </TaskContent>
         </LargeContent>
       )}
@@ -69,7 +77,9 @@ export const TodoWidget: React.FC<TodoWidgetProps> = ({
             <Octicons name="checklist" size={16} color="#480D49" />
             <HeaderText>Number of tasks:</HeaderText>
           </HeaderLeftWrapper>
-          <TaskToDoCount>{todos.length}</TaskToDoCount>
+          <TaskToDoCount>
+            {todos.filter((item) => !item.done).length}
+          </TaskToDoCount>
         </HeaderContent>
       )}
       {currentSize === 'SMALL' && (
@@ -78,7 +88,9 @@ export const TodoWidget: React.FC<TodoWidgetProps> = ({
             <Octicons name="checklist" size={16} color="#480D49" />
             <HeaderText>Todo</HeaderText>
           </TopContent>
-          <TaskToDoCountBig>{todos.length}</TaskToDoCountBig>
+          <TaskToDoCountBig>
+            {todos.filter((item) => !item.done).length}
+          </TaskToDoCountBig>
           <HeaderText>Todo tasks</HeaderText>
         </SmallContent>
       )}
@@ -91,6 +103,7 @@ export const TodoWidget: React.FC<TodoWidgetProps> = ({
             description={todos[0].description}
             done={todos[0].done}
             type={todos[0].type}
+            borderRadius
             small
           />
         </MediumContent>

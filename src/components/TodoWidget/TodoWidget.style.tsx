@@ -48,7 +48,7 @@ export const TaskContent = styled.View`
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 5px;
 `;
 
 export const TaskCard = styled(_TaskCard)`

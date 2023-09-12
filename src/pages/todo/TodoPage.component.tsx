@@ -100,7 +100,7 @@ export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
 
   useEffect(() => {
     getTodos(profile);
-  });
+  }, []);
   const pressAddTodo = () => {
     if (profile) {
       setDescValue('');
@@ -130,6 +130,7 @@ export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
           onPress={() =>
             navigation.navigate('Home', {
               token: token,
+              newTodos: newTodos,
             })
           }
         >
@@ -148,18 +149,28 @@ export const TodoPage: React.FC<TodoProps> = ({ route, navigation }) => {
           }
         >
           <TodosContainer>
-            {newTodos.map((todo) => (
-              <TaskCard
-                key={todo.id}
-                id={todo.id}
-                title={todo.title}
-                description={todo.description}
-                done={todo.done}
-                type={todo.type}
-                toRemove={delTodo}
-                toDone={() => updateTodo(todo.id, !todo.done)}
-              />
-            ))}
+            {newTodos
+              .sort((a, b) => {
+                if (a.done && !b.done) {
+                  return 1;
+                }
+                if (!a.done && b.done) {
+                  return -1;
+                }
+                return 0;
+              })
+              .map((todo) => (
+                <TaskCard
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  description={todo.description}
+                  done={todo.done}
+                  type={todo.type}
+                  toRemove={delTodo}
+                  toDone={() => updateTodo(todo.id, !todo.done)}
+                />
+              ))}
           </TodosContainer>
         </ScrollTodos>
         <TouchableOpacity
