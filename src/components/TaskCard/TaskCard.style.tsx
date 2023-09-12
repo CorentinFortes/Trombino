@@ -101,7 +101,7 @@ export const LeftActionWrapper = styled.View`
 `;
 
 export const RightActionWrapper = styled.View`
-  background-color: red;
+  background-color: #f13838;
   justify-content: center;
   text-align: right;
   display: flex;
@@ -192,7 +192,7 @@ export const ConfirmtButton = styled.TouchableOpacity`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: red;
+  background-color: #f13838;
   border-radius: 10px;
   width: 100%;
 `;
