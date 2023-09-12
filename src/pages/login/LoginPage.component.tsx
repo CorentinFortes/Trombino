@@ -96,10 +96,6 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
         <ConnectButton onPress={() => handleLogin(email, password)}>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
-
-        <TouchableOpacity>
-          <GreyText>Forgot password ?</GreyText>
-        </TouchableOpacity>
       </ConnexionContainer>
       <CreditsContainer>
         <GreyText>Trombino</GreyText>
