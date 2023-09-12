@@ -17,6 +17,14 @@
     },
     "permissions": [
       "location"
+    ],
+    "plugins": [
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ]
     ]
   }
 }

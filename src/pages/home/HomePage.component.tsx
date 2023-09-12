@@ -225,7 +225,6 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                     key={widget.id}
                     size={widget.size}
                     deleteFunction={deleteWidget}
-                    downloading={false}
                   />
                 ) : widget.widget === 'Todo' ? (
                   <TodoWidget
