@@ -31,6 +31,7 @@ import {
   WorkText,
 } from './ProfilePage.style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from '../../components/Button';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Profile'>;
 
@@ -117,12 +118,14 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
 
         {id && me ? (
           <ButtonContainer>
-            <ContactButton
+            <Button
+              type="primary"
               onPress={() => Linking.openURL('mailto:' + me?.email)}
             >
-              <ContactButtonText>Contact</ContactButtonText>
-            </ContactButton>
-            <ContactButton
+              Contact
+            </Button>
+            <Button
+              type="primary"
               onPress={() =>
                 navigation.navigate('Chat', {
                   token,
@@ -131,21 +134,21 @@ export const ProfilePage: React.FC<ProfileProps> = ({ route, navigation }) => {
                 })
               }
             >
-              <ContactButtonText>Message</ContactButtonText>
-            </ContactButton>
+              Message
+            </Button>
           </ButtonContainer>
         ) : null}
         {!id && (
-          <LogoutButton
+          <Button
+            type="secondary"
+            color={'#1E1E1E'}
             onPress={() => {
               AsyncStorage.removeItem('token');
               navigation.navigate('Login');
             }}
           >
-            <ContactButtonText style={{ color: '#1E1E1E' }}>
-              Log out
-            </ContactButtonText>
-          </LogoutButton>
+            Log out
+          </Button>
         )}
       </ProfilePageContainer>
     </PageContainer>

@@ -5,21 +5,16 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Login } from '../../api/api';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
+import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
-import { LockIcon } from '../../svg/Lock';
 import { Logo } from '../../svg/Logo';
-import { UserIcon } from '../../svg/User';
 import {
-  ConnectButton,
-  ConnectButtonText,
   ConnexionContainer,
   CreditsContainer,
   GreyText,
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
-import { AntDesign } from '@expo/vector-icons';
-import { Button } from '../../components/Button';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 

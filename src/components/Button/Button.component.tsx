@@ -8,6 +8,7 @@ type ButtonProps = {
   type: 'primary' | 'secondary';
   backgroundColor?: string;
   color?: string;
+  borderColor?: string;
   small?: boolean;
 };
 
@@ -34,6 +35,16 @@ const ButtonComponent: React.FC<ButtonProps> = ({
     primary: 'contained',
     secondary: 'outlined',
   };
+  const getColor = () => {
+    if (backgroundColor) {
+      return backgroundColor;
+    }
+    if (type === 'primary') {
+      return '#1E1E1E';
+    } else if (type === 'secondary') {
+      return '#FFFAFA';
+    }
+  };
   return (
     <ButtonContainer
       mode={getType[type]}
@@ -41,6 +52,8 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       onPress={onPress}
       onLongPress={onLongPress}
       compact={small}
+      buttonColor={getColor()}
+      textColor={color ? color : 'white'}
       {...props}
     >
       <ButtonText>{children}</ButtonText>
