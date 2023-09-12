@@ -49,17 +49,20 @@ export const TodoWidget: React.FC<TodoWidgetProps> = ({
             <TextMedium>Todo</TextMedium>
           </TopContent>
           <TaskContent>
-            {todos.slice(0, 2).map((todo) => (
-              <TaskCard
-                key={todo.id}
-                id={todo.id}
-                title={todo.title}
-                description={todo.description}
-                done={todo.done}
-                type={todo.type}
-                small
-              />
-            ))}
+            {todos
+              .filter((item) => !item.done)
+              .slice(0, 2)
+              .map((todo) => (
+                <TaskCard
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  description={todo.description}
+                  done={todo.done}
+                  type={todo.type}
+                  borderRadius
+                />
+              ))}
           </TaskContent>
         </LargeContent>
       )}
@@ -91,6 +94,7 @@ export const TodoWidget: React.FC<TodoWidgetProps> = ({
             description={todos[0].description}
             done={todos[0].done}
             type={todos[0].type}
+            borderRadius
             small
           />
         </MediumContent>

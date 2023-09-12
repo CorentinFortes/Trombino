@@ -8,16 +8,18 @@ const POINT_COLOR = {
   normal: 'violet',
 };
 
-export const TaskCardContainer = styled.View<{ small?: boolean }>`
+export const TaskCardContainer = styled.View<{
+  small?: boolean;
+  borderRadius?: boolean;
+}>`
   display: flex;
   padding: ${(props) => (props.small ? '0 5px' : '0 10px')};
   width: 100%;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(154, 151, 151, 0.2);
-  border-radius: 10px;
   background-color: #fffafa;
-  padding: 0 20px;
+  ${(props) => props.borderRadius && 'border-radius: 10px;'}
 `;
 
 export const TaskCardContent = styled.View<{ small?: boolean }>`
@@ -29,7 +31,7 @@ export const TaskCardContent = styled.View<{ small?: boolean }>`
   padding: ${(props) => (props.small ? '5px 0' : '10px 0')};
   width: 100%;
   background-color: #fffafa;
-  border-radius: 10px;
+  padding-left: 10px;
 `;
 
 export const TaskTypePoint = styled.View<{
@@ -37,8 +39,8 @@ export const TaskTypePoint = styled.View<{
   small?: boolean;
 }>`
   border-radius: 100%;
-  width: ${(props) => (props.small ? '7px' : '10px')};
-  height: ${(props) => (props.small ? '7px' : '10px')};
+  width: ${(props) => (props.small ? '8px' : '12px')};
+  height: ${(props) => (props.small ? '8px' : '12px')};
   align-self: center;
   justify-self: center;
   background: ${(props) => POINT_COLOR[props.type]};
@@ -92,7 +94,6 @@ export const LeftActionWrapper = styled.View`
   padding: 0 10px;
   margin: 0;
   width: 40%;
-  border-radius: 10px 0 0 10px;
 `;
 
 export const RightActionWrapper = styled.View`
@@ -105,7 +106,6 @@ export const RightActionWrapper = styled.View`
   justify-content: center;
   padding: 0 10px;
   width: 40%;
-  border-radius: 0 10px 10px 0;
 `;
 
 export const SwipeableContainer = styled(Swipeable)`

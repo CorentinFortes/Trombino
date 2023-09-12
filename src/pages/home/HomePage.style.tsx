@@ -21,6 +21,8 @@ export const HeaderProfileContainer = styled.View`
   margin-top: 20px;
   padding: 0;
   width: 100%;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 export const HeaderProfileLeftWrapper = styled.View`

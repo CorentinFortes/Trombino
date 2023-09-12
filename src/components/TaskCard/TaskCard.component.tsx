@@ -30,6 +30,7 @@ type TaskProps = {
   done: boolean;
   type: 'urgent' | 'important' | 'normal';
   small?: boolean;
+  borderRadius?: boolean;
   toRemove?: (id: string) => Promise<void>;
   toDone?: (id: string, done: boolean) => Promise<void>;
 };
@@ -59,6 +60,7 @@ const TaskComponent: React.FC<TaskProps> = ({
   small,
   toRemove,
   toDone,
+  borderRadius,
   ...props
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -87,7 +89,7 @@ const TaskComponent: React.FC<TaskProps> = ({
   };
   return (
     <>
-      <TaskCardContainer {...props}>
+      <TaskCardContainer small={small} {...props} borderRadius={borderRadius}>
         <SwipeableContainer
           enabled={toRemove !== undefined && toDone !== undefined}
           ref={swipeableRef}
@@ -95,7 +97,7 @@ const TaskComponent: React.FC<TaskProps> = ({
           renderRightActions={RightActions}
           onSwipeableOpen={(direction) => onSwipe(direction)}
         >
-          <TaskCardContent>
+          <TaskCardContent small={small}>
             {done ? (
               <Ionicons
                 name="checkmark-circle-sharp"
