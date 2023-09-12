@@ -28,7 +28,7 @@ import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
 import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
 import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
-import { Animated, FlatList, View } from 'react-native';
+import { Animated, Dimensions, FlatList, View } from 'react-native';
 import Paginator from '../Paginator/Paginator';
 
 type Props = {
@@ -74,6 +74,8 @@ export const AddWidget: React.FC<Props> = ({
               <FlatList
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
+                bounces={false}
+                snapToInterval={Dimensions.get('window').width}
                 renderItem={() => (
                   <View
                     style={{ display: 'flex', flexDirection: 'row', gap: 10 }}
