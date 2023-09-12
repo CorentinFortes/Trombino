@@ -18,6 +18,8 @@ import {
   InputContainer,
   LoginPageContainer,
 } from './LoginPage.style';
+import { AntDesign } from '@expo/vector-icons';
+import { Button } from '../../components/Button';
 
 type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 
@@ -75,23 +77,21 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
       <ConnexionContainer>
         <InputContainer>
           <Input
-            icon={<UserIcon />}
             type="text"
             placeholder="E-mail"
             onChangeText={setEmail}
             value={email}
           />
           <Input
-            icon={<LockIcon />}
             type="password"
             placeholder="Password"
             onChangeText={setPassword}
             value={password}
           />
         </InputContainer>
-        <ConnectButton onPress={() => handleLogin(email, password)}>
-          <ConnectButtonText>Connect</ConnectButtonText>
-        </ConnectButton>
+        <Button type="primary" onPress={() => handleLogin(email, password)}>
+          Connect
+        </Button>
         <TouchableOpacity>
           <GreyText>Forgot password ?</GreyText>
         </TouchableOpacity>
