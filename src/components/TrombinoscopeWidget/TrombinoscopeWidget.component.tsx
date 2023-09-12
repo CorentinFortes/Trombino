@@ -36,7 +36,7 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
   React.useEffect(() => {
-    if (employees != undefined) {
+    if (employees != undefined && employees.length > 0) {
       setLastTeamMember(employees[employees.length - 1].name);
       setNbMembers(employees.length);
     }
@@ -145,7 +145,7 @@ const TrominoWidgetComponent: React.FC<TrombinoWidgetProps> = ({
                   <MaterialCommunityIcons name="wall" size={16} color="black" />
                   <TextMedium fontSize={12}>Trombinoscope</TextMedium>
                 </TopContent>
-                <TextMedium fontSize={32}>{nbMembers}</TextMedium>
+                <TextMedium fontSize={32}>{nbMembers - 1}</TextMedium>
                 <TeamTextContainer>
                   <TextMedium fontSize={14}>Team members</TextMedium>
                   <TextRegular fontSize={12}>are on Trombino!</TextRegular>

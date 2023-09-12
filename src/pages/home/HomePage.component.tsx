@@ -171,7 +171,10 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   key={widget.id}
                   size={widget.size}
                   token={token}
-                  employees={employees}
+                  employees={ employees !== undefined
+                    ? (employees)
+                    : '?'
+                  }
                   onPress={() =>
                     navigation.navigate('Trombinoscope', { token })
                   }
@@ -192,16 +195,16 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                   localization={
                     weather !== undefined
                       ? weather.city + ', ' + weather.country
-                      : 'Marseille, FR'
+                      : '?, ?'
                   }
                   weather={
                     weather !== undefined
                       ? (weather.main as WeatherModeType)
-                      : 'Clear'
+                      : '?'
                   }
-                  temperature={weather !== undefined ? weather.temperature : 20}
+                  temperature={weather !== undefined ? weather.temperature : 0}
                   description={
-                    weather !== undefined ? weather.description : 'Sunny'
+                    weather !== undefined ? weather.description : '?'
                   }
                   night={false}
                 />
