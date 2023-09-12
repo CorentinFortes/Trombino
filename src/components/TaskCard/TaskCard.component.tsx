@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import React, { useRef, useState } from 'react';
 import {
   AnimatedText,
@@ -38,7 +38,13 @@ type TaskProps = {
 const LeftActions = (done: boolean) => {
   return (
     <LeftActionWrapper>
-      <AnimatedText>{done ? 'Not done' : 'Done'}</AnimatedText>
+      <AnimatedText>
+        {done ? (
+          <Feather name="x-square" size={24} color="white" />
+        ) : (
+          <Feather name="check-square" size={24} color="white" />
+        )}
+      </AnimatedText>
     </LeftActionWrapper>
   );
 };
@@ -46,7 +52,9 @@ const LeftActions = (done: boolean) => {
 const RightActions = () => {
   return (
     <RightActionWrapper>
-      <AnimatedText>Delete</AnimatedText>
+      <AnimatedText>
+        <Ionicons name="trash-bin-outline" size={24} color="white" />
+      </AnimatedText>
     </RightActionWrapper>
   );
 };
