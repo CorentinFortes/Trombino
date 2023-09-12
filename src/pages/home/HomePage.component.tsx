@@ -36,6 +36,7 @@ import {
   SectionContainer,
   SectionTitle,
 } from './HomePage.style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -132,14 +133,11 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
             <ProfileImage source={GetEmployeeImage(token, me.id)} />
             <HeaderText>{me.name}</HeaderText>
           </HeaderProfileLeftWrapper>
-          <HeaderText>
-            <AntDesign
-              name="arrowright"
-              size={32}
-              color="#1E1E1E"
-              onPress={() => navigation.navigate('Profile', { token })}
-            />
-          </HeaderText>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Profile', { token })}
+          >
+            <AntDesign name="arrowright" size={32} color="#1E1E1E" />
+          </TouchableOpacity>
         </HeaderProfileContainer>
       )}
       <ScrollContent
