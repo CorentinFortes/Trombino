@@ -97,7 +97,7 @@ const TaskComponent: React.FC<TaskProps> = ({
           renderRightActions={RightActions}
           onSwipeableOpen={(direction) => onSwipe(direction)}
         >
-          <TaskCardContent small={small}>
+          <TaskCardContent small={small} borderRadius={borderRadius}>
             {done ? (
               <Ionicons
                 name="checkmark-circle-sharp"

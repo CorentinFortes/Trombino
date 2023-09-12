@@ -232,7 +232,7 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
                 ) : widget.widget === 'Todo' ? (
                   <TodoWidget
                     id={widget.id}
-                    todos={newTodos ? newTodos.slice(0, 2) : todos.slice(0, 2)}
+                    todos={newTodos ? newTodos : todos}
                     key={widget.id}
                     onPress={() =>
                       navigation.navigate('Todo', {

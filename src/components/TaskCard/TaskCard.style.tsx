@@ -22,7 +22,10 @@ export const TaskCardContainer = styled.View<{
   ${(props) => props.borderRadius && 'border-radius: 10px;'}
 `;
 
-export const TaskCardContent = styled.View<{ small?: boolean }>`
+export const TaskCardContent = styled.View<{
+  small?: boolean;
+  borderRadius?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,6 +35,7 @@ export const TaskCardContent = styled.View<{ small?: boolean }>`
   width: 100%;
   background-color: #fffafa;
   padding-left: 10px;
+  ${(props) => props.borderRadius && 'border-radius: 10px;'}
 `;
 
 export const TaskTypePoint = styled.View<{
