@@ -59,6 +59,7 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
   size,
   night,
   id,
+  onPress,
   deleteFunction,
 }) => {
   // todo : add weather icon for lage size
@@ -87,6 +88,7 @@ const WeatherWidgetComponent: React.FC<WeatherType & WidgetType> = ({
         }
         weather={weather}
         night={night}
+        onPress={onPress}
         onLongPress={() => setOpenSizeModal(true)}
         id={id}
         deleteFunction={deleteFunction}

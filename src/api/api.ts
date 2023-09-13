@@ -5,6 +5,10 @@ export interface Token {
   access_token: string;
 }
 
+export interface Error {
+  AxiosError: string;
+}
+
 export interface Employee {
   id: number;
   email: string;
@@ -37,15 +41,17 @@ export const Login = async (email: string, password: string) => {
       },
       {
         headers: {
-          'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+          'X-Group-Authorization': '5e150ebfda0cfd443239c42af17c98fd',
         },
       },
     );
     const tokenRes: Token = res.data;
     AsyncStorage.setItem('token', tokenRes.access_token);
-    return tokenRes.access_token;
-  } catch (error) {
-    console.log(error);
+    return true;
+  } catch (error: any) {
+    const errornbr = error.message.split(' ');
+    AsyncStorage.setItem('error', errornbr[5]);
+    return false;
   }
 };
 
@@ -54,7 +60,7 @@ export const GetEmployees = async (token: string) => {
     const res = await axios.get('https://masurao.fr/api/employees', {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+        'X-Group-Authorization': '5e150ebfda0cfd443239c42af17c98fd',
       },
     });
     const employees: Employee[] = res.data;
@@ -69,7 +75,7 @@ export const getMe = async (token: string) => {
     const res = await axios.get('https://masurao.fr/api/employees/me', {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+        'X-Group-Authorization': '5e150ebfda0cfd443239c42af17c98fd',
       },
     });
     const me: EmployeeDetail = res.data;
@@ -84,7 +90,7 @@ export const getLeaders = async (token: string) => {
     const res = await axios.get('https://masurao.fr/api/employees/leaders', {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+        'X-Group-Authorization': '5e150ebfda0cfd443239c42af17c98fd',
       },
     });
     const leaders: Employee[] = res.data;
@@ -99,7 +105,7 @@ export const GetEmployee = async (token: string, id: number) => {
     const res = await axios.get(`https://masurao.fr/api/employees/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+        'X-Group-Authorization': '5e150ebfda0cfd443239c42af17c98fd',
       },
     });
     const employee: EmployeeDetail = res.data;
@@ -114,7 +120,7 @@ export const GetEmployeeImage = (token: string, id: number) => {
     uri: `https://masurao.fr/api/employees/${id}/image`,
     headers: {
       Authorization: `Bearer ${token}`,
-      'X-Group-Authorization': 'dfIYtMwmYQIhUGnZY6GPzT82LBKV2cMn',
+      'X-Group-Authorization': '5e150ebfda0cfd443239c42af17c98fd',
     },
   };
   return res;

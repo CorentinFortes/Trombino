@@ -17,6 +17,7 @@ export const ConnexionContainer = styled.View`
   align-items: center;
   justify-content: center;
   gap: 25px;
+  padding-bottom: 30px;
 `;
 
 export const ConnectButton = styled.TouchableOpacity`
