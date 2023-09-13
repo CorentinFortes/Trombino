@@ -8,13 +8,15 @@ import { ChatPage } from '../../pages/chat/ChatPage.component';
 import { EmailPage } from '../../pages/email/EmailPage.component';
 import { ProfilePage } from '../../pages/profile/ProfilePage.component';
 import { TrombinoscopePage } from '../../pages/trombinoscope/TrombinoscopePage';
+import { TodoPage } from '../../pages/todo/TodoPage.component';
+import { TodoType } from '../../types/todo';
 import { CalendarPage } from '../../pages/calendar/CalendarPage';
 import { WeatherPage } from '../../pages/weather/weatherPage.component';
 import { WeatherData } from '../../api/weather';
 import { WeatherModeType } from '../../types/Widget/weather';
 
 export type RootStackParamList = {
-  Home: { token: string };
+  Home: { token: string; newTodos?: TodoType[] };
   Login: undefined;
   Settings: undefined;
   Profile: {
@@ -32,6 +34,7 @@ export type RootStackParamList = {
     weather: WeatherData | undefined;
     weathermode: WeatherModeType;
   };
+  Todo: { token: string; profile: EmployeeDetail; todos: TodoType[] };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -51,6 +54,7 @@ function AppNavigation() {
         <Stack.Screen name="Calendar" component={CalendarPage} />
         <Stack.Screen name="Chat" component={ChatPage} />
         <Stack.Screen name="Weather" component={WeatherPage} />
+        <Stack.Screen name="Todo" component={TodoPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

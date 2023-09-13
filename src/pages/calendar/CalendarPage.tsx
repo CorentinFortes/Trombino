@@ -1,25 +1,29 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Agenda, AgendaSchedule } from 'react-native-calendars';
 import {
   AddEventButton,
   AddEventContainer,
   ButtonsContainer,
+  CrossButton,
+  DeleteButton,
+  DeleteButtonText,
   EventButton,
   InputContainer,
   MediumText,
   ModalContainer,
   ModalContent,
+  ModalHeader,
   PageContainer,
   RenderDay,
 } from './CalendarPage.style';
 import { AntDesign } from '@expo/vector-icons';
 import { Input } from '../../components/Input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDate, getEvents } from '.';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import { changeKeyOfStorage, findItemInStorage, getDate, getEvents } from '.';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 type CalendarProps = StackScreenProps<RootStackParamList, 'Calendar'>;
 
@@ -32,8 +36,11 @@ export const CalendarPage: React.FC<CalendarProps> = ({
   const [content, setContent] = React.useState<string>('');
   const [date, setDate] = React.useState<string>('');
   const [nbEvents, setNbEvents] = React.useState<number>(0);
-  const actualDate = getDate();
-
+  const [modalEvent, setModalEvent] = React.useState<boolean>(false);
+  const [eventSelectedName, setEventSelectedName] = React.useState<string>('');
+  const [eventSelectedDate, setEventSelectedDate] = React.useState<string>('');
+  const [actualDate, setActualDate] = React.useState<string>(getDate());
+  const [dateForPicker, setDateForPicker] = React.useState<Date>(new Date());
   React.useEffect(() => {
     getEvents().then((events) => {
       if (events.nbEvents > 0) {
@@ -72,6 +79,49 @@ export const CalendarPage: React.FC<CalendarProps> = ({
     AsyncStorage.setItem(`event${nbEvents + 1}`, JSON.stringify(tmp));
     setNbEvents(nbEvents + 1);
   };
+
+  const deleteEvent = (date: string, content: string) => {
+    setItems((prev) => {
+      const tmp = {
+        ...prev,
+        [date]: prev[date].filter((item) => item.name !== content),
+      };
+      if (tmp[date].length === 0) {
+        delete tmp[date];
+      }
+      return tmp;
+    });
+    setNbEvents(nbEvents - 1);
+    setModalEvent(false);
+    findItemInStorage(content).then((key) => {
+      AsyncStorage.removeItem(`event${key}`);
+      changeKeyOfStorage(key);
+    });
+    setContent('');
+    setDate('');
+    setEventSelectedDate('');
+    setEventSelectedName('');
+  };
+
+  const ModifyEvent = (date: string, content: string) => {
+    if (date !== '' && date !== eventSelectedDate) {
+      deleteEvent(eventSelectedDate, eventSelectedName);
+      addEvent(content !== '' ? content : eventSelectedName, date);
+    } else if (content !== '' && content !== eventSelectedName) {
+      deleteEvent(eventSelectedDate, eventSelectedName);
+      addEvent(content, date !== '' ? date : eventSelectedDate);
+    }
+    setModalEvent(false);
+  };
+  const handleDateChange = (event: any, selectedDate: any) => {
+    const date = selectedDate || dateForPicker;
+    setDateForPicker(date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    setDate(`${year}-${month}-${day}`);
+  };
+
   return (
     <>
       <PageContainer>
@@ -96,7 +146,14 @@ export const CalendarPage: React.FC<CalendarProps> = ({
           selected={actualDate}
           items={items}
           renderItem={(item, isFirst) => (
-            <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => {
+                setModalEvent(true);
+                setEventSelectedName(item.name);
+                setEventSelectedDate(item.day);
+              }}
+            >
               <Text style={styles.itemText}>{item.name}</Text>
             </TouchableOpacity>
           )}
@@ -140,12 +197,15 @@ export const CalendarPage: React.FC<CalendarProps> = ({
                   placeholderTextColor="rgba(30, 30, 30, 0.40);"
                   onChangeText={setContent}
                 />
-                <Input
-                  placeholder="Date (YYYY-MM-DD)"
-                  type={'text'}
-                  placeholderTextColor="rgba(30, 30, 30, 0.40);"
-                  value={date}
-                  onChangeText={setDate}
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={dateForPicker}
+                  mode="date"
+                  is24Hour={true}
+                  display="spinner"
+                  onChange={handleDateChange}
+                  style={{ alignSelf: 'center' }}
+                  textColor="#49136A"
                 />
               </InputContainer>
               <ButtonsContainer>
@@ -155,6 +215,51 @@ export const CalendarPage: React.FC<CalendarProps> = ({
                 <EventButton color="#fff" onPress={() => setModalOpen(false)}>
                   <MediumText color="#1E1E1E">Cancel</MediumText>
                 </EventButton>
+              </ButtonsContainer>
+            </AddEventContainer>
+          </ModalContent>
+        </ModalContainer>
+      )}
+      {modalEvent && (
+        <ModalContainer transparent>
+          <ModalContent>
+            <AddEventContainer>
+              <ModalHeader>
+                <MediumText>Modify your Event</MediumText>
+                <CrossButton onPress={() => setModalEvent(false)}>
+                  <AntDesign name="close" size={24} color="#1E1E1E" />
+                </CrossButton>
+              </ModalHeader>
+              <InputContainer>
+                <Input
+                  value={eventSelectedName}
+                  placeholder="Enter the event name"
+                  type={'text'}
+                  placeholderTextColor="rgba(30, 30, 30, 0.40);"
+                  onChangeText={setContent}
+                />
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={dateForPicker}
+                  mode="date"
+                  is24Hour={true}
+                  display="spinner"
+                  onChange={handleDateChange}
+                  style={{ alignSelf: 'center' }}
+                  textColor="#49136A"
+                />
+              </InputContainer>
+              <ButtonsContainer>
+                <EventButton onPress={() => ModifyEvent(date, content)}>
+                  <MediumText color="#fff">Confirm modification</MediumText>
+                </EventButton>
+                <DeleteButton
+                  onPress={() =>
+                    deleteEvent(eventSelectedDate, eventSelectedName)
+                  }
+                >
+                  <DeleteButtonText>Delete</DeleteButtonText>
+                </DeleteButton>
               </ButtonsContainer>
             </AddEventContainer>
           </ModalContent>

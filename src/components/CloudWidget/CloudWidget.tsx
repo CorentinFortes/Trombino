@@ -1,34 +1,79 @@
 import React, { useState } from 'react';
-import { Feather, Ionicons, Octicons } from '@expo/vector-icons';
+import { AntDesign, Feather, Ionicons, Octicons } from '@expo/vector-icons';
 import { WidgetType } from '../../types/widgetType';
-import { TouchableOpacity } from 'react-native';
 import {
+  ScrollView,
+  TouchableOpacity,
+  TouchableOpacityBase,
+} from 'react-native';
+import {
+  DownloadButton,
+  DownloadFilesContainer,
+  FileDownloadContainer,
+  FilesDownloadContainer,
   FlexColumnContainer,
   HeaderContainer,
   HorizontalContainer,
+  LargeContainer,
+  MediumContainer,
+  ModalContainer,
+  ModalContent,
   SmallContainer,
   TextMedium,
   TextRegular,
   TopContent,
+  TopContentDownload,
   UploadButton,
   UploadContainer,
+  UploadMediumContainer,
+  UploadSmallContainer,
   Widget,
 } from './CloudWidget.style';
+import {
+  DownloadFile,
+  File,
+  UploadFile,
+  listAllFiles,
+} from '../../api/storage';
+import * as DocumentPicker from 'expo-document-picker';
+import LottieView from 'lottie-react-native';
 
-type CloudWidgetProps = {
-  downloading: boolean;
-} & WidgetType;
-
-const CalendarWidgetComponent: React.FC<CloudWidgetProps> = ({
+const CalendarWidgetComponent: React.FC<WidgetType> = ({
   size,
   deleteFunction,
   id,
-  downloading,
 }) => {
   const [openSizeModal, setOpenSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState<
     'LARGE' | 'MEDIUM' | 'SMALL' | 'HEADER'
   >(size);
+  const [fileName, setFileName] = useState('');
+  const [blobFile, setBlobFile] = useState<Blob | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const animation: React.LegacyRef<LottieView> = React.useRef(null);
+  const [modalOpenDownload, setModalOpenDownload] = useState(false);
+  const [downloadsFiles, setDownloadsFiles] = useState<File[]>([]);
+
+  const pickDocument = async () => {
+    const result = await DocumentPicker.getDocumentAsync({});
+    if (result !== null && result.assets) {
+      const r = await fetch(result.assets[0].uri);
+      const b = await r.blob();
+      setFileName(result.assets[0].name);
+      setBlobFile(b);
+      setIsUploading(true);
+      animation.current?.play();
+    }
+  };
+
+  React.useEffect(() => {
+    if (blobFile !== null && fileName !== '') {
+      UploadFile(blobFile, fileName);
+      setFileName('');
+      setBlobFile(null);
+    }
+  }, [blobFile, fileName]);
+  const downloading = false;
   return (
     <>
       <TouchableOpacity onLongPress={() => setOpenSizeModal(true)}>
@@ -46,147 +91,196 @@ const CalendarWidgetComponent: React.FC<CloudWidgetProps> = ({
         >
           {currentSize === 'LARGE' && (
             <>
-              <TopContent>
-                <Ionicons
-                  name="cloud-download-outline"
-                  size={24}
-                  color="#491C0D"
-                />
-                <TextMedium>Cloud</TextMedium>
-              </TopContent>
-              <UploadContainer>
-                <Feather name="upload" size={16} color="#491C0D" />
-                <TextMedium fontSize={14}>Add new downloading</TextMedium>
-              </UploadContainer>
-              <UploadButton>
-                <TextMedium color="#FAFAFF" fontSize={16}>
-                  Upload files
-                </TextMedium>
-              </UploadButton>
+              <LargeContainer>
+                <TopContent>
+                  <Ionicons
+                    name="cloud-download-outline"
+                    size={24}
+                    color="#491C0D"
+                  />
+                  <TextMedium>Cloud</TextMedium>
+                </TopContent>
+                <UploadContainer onPress={pickDocument}>
+                  <Feather name="upload" size={16} color="#491C0D" />
+                  <TextMedium fontSize={14}>Add new file</TextMedium>
+                </UploadContainer>
+                <DownloadButton
+                  onPress={() => {
+                    listAllFiles().then((res) => {
+                      if (res) {
+                        setDownloadsFiles(res);
+                      }
+                      setModalOpenDownload(true);
+                    });
+                  }}
+                  maxWidth
+                >
+                  <TextMedium color="#FAFAFF" fontSize={16}>
+                    Download files
+                  </TextMedium>
+                </DownloadButton>
+              </LargeContainer>
             </>
           )}
           {currentSize === 'HEADER' && (
             <>
-              {!downloading ? (
-                <HeaderContainer>
-                  <TopContent gap={5}>
-                    <Ionicons
-                      name="cloud-download-outline"
-                      size={16}
-                      color="#491C0D"
-                    />
-                    <TextMedium fontSize={14}>Personnal</TextMedium>
-                  </TopContent>
-                  <TopContent>
-                    <Octicons name="stack" size={16} color="#491C0D" />
-                    <TextMedium fontSize={14}>0.1 / 10 gb</TextMedium>
-                  </TopContent>
-                </HeaderContainer>
-              ) : (
-                <HeaderContainer>
-                  <TopContent gap={5}>
-                    <Ionicons
-                      name="cloud-download-outline"
-                      size={16}
-                      color="#491C0D"
-                    />
-                    <TextMedium fontSize={14}>Picture.png</TextMedium>
-                  </TopContent>
-                  <TopContent>
-                    <Feather name="download" size={16} color="black" />
-                    <TextMedium fontSize={14}>10/100%</TextMedium>
-                  </TopContent>
-                </HeaderContainer>
-              )}
+              <HeaderContainer>
+                <TopContent>
+                  <Ionicons
+                    name="cloud-download-outline"
+                    size={16}
+                    color="#491C0D"
+                  />
+                </TopContent>
+                <TopContent>
+                  <DownloadButton
+                    onPress={() => {
+                      listAllFiles().then((res) => {
+                        if (res) {
+                          setDownloadsFiles(res);
+                        }
+                        setModalOpenDownload(true);
+                      });
+                    }}
+                  >
+                    <TextMedium color="#FAFAFF" fontSize={14}>
+                      Download files
+                    </TextMedium>
+                  </DownloadButton>
+                  <DownloadButton onPress={pickDocument}>
+                    <TextMedium color="#FAFAFF" fontSize={14}>
+                      Upload files
+                    </TextMedium>
+                  </DownloadButton>
+                </TopContent>
+              </HeaderContainer>
             </>
           )}
           {currentSize === 'SMALL' && (
             <>
-              {downloading ? (
-                <SmallContainer>
-                  <TopContent gap={5}>
-                    <Ionicons
-                      name="cloud-download-outline"
-                      size={16}
-                      color="#491C0D"
-                    />
-                    <TextMedium fontSize={12}>Cloud</TextMedium>
-                  </TopContent>
-                  <TopContent>
-                    <Feather name="download" size={24} color="black" />
-                    <TextMedium fontSize={16}>10/100%</TextMedium>
-                  </TopContent>
-                  <FlexColumnContainer>
-                    <TextMedium fontSize={12}>Available space</TextMedium>
-                    <TextRegular fontSize={12}>9.9 gB</TextRegular>
-                  </FlexColumnContainer>
-                </SmallContainer>
-              ) : (
-                <SmallContainer>
-                  <TopContent gap={5}>
-                    <Ionicons
-                      name="cloud-download-outline"
-                      size={16}
-                      color="#491C0D"
-                    />
-                    <TextMedium fontSize={12}>Cloud</TextMedium>
-                  </TopContent>
-                  <TextMedium fontSize={12}>No download</TextMedium>
-                  <FlexColumnContainer paddingTop={15}>
-                    <TextMedium fontSize={12}>Available space</TextMedium>
-                    <TextRegular fontSize={12}>9.9 gB</TextRegular>
-                  </FlexColumnContainer>
-                </SmallContainer>
-              )}
+              <SmallContainer>
+                <TopContent gap={5}>
+                  <Ionicons
+                    name="cloud-download-outline"
+                    size={16}
+                    color="#491C0D"
+                  />
+                  <TextMedium fontSize={12}>Cloud</TextMedium>
+                </TopContent>
+                <FlexColumnContainer>
+                  <UploadSmallContainer onPress={pickDocument}>
+                    <Feather name="upload" size={12} color="#491C0D" />
+                    <TextMedium fontSize={12}>Add new file</TextMedium>
+                  </UploadSmallContainer>
+                  <DownloadButton
+                    onPress={() => {
+                      listAllFiles().then((res) => {
+                        if (res) {
+                          setDownloadsFiles(res);
+                        }
+                        setModalOpenDownload(true);
+                      });
+                    }}
+                    maxWidth
+                  >
+                    <TextMedium color="#FAFAFF" fontSize={12}>
+                      Download files
+                    </TextMedium>
+                  </DownloadButton>
+                </FlexColumnContainer>
+              </SmallContainer>
             </>
           )}
           {currentSize === 'MEDIUM' && (
             <>
-              {downloading ? (
-                <>
-                  <TopContent gap={6}>
-                    <Ionicons
-                      name="cloud-download-outline"
-                      size={16}
-                      color="#491C0D"
-                    />
-                    <TextMedium fontSize={12}>Cloud</TextMedium>
-                  </TopContent>
-                  <HorizontalContainer>
-                    <FlexColumnContainer>
-                      <TextMedium fontSize={14}>Picture.png</TextMedium>
-                      <TextRegular fontSize={10}>
-                        Available space 9.9gb
-                      </TextRegular>
-                    </FlexColumnContainer>
-                    <TopContent gap={10}>
-                      <Feather name="download" size={16} color="black" />
-                      <TextMedium fontSize={14}>10/100%</TextMedium>
-                    </TopContent>
-                  </HorizontalContainer>
-                </>
-              ) : (
-                <>
-                  <TopContent gap={6}>
-                    <Ionicons
-                      name="cloud-download-outline"
-                      size={16}
-                      color="#491C0D"
-                    />
-                    <TextMedium fontSize={12}>Cloud</TextMedium>
-                  </TopContent>
-                  <FlexColumnContainer>
-                    <TextMedium fontSize={14}>No download</TextMedium>
-                    <TextRegular fontSize={10}>
-                      Available space 9.9gb
-                    </TextRegular>
-                  </FlexColumnContainer>
-                </>
-              )}
+              <MediumContainer>
+                <TopContent gap={6}>
+                  <Ionicons
+                    name="cloud-download-outline"
+                    size={20}
+                    color="#491C0D"
+                  />
+                  <TextMedium fontSize={16}>Cloud</TextMedium>
+                </TopContent>
+                <FlexColumnContainer>
+                  <UploadMediumContainer onPress={pickDocument}>
+                    <Feather name="upload" size={10} color="#491C0D" />
+                    <TextMedium fontSize={10}>Add new file</TextMedium>
+                  </UploadMediumContainer>
+                  <DownloadButton
+                    onPress={() => {
+                      listAllFiles().then((res) => {
+                        if (res) {
+                          setDownloadsFiles(res);
+                        }
+                        setModalOpenDownload(true);
+                      });
+                    }}
+                    maxWidth
+                  >
+                    <TextMedium color="#FAFAFF" fontSize={10}>
+                      Download files
+                    </TextMedium>
+                  </DownloadButton>
+                </FlexColumnContainer>
+              </MediumContainer>
             </>
           )}
         </Widget>
       </TouchableOpacity>
+      {isUploading && (
+        <ModalContainer transparent>
+          <ModalContent>
+            <LottieView
+              ref={animation}
+              source={require('../../../assets/uploadAnimation.json')}
+              loop={false}
+              onAnimationFinish={() => setIsUploading(false)}
+              style={{
+                width: 200,
+                height: 200,
+              }}
+              speed={3}
+            />
+          </ModalContent>
+        </ModalContainer>
+      )}
+      {modalOpenDownload && (
+        <ModalContainer transparent>
+          <ModalContent basicColor>
+            <DownloadFilesContainer>
+              <TopContentDownload>
+                <TopContent>
+                  <Ionicons
+                    name="cloud-download-outline"
+                    size={24}
+                    color="#491C0D"
+                  />
+                  <TextMedium>Cloud</TextMedium>
+                </TopContent>
+                <TouchableOpacity onPress={() => setModalOpenDownload(false)}>
+                  <AntDesign name="close" size={24} color="#1E1E1E" />
+                </TouchableOpacity>
+              </TopContentDownload>
+              <ScrollView style={{ width: '100%' }}>
+                <FilesDownloadContainer>
+                  {downloadsFiles.map((file, index) => (
+                    <FileDownloadContainer
+                      key={index}
+                      onPress={() => DownloadFile(file)}
+                    >
+                      <TextRegular fontSize={16} numberOfLines={1}>
+                        {file.name}
+                      </TextRegular>
+                      <Feather name="download" size={16} color="#491C0D" />
+                    </FileDownloadContainer>
+                  ))}
+                </FilesDownloadContainer>
+              </ScrollView>
+            </DownloadFilesContainer>
+          </ModalContent>
+        </ModalContainer>
+      )}
     </>
   );
 };

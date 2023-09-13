@@ -69,6 +69,8 @@ export const MediumText = styled.Text<{ color?: string }>`
 export const InputContainer = styled.View`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
   width: 100%;
 `;
@@ -86,4 +88,35 @@ export const EventButton = styled.TouchableOpacity<{ color?: string }>`
   border-radius: 10px;
   border: 1.667px solid #1e1e1e;
   padding: 9px 33px;
+`;
+
+export const DeleteButton = styled.TouchableOpacity`
+  background-color: #fafaff;
+  border-radius: 10px;
+  border: 1.667px solid #f13838;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const DeleteButtonText = styled.Text`
+  color: #f13838;
+  font-size: 20px;
+  font-family: 'Rubik_Medium';
+  font-weight: 500;
+  padding: 9px 33px;
+`;
+
+export const CrossButton = styled.TouchableOpacity`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ModalHeader = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;

@@ -46,7 +46,7 @@ export const ChatPage: React.FC<ChatProps> = ({ route, navigation }) => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(true);
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
-  const { token, targetEmployee, fromChat } = route.params;
+  const { token, targetEmployee } = route.params;
   const receiverId = targetEmployee.id;
   React.useEffect(() => {
     if (token) {

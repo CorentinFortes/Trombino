@@ -22,12 +22,13 @@ import {
   Feather,
   Ionicons,
   MaterialCommunityIcons,
+  Octicons,
 } from '@expo/vector-icons';
 import { LargeSizeIcon } from '../../svg/LargeSizeIcon';
 import { MediumSizeIcon } from '../../svg/MediumSizeIcon';
 import { SmallSizeIcon } from '../../svg/SmallSizeIcon';
 import { HeaderSizeIcon } from '../../svg/HeaderSizeIcon';
-import { Animated, FlatList, View } from 'react-native';
+import { Animated, Dimensions, FlatList, View } from 'react-native';
 import Paginator from '../Paginator/Paginator';
 
 type Props = {
@@ -42,7 +43,6 @@ export const AddWidget: React.FC<Props> = ({
   const [step, setStep] = React.useState<number>(0);
   const [widgetType, setWidgetType] = React.useState<WidgetsType>();
   const [widgetSize, setWidgetSize] = React.useState<WidgetSize>();
-  const [currentIndex, setCurrentIndex] = React.useState<number>(0);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const addNewWidget = (sizeTmp: WidgetSize) => {
     setWidgetSize(sizeTmp);
@@ -74,6 +74,8 @@ export const AddWidget: React.FC<Props> = ({
               <FlatList
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
+                bounces={false}
+                snapToInterval={Dimensions.get('window').width}
                 renderItem={() => (
                   <View
                     style={{ display: 'flex', flexDirection: 'row', gap: 10 }}
@@ -142,12 +144,20 @@ export const AddWidget: React.FC<Props> = ({
                         />
                         <WidgetTitle>Cloud</WidgetTitle>
                       </WidgetButton>
+                      <WidgetButton
+                        onPress={() => {
+                          setWidgetType('Todo');
+                          setStep(2);
+                        }}
+                      >
+                        <Octicons name="checklist" size={24} color="#1E1E1E" />
+                        <WidgetTitle>Todo</WidgetTitle>
+                      </WidgetButton>
                     </SizeContainer>
                   </View>
                 )}
                 data={[1]}
                 horizontal
-                showsHorizontalScrollIndicator
                 pagingEnabled
                 bounces={false}
                 // keyExtractor={(item) => item.id}

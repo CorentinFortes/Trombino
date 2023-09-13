@@ -9,15 +9,19 @@ import {
   GetEmployees,
   getMe,
 } from '../../api/api';
+import { getTodo } from '../../api/todo';
 import { WeatherData, getWeather } from '../../api/weather';
 import { AddWidget } from '../../components/AddWidget/AddWidget.component';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
 import { CalendarWidget } from '../../components/CalendarWidget';
+import { CloudWidget } from '../../components/CloudWidget';
 import { MailWidget } from '../../components/MailWidget/MailWidget';
+import { TodoWidget } from '../../components/TodoWidget/TodoWidget.component';
 import { TrombinoscopeWidget } from '../../components/TrombinoscopeWidget';
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SmallLogo } from '../../svg/SmallLogo';
 import { WeatherModeType } from '../../types/Widget/weather';
+import { TodoType } from '../../types/todo';
 import { CustomWidgetProps, WidgetSize } from '../../types/widgetType';
 import { tmpMail } from '../../utils/mock/mail';
 import {
@@ -32,17 +36,18 @@ import {
   SectionContainer,
   SectionTitle,
 } from './HomePage.style';
-import { CloudWidget } from '../../components/CloudWidget';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type HomePageProps = StackScreenProps<RootStackParamList, 'Home'>;
 
 export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
-  const token = route.params.token;
+  const { token, newTodos } = route.params;
   const [me, setMe] = React.useState<EmployeeDetail>();
   const [employees, setEmployees] = React.useState<Employee[]>();
   const [lat, setLat] = React.useState<number>();
   const [long, setLong] = React.useState<number>();
   const [weather, setWeather] = React.useState<WeatherData>();
+  const [todos, setTodos] = React.useState<TodoType[]>([]);
   const [customWidgets, setCustomWidgets] = React.useState<CustomWidgetProps[]>(
     [
       {
@@ -73,8 +78,9 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
       getMe(token).then((me) => {
         if (me !== undefined) {
           me.surname = me.surname.toUpperCase();
+          setMe(me);
+          getTodo(setTodos, me);
         }
-        setMe(me);
       });
       GetEmployees(token).then((employees) => {
         if (employees !== undefined) {
@@ -111,6 +117,13 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
     setCustomWidgets(customWidgets.filter((widget) => widget.id !== id));
   };
 
+  const getNewTodos = () => {
+    if (newTodos) {
+      return newTodos as TodoType[];
+    }
+    return todos;
+  };
+
   return (
     <PageContainer>
       <SmallLogo />
@@ -120,14 +133,11 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
             <ProfileImage source={GetEmployeeImage(token, me.id)} />
             <HeaderText>{me.name}</HeaderText>
           </HeaderProfileLeftWrapper>
-          <HeaderText>
-            <AntDesign
-              name="arrowright"
-              size={32}
-              color="#1E1E1E"
-              onPress={() => navigation.navigate('Profile', { token })}
-            />
-          </HeaderText>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Profile', { token })}
+          >
+            <AntDesign name="arrowright" size={32} color="#1E1E1E" />
+          </TouchableOpacity>
         </HeaderProfileContainer>
       )}
       <ScrollContent
@@ -231,6 +241,97 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
               setCustomWidgets={setCustomWidgets}
             />
           </CustomsWidgetsContainer>
+          {me && (
+            <CustomsWidgetsContainer>
+              {customWidgets.map((widget) =>
+                widget.widget === 'Mail' ? (
+                  <MailWidget
+                    id={widget.id}
+                    deleteFunction={deleteWidget}
+                    key={widget.id}
+                    nbUnread={1}
+                    mails={tmpMail}
+                    size={widget.size}
+                    onPress={() =>
+                      navigation.navigate('Email', {
+                        token,
+                        unread: 1,
+                      })
+                    }
+                  />
+                ) : widget.widget === 'Trombino' ? (
+                  <TrombinoscopeWidget
+                    deleteFunction={deleteWidget}
+                    id={widget.id}
+                    key={widget.id}
+                    size={widget.size}
+                    token={token}
+                    employees={employees}
+                    onPress={() =>
+                      navigation.navigate('Trombinoscope', { token })
+                    }
+                  />
+                ) : widget.widget === 'Weather' ? (
+                  <WeatherWidget
+                    id={widget.id}
+                    deleteFunction={deleteWidget}
+                    key={widget.id}
+                    size={widget.size}
+                    localization={
+                      weather !== undefined
+                        ? weather.city + ', ' + weather.country
+                        : 'Marseille, FR'
+                    }
+                    weather={
+                      weather !== undefined
+                        ? (weather.main as WeatherModeType)
+                        : 'Clear'
+                    }
+                    temperature={
+                      weather !== undefined ? weather.temperature : 20
+                    }
+                    description={
+                      weather !== undefined ? weather.description : 'Sunny'
+                    }
+                    night={false}
+                  />
+                ) : widget.widget === 'Calendar' ? (
+                  <CalendarWidget
+                    id={widget.id}
+                    key={widget.id}
+                    size={widget.size}
+                    deleteFunction={deleteWidget}
+                    onPress={() => navigation.navigate('Calendar', { token })}
+                  />
+                ) : widget.widget === 'Cloud' ? (
+                  <CloudWidget
+                    id={widget.id}
+                    key={widget.id}
+                    size={widget.size}
+                    deleteFunction={deleteWidget}
+                  />
+                ) : widget.widget === 'Todo' ? (
+                  <TodoWidget
+                    id={widget.id}
+                    todos={newTodos ? newTodos : todos}
+                    key={widget.id}
+                    onPress={() =>
+                      navigation.navigate('Todo', {
+                        token,
+                        profile: me,
+                        todos: getNewTodos(),
+                      })
+                    }
+                    size={widget.size}
+                  />
+                ) : null,
+              )}
+              <AddWidget
+                customWidgets={customWidgets}
+                setCustomWidgets={setCustomWidgets}
+              />
+            </CustomsWidgetsContainer>
+          )}
         </ContentContainer>
       </ScrollContent>
     </PageContainer>
