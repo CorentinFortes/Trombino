@@ -24,12 +24,21 @@ type ProfileProps = StackScreenProps<RootStackParamList, 'Login'>;
 export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
   const [email, setEmail] = React.useState<string>('oliver.lewis@masurao.jp');
   const [password, setPassword] = React.useState<string>('password');
-  const [token, setToken] = React.useState<string>('');
+  const [token, setToken] = React.useState<string | null>('');
   const [location, setLocation] = React.useState<Location.LocationObject>();
 
-  function handleLogin(email: string, password: string) {
-    Login(email, password).then((token) => {
-      setToken(token!);
+  async function handleLogin(email: string, password: string) {
+    setToken(null);
+    Login(email, password).then(async (res) => {
+      if (res) {
+        const tokenFromStorage = await AsyncStorage.getItem('token');
+        setToken(tokenFromStorage);
+      } else {
+        setToken(null);
+        const error = await AsyncStorage.getItem('error');
+        if (error === '401') alert('Wrong email or password, please try again');
+        else alert('An error occured, please try again');
+      }
     });
   }
 
@@ -58,11 +67,6 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
           'long',
           JSON.stringify(locationData.coords.longitude),
         );
-        await AsyncStorage.getItem('token').then((token) => {
-          if (token) {
-            navigation.navigate('Home', { token });
-          }
-        });
       } catch (error) {
         console.error('Error getting location:', error);
       }
@@ -92,9 +96,6 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
         <ConnectButton onPress={() => handleLogin(email, password)}>
           <ConnectButtonText>Connect</ConnectButtonText>
         </ConnectButton>
-        <TouchableOpacity>
-          <GreyText>Forgot password ?</GreyText>
-        </TouchableOpacity>
       </ConnexionContainer>
       <CreditsContainer>
         <GreyText>Trombino</GreyText>

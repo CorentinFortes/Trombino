@@ -5,6 +5,10 @@ export interface Token {
   access_token: string;
 }
 
+export interface Error {
+  AxiosError: string;
+}
+
 export interface Employee {
   id: number;
   email: string;
@@ -43,9 +47,11 @@ export const Login = async (email: string, password: string) => {
     );
     const tokenRes: Token = res.data;
     AsyncStorage.setItem('token', tokenRes.access_token);
-    return tokenRes.access_token;
-  } catch (error) {
-    console.log(error);
+    return true;
+  } catch (error: any) {
+    const errornbr = error.message.split(' ');
+    AsyncStorage.setItem('error', errornbr[5]);
+    return false;
   }
 };
 

@@ -5,10 +5,14 @@ export interface Root {
   name: string;
   weather: Weather[];
   sys: Sys;
+  wind: Wind;
 }
 
 export interface Main {
   temp: number;
+  feels_like: number;
+  humidity: number;
+  pressure: number;
 }
 
 export interface Sys {
@@ -20,12 +24,20 @@ export interface Weather {
   main: string;
 }
 
+export interface Wind {
+  speed: number;
+}
+
 export interface WeatherData {
   city: string;
   country: string;
   temperature: number;
   description: string;
   main: string;
+  feels_like: number;
+  humidity: number;
+  pressure: number;
+  wind_speed: number;
 }
 
 export const getWeather = async (lat: number, lon: number) => {
@@ -42,6 +54,11 @@ export const getWeather = async (lat: number, lon: number) => {
         data.weather[0].description.charAt(0).toUpperCase() +
         data.weather[0].description.slice(1),
       main: data.weather[0].main,
+      feels_like: data.main.feels_like,
+      humidity: data.main.humidity,
+      pressure: data.main.pressure,
+      wind_speed: data.wind.speed,
+
     };
     return weatherData;
   } catch (error) {

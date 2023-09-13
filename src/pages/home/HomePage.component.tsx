@@ -157,6 +157,90 @@ export const HomePage: React.FC<HomePageProps> = ({ route, navigation }) => {
             />
           </SectionContainer>
           <SectionTitle>Your Widgets</SectionTitle>
+          <CustomsWidgetsContainer>
+            {customWidgets.map((widget) =>
+              widget.widget === 'Mail' ? (
+                <MailWidget
+                  id={widget.id}
+                  deleteFunction={deleteWidget}
+                  key={widget.id}
+                  nbUnread={1}
+                  mails={tmpMail}
+                  size={widget.size}
+                  onPress={() =>
+                    navigation.navigate('Email', {
+                      token,
+                      unread: 1,
+                    })
+                  }
+                />
+              ) : widget.widget === 'Trombino' ? (
+                <TrombinoscopeWidget
+                  deleteFunction={deleteWidget}
+                  id={widget.id}
+                  key={widget.id}
+                  size={widget.size}
+                  token={token}
+                  employees={ employees !== undefined
+                    ? (employees)
+                    : '?'
+                  }
+                  onPress={() =>
+                    navigation.navigate('Trombinoscope', { token })
+                  }
+                />
+              ) : widget.widget === 'Weather' ? (
+                <WeatherWidget
+                  id={widget.id}
+                  deleteFunction={deleteWidget}
+                  key={widget.id}
+                  size={widget.size}
+                  onPress={() =>
+                    navigation.navigate('Weather', {
+                      token,
+                      weather,
+                      weathermode: weather?.main as WeatherModeType,
+                    })
+                  }
+                  localization={
+                    weather !== undefined
+                      ? weather.city + ', ' + weather.country
+                      : '?, ?'
+                  }
+                  weather={
+                    weather !== undefined
+                      ? (weather.main as WeatherModeType)
+                      : '?'
+                  }
+                  temperature={weather !== undefined ? weather.temperature : 0}
+                  description={
+                    weather !== undefined ? weather.description : '?'
+                  }
+                  night={false}
+                />
+              ) : widget.widget === 'Calendar' ? (
+                <CalendarWidget
+                  id={widget.id}
+                  key={widget.id}
+                  size={widget.size}
+                  deleteFunction={deleteWidget}
+                  onPress={() => navigation.navigate('Calendar', { token })}
+                />
+              ) : widget.widget === 'Cloud' ? (
+                <CloudWidget
+                  id={widget.id}
+                  key={widget.id}
+                  size={widget.size}
+                  deleteFunction={deleteWidget}
+                  downloading={false}
+                />
+              ) : null,
+            )}
+            <AddWidget
+              customWidgets={customWidgets}
+              setCustomWidgets={setCustomWidgets}
+            />
+          </CustomsWidgetsContainer>
           {me && (
             <CustomsWidgetsContainer>
               {customWidgets.map((widget) =>
