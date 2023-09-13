@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { Widget as _Widget } from '../Widget';
 import { TaskCard as _TaskCard } from '../TaskCard';
+import { Text } from 'react-native-paper';
 
 export const Widget = styled(_Widget)`
   background-color: #fbccee;
@@ -28,14 +29,14 @@ export const TopContent = styled.View<{ gap?: number }>`
   gap: ${({ gap }) => (gap ? gap : 10)}px;
 `;
 
-export const TextMedium = styled.Text<{ fontSize?: number }>`
+export const TextMedium = styled(Text)<{ fontSize?: number }>`
   font-family: 'Rubik_Medium';
   font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
   color: #511111;
   font-weight: 600;
 `;
 
-export const TextRegular = styled.Text<{ fontSize?: number }>`
+export const TextRegular = styled(Text)<{ fontSize?: number }>`
   font-family: 'Rubik_Regular';
   font-size: ${({ fontSize }) => (fontSize ? fontSize : 24)}px;
   color: #511111;
@@ -73,17 +74,17 @@ export const HeaderLeftWrapper = styled.View`
   justify-content: flex-start;
 `;
 
-export const HeaderText = styled.Text`
+export const HeaderText = styled(Text)`
   font-family: 'Rubik_Medium';
   font-size: 16px;
 `;
 
-export const TaskToDoCount = styled.Text`
+export const TaskToDoCount = styled(Text)`
   font-family: 'Rubik_Medium';
   font-size: 20px;
 `;
 
-export const TaskToDoCountBig = styled.Text`
+export const TaskToDoCountBig = styled(Text)`
   font-family: 'Rubik_Medium';
   font-size: 40px;
 `;

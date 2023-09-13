@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { WidgetSize } from '../../types/widgetType';
-import { Modal } from 'react-native';
 import { Dimensions } from 'react-native';
+import { Button, Modal } from 'react-native-paper';
 
 const WIDGET_SIZE: {
   [key in WidgetSize]: {
@@ -66,7 +66,7 @@ export const WidgetTitle = styled.View`
   width: 100%;
 `;
 
-export const ModalContainer = styled(Modal)``;
+export const ModalContainer = styled.Modal``;
 
 export const ModalContent = styled.View`
   display: flex;
@@ -92,7 +92,7 @@ export const SelectSizeContainer = styled.View`
   transition: ease-out 150ms;
 `;
 
-export const CrossButton = styled.TouchableOpacity`
+export const CrossButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,22 +115,21 @@ export const ModalTitle = styled.Text`
 
 export const SizeContainer = styled.View`
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
   gap: 30px;
   padding-top: 10px;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
-export const SizeButton = styled.TouchableOpacity`
+export const SizeButton = styled(Button)`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 
-export const DeleteButton = styled.TouchableOpacity`
+export const DeleteButton = styled(Button)`
   background-color: #fafaff;
   border-radius: 10px;
   border: 1px solid #f13838;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputContainer, LoginInput } from './Input.style';
+import { LoginInput } from './Input.style';
 
 type InputProps = {
   icon?: React.ReactNode;
@@ -19,17 +19,20 @@ const InputComponent: React.FC<InputProps> = ({
   placeholderTextColor,
 }) => {
   return (
-    <InputContainer>
-      {icon}
-      <LoginInput
-        value={value}
-        autoCapitalize="none"
-        secureTextEntry={type === 'password'}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        placeholderTextColor={placeholderTextColor}
-      />
-    </InputContainer>
+    <LoginInput
+      style={{ width: 300 }}
+      left={icon}
+      value={value}
+      mode="outlined"
+      autoCapitalize="none"
+      secureTextEntry={type === 'password'}
+      placeholder={placeholder}
+      onChangeText={onChangeText}
+      placeholderTextColor={placeholderTextColor}
+      outlineColor="#c2bfbf"
+      activeOutlineColor="#c2bfbf"
+      textColor="#1E1E1E"
+    />
   );
 };
 

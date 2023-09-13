@@ -68,6 +68,8 @@ const WidgetComponent: React.FC<WidgetType> = ({
                 <SizeButton onPress={() => changeSize(WidgetSize.MEDIUM)}>
                   <MediumSizeIcon />
                 </SizeButton>
+              </SizeContainer>
+              <SizeContainer>
                 <SizeButton onPress={() => changeSize(WidgetSize.SMALL)}>
                   <SmallSizeIcon />
                 </SizeButton>

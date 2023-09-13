@@ -5,13 +5,10 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Login } from '../../api/api';
 import { RootStackParamList } from '../../components/AppNavigation/AppNavigation.component';
+import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
-import { LockIcon } from '../../svg/Lock';
 import { Logo } from '../../svg/Logo';
-import { UserIcon } from '../../svg/User';
 import {
-  ConnectButton,
-  ConnectButtonText,
   ConnexionContainer,
   CreditsContainer,
   GreyText,
@@ -79,23 +76,24 @@ export const LoginPage: React.FC<ProfileProps> = ({ navigation }) => {
       <ConnexionContainer>
         <InputContainer>
           <Input
-            icon={<UserIcon />}
             type="text"
             placeholder="E-mail"
             onChangeText={setEmail}
             value={email}
           />
           <Input
-            icon={<LockIcon />}
             type="password"
             placeholder="Password"
             onChangeText={setPassword}
             value={password}
           />
         </InputContainer>
-        <ConnectButton onPress={() => handleLogin(email, password)}>
-          <ConnectButtonText>Connect</ConnectButtonText>
-        </ConnectButton>
+        <Button type="primary" onPress={() => handleLogin(email, password)}>
+          Connect
+        </Button>
+        <TouchableOpacity>
+          <GreyText>Forgot password ?</GreyText>
+        </TouchableOpacity>
       </ConnexionContainer>
       <CreditsContainer>
         <GreyText>Trombino</GreyText>
