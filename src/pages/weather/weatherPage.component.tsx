@@ -59,10 +59,6 @@ export const WeatherPage: React.FC<WeatherProps> = ({ route, navigation }) => {
   const weathermode = route.params.weathermode;
   const night = false;
 
-  React.useEffect(() => {
-    console.log('WeatherPage', weather);
-  }, []);
-
   const getTextColor = () => {
     if (night) {
       return '#69A1BF';
